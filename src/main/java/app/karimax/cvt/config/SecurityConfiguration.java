@@ -25,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
+
     @SuppressWarnings("removal")
-	@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**")
@@ -35,8 +36,8 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.headers().httpStrictTransportSecurity()
-        .maxAgeInSeconds(0)
-        .includeSubDomains(true);
+                .maxAgeInSeconds(0)
+                .includeSubDomains(true);
         return http.build();
     }
 
