@@ -1,5 +1,7 @@
 package app.karimax.cvt.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +26,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
+        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName()).phone_number(request.getPhone_number())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+       User newuser = userRepository.getbyEmailapp(request.getEmail());
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).build();
     }
 
     @Override
@@ -39,6 +42,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        
+        User newuser = userRepository.getbyEmailapp(request.getEmail());
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).build();
     }
 }

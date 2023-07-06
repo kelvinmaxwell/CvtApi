@@ -35,9 +35,7 @@ public class SecurityConfiguration {
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        http.headers().httpStrictTransportSecurity()
-                .maxAgeInSeconds(0)
-                .includeSubDomains(true);
+       
         return http.build();
     }
 
