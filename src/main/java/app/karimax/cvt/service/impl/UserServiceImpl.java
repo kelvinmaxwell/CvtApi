@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import app.karimax.cvt.exception.ResourceNotFoundException;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.UserRepository;
+import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +38,22 @@ public class UserServiceImpl implements UserService {
 		else {
 			throw new ResourceNotFoundException("UserNotFound","name",email);
 		}
+	}
+	@Override
+	public User findByphone(String phone) {
+		User user=userRepository.findByPhone_number(phone);
+		if(user!=null) {
+		return user;
+		
+		}
+		else {
+			throw new ResourceNotFoundException("User Not Found","","");
+		}
+	}
+	@Override
+	public PhonVerResponse phonever(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
