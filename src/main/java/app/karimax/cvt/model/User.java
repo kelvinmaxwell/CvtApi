@@ -25,9 +25,14 @@ public class User implements UserDetails {
     private Integer id;
     private String firstName;
     private String lastName;
+   
     private String email;
+  
     private String phone_number;
     private String password;
+    private String verfication_code;
+    private String verfication_status;
+    
     @Enumerated(EnumType.STRING)
     private Role role;
     @Override

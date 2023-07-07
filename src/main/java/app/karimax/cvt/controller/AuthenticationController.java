@@ -16,6 +16,7 @@ import app.karimax.cvt.dao.request.SigninRequest;
 import app.karimax.cvt.model.Employee;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.response.JwtAuthenticationResponse;
+import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.UserService;
@@ -57,7 +58,12 @@ public class AuthenticationController {
   		return new ResponseEntity <User>(userService.findByphone(phone),HttpStatus.OK);
   	}
     
-    
+    @PostMapping("/PhonVerResponse")
+    public ResponseEntity<PhonVerResponse> phonever(@RequestBody User user) {
+    	
+    	
+        return new  ResponseEntity <PhonVerResponse>(userService.addvercode(user),HttpStatus.OK);
+    }
     
     
   //build get employee by id name

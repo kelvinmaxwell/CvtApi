@@ -32,11 +32,5 @@ public class UserController {
 			return new ResponseEntity <User>(userService.getbyEmailapp(email),HttpStatus.OK);
 		}
 	
-	@GetMapping("getUserphone")
-	public  ResponseEntity <PhonVerResponse> getUserByPhone(@RequestBody User user)
 	
-	{
-	
-		return new ResponseEntity <PhonVerResponse>(userService.phonever(user),HttpStatus.OK);
-	}
 }
