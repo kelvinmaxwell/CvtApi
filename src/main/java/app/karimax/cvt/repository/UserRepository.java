@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import app.karimax.cvt.model.Employee;
+
 import app.karimax.cvt.model.User;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     // Since email is unique, we'll find users by email
     Optional<User> findByEmail(String email);
     
@@ -28,6 +30,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //	List<User> findByEmail(String email);
 	
 	
-	@Query(value = "SELECT id FROM employees WHERE first_name = ?1 ", nativeQuery = true)
-	String findAdultUserByEmail(String firstname);
+//	@Query(value = "SELECT id FROM employees WHERE first_name = ?1 ", nativeQuery = true)
+//	String findAdultUserByEmail(String firstname);
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value="update users  set users.verfication_code =?1,verification_status=?2 where users.id = ?3", nativeQuery = true)
+	int addphonevercode( String code,String status,int id );
+	
+
 }

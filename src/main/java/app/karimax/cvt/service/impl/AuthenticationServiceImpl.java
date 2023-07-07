@@ -1,6 +1,7 @@
 package app.karimax.cvt.service.impl;
 
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.dao.request.SignUpRequest;
 import app.karimax.cvt.dao.request.SigninRequest;
+
 import app.karimax.cvt.model.Role;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.JwtAuthenticationResponse;
+import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -46,4 +49,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User newuser = userRepository.getbyEmailapp(request.getEmail());
         return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).build();
     }
+
+	
 }

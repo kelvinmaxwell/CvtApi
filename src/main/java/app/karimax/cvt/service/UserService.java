@@ -2,13 +2,12 @@ package app.karimax.cvt.service;
 
 
 
-import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import app.karimax.cvt.dao.request.SigninRequest;
+
 import app.karimax.cvt.model.User;
-import app.karimax.cvt.response.JwtAuthenticationResponse;
+
 import app.karimax.cvt.response.PhonVerResponse;
 
 
@@ -20,7 +19,9 @@ public interface UserService {
   
   User findByphone(String phone);
   
-  PhonVerResponse phonever(User user);
+  
+  PhonVerResponse addvercode(User user);
+
   
   
 }
