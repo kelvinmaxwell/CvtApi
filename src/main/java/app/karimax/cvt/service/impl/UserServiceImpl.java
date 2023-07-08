@@ -10,10 +10,13 @@ import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +27,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import app.karimax.cvt.exception.ResourceNotFoundException;
-
+import app.karimax.cvt.model.SmsCall;
 import app.karimax.cvt.model.User;
 
 import app.karimax.cvt.repository.UserRepository;
@@ -77,40 +80,49 @@ public class UserServiceImpl implements UserService {
 	    		()->new ResourceNotFoundException("user","Id",""));;
 	    		   Random r = new Random();
 	    			
-		int fourDigitCode = 1000 + r.nextInt(10000);
+		String fourDigitCode = String.format("%04d", Integer.valueOf(r.nextInt(1001)));;
 	    userRepository.addphonevercode(String.valueOf(fourDigitCode),"pending",user.getId());
 	 String smsres = null;
 		System.out.print(user.getEmail());
 		
 		if(existingeuser!=null)
 		{
-			String POST_PARAMS = "{\r\n" +
-	                "  \"apikey\": \"7cad0a203f66336727cf78484b2d88aa\",\r\n" +
-	                "  \"partnerID\": \"6460\",\r\n" +
-	                "  \"mobile\": \"user.getPhone_number()\",\r\n" +
-	                "  \"message\": \"String.valueOf(fourDigitCode)\",\r\n" +
-	                "  \"shortcode\": \"FINTAB\",\r\n" +
-	                "}";
-		 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-			  String BASE_URL = "https://api.metamug.com";
-			    OkHttpClient client = new OkHttpClient();
-			    String url="https://sms.textsms.co.ke/api/services/sendsms/";
-			    RequestBody body = RequestBody.create(JSON, POST_PARAMS);
-		        Request request = new Request.Builder().url(url).post(body).build();
-		        try {
-		        	Response response = client.newCall(request).execute();
-		        	smsres= response.body().string();
-		        }
-		        catch (IOException e) {
-					// TODO: handle exception
-				}
+			
+			RestTemplate restTemplate = new RestTemplate();
+
+	        String resourceUrl
+	          = "https://sms.textsms.co.ke/api/services/sendsms/";
+
+	        // Create the request body by wrapping
+	        // the object in HttpEntity 
+	        HttpEntity<SmsCall> request = new HttpEntity<SmsCall>(
+	            new SmsCall("7cad0a203f66336727cf78484b2d88aa", "6460",existingeuser.getPhone_number(),"<#> Your otp code is : "+String.valueOf(fourDigitCode)+" svvQbds15hc","FINTAB"));
+
+	        // Send the request body in HttpEntity for HTTP POST request
+	        String productCreateResponse = restTemplate
+	               .postForObject(resourceUrl, request, String.class);
+	        
+	        JSONObject obj = new JSONObject(productCreateResponse);
+	        JSONArray projectNameArray = obj.getJSONArray("responses");
+	        
+	        JSONObject single = projectNameArray.getJSONObject(0);
+	        int responseCode=(single.getInt("response-code"));
+	       
+	       if(responseCode==200)
+	       {
+	    	   
+	    	   
+	       }
+			
+			
+		
 
 	        
 
 		
           
              
-             return PhonVerResponse.builder().message(smsres).build();
+             return PhonVerResponse.builder().message(String.valueOf(responseCode)).build();
              
              
             
@@ -128,6 +140,28 @@ public class UserServiceImpl implements UserService {
 		
 	
 	
+	}
+	@Override
+	public PhonVerResponse confirmcode(User user) {
+		System.out.println("output"+user.getId()+user.getVerification_code());
+		User existingeuser= userRepository.verifycode(user.getId(),user.getVerification_code());
+		if(existingeuser!=null) {
+			
+			int updated=userRepository.setupdated("verified", user.getId());
+			
+			if(updated==1) {
+			 return PhonVerResponse.builder().message("number_verified").build();
+			}
+			else {
+				throw new ResourceNotFoundException("user","Id","");
+			}
+			
+		}
+		else {
+			throw new ResourceNotFoundException("user","Id","");
+		}
+		
+		
 	}
 }
 	

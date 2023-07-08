@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SmsCall {
 	String apikey;
-	String partnerId;
+	String partnerID;
+	String mobile;
 	String message;
 	String shortcode;
 	
