@@ -66,6 +66,17 @@ public class AuthenticationController {
     }
     
     
+    
+    @PostMapping("/Confirmcode")
+    public ResponseEntity<PhonVerResponse> confirmcode(@RequestBody User user) {
+    	
+    	
+        return new  ResponseEntity <PhonVerResponse>(userService.confirmcode(user),HttpStatus.OK);
+    }
+    
+    
+    
+    
   //build get employee by id name
   		
   		

@@ -30,8 +30,8 @@ public class User implements UserDetails {
   
     private String phone_number;
     private String password;
-    private String verfication_code;
-    private String verfication_status;
+    private String verification_code;
+    private String verification_status;
     
     @Enumerated(EnumType.STRING)
     private Role role;
