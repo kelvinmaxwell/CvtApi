@@ -1,7 +1,9 @@
 package app.karimax.cvt.controller;
 
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,18 +11,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import app.karimax.cvt.getFileExtension;
 import app.karimax.cvt.dao.request.SignUpRequest;
 import app.karimax.cvt.dao.request.SigninRequest;
+import app.karimax.cvt.dao.request.mechsignuprequest;
 import app.karimax.cvt.model.Employee;
+import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.User;
+import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.response.JwtAuthenticationResponse;
 import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.EmployeeService;
+import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,6 +45,15 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationController {
 	
 	private final UserService userService;
+	
+	@Autowired
+
+	  private FileStorageService fileStorageService;
+
+	  @Autowired
+
+	  private ObjectMapper objectMapper;
+	
 	
     private final AuthenticationService authenticationService;
     @PostMapping("/signup")
@@ -41,12 +67,62 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.signin(request));
     }
     
+    
+    @PostMapping("/mechsignup")
+    public ResponseEntity<User> mechsignup(@RequestParam("model") String jsonObject, @RequestParam("file") MultipartFile file) {
+    	mechsignuprequest response = null;
+    	
+    
+
+    	      
+    	
+    	try {
+
+    	      String fileName = fileStorageService.storeFile(file);
+
+    	      ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName).toUriString();
+
+    	      response = objectMapper.readValue(jsonObject, mechsignuprequest.class);
+
+    	      response.setResume_file_path(fileName);
+
+    	    } catch (JsonProcessingException e) {
+
+    	      e.printStackTrace();
+
+    	    }
+    
+    	return new ResponseEntity<User>(userService.savemechanicbio(response),HttpStatus.OK);
+    }
+
+    @PostMapping("/mechsignin")
+    public ResponseEntity<JwtAuthenticationResponse> mechsignin(@RequestBody SigninRequest request) {
+        return ResponseEntity.ok(authenticationService.signin(request));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @GetMapping("getUserphone/{phone}")
 	public  ResponseEntity <User> getUserByPhone(@PathVariable("phone") String phone)
 	
 	{
 	
 		return new ResponseEntity <User>(userService.findByphone(phone),HttpStatus.OK);
+	}
+    
+    
+    @GetMapping("getUseremail/{email}")
+	public  ResponseEntity <User> getUserByEmail(@PathVariable("email") String email)
+	
+	{
+	
+		return new ResponseEntity <User>(userService.getbyEmailapp(email),HttpStatus.OK);
 	}
     
     

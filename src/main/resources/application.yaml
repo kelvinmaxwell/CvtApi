@@ -28,6 +28,16 @@ token:
     key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
     
     
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 500KB
+      max-request-size: 500KB
+file:
+  upload-dir: ./uploads
+    
     
 logging:
   level:

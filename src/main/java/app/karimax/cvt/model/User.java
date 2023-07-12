@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +32,16 @@ public class User implements UserDetails {
   
     private String phone_number;
     private String password;
-    private String verification_code;
-    private String verification_status;
+    private String otp_code;
+    private String otp_code_expires_at;
+    private String otp_verified_at;
+    
+
+    private String userable_type;
+    @Column(name = "userable_id")
+    private long userable_id;
+  
+    
     
     @Enumerated(EnumType.STRING)
     private Role role;

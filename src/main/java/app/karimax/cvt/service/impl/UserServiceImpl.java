@@ -3,7 +3,14 @@ package app.karimax.cvt.service.impl;
 
 
 import java.io.IOException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -26,12 +33,16 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import app.karimax.cvt.dao.request.mechsignuprequest;
 import app.karimax.cvt.exception.ResourceNotFoundException;
+import app.karimax.cvt.model.Mechanic;
+import app.karimax.cvt.model.Role;
 import app.karimax.cvt.model.SmsCall;
 import app.karimax.cvt.model.User;
-
+import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.PhonVerResponse;
+import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -40,7 +51,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    
+    private final MechanicRepository mechanicRepository;
     
     @Override
     public UserDetailsService userDetailsService() {
@@ -79,9 +90,16 @@ public class UserServiceImpl implements UserService {
 		User existingeuser= userRepository.findById((long) user.getId()).orElseThrow(
 	    		()->new ResourceNotFoundException("user","Id",""));;
 	    		   Random r = new Random();
+	    		   
+	    		  
+	    		   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	   		    Date  expires_at = new Date();  
+	   		  Calendar calendar = Calendar.getInstance();
+	   	    calendar.setTime(expires_at);
+	   	    calendar.add(Calendar.HOUR_OF_DAY, 1);
 	    			
 		String fourDigitCode = String.format("%04d", Integer.valueOf(r.nextInt(1001)));;
-	    userRepository.addphonevercode(String.valueOf(fourDigitCode),"pending",user.getId());
+	    userRepository.addphonevercode(String.valueOf(fourDigitCode),calendar.getTime(),user.getId());
 	 String smsres = null;
 		System.out.print(user.getEmail());
 		
@@ -143,11 +161,13 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public PhonVerResponse confirmcode(User user) {
-		System.out.println("output"+user.getId()+user.getVerification_code());
-		User existingeuser= userRepository.verifycode(user.getId(),user.getVerification_code());
+		System.out.println("output"+user.getId()+user.getOtp_code());
+		User existingeuser= userRepository.verifycode(user.getId(),user.getOtp_code());
 		if(existingeuser!=null) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+		    Date date = new Date();  
 			
-			int updated=userRepository.setupdated("verified", user.getId());
+			int updated=userRepository.setupdated(formatter.format(date), user.getId());
 			
 			if(updated==1) {
 			 return PhonVerResponse.builder().message("number_verified").build();
@@ -162,6 +182,46 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		
+	}
+	@Override
+	public User savemechanicbio(mechsignuprequest mechrequest) {
+		Mechanic newMechanic=new Mechanic();
+		newMechanic.setReference("MEC-"+new UUIDGeneratorLogic().generateID());
+		newMechanic.setFirst_name(mechrequest.getFirst_name());
+		newMechanic .setLast_name(mechrequest.getLast_name());
+		newMechanic.setGender(mechrequest.getGender());
+		newMechanic.setSpecialized(mechrequest.getSpecialized());
+		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
+		newMechanic.setNext_of_kin("app");
+		newMechanic.setCountry("app");
+		newMechanic.setCity("app");
+		newMechanic.setBadge(mechrequest.getBadge());
+		newMechanic.setCurrent_address("{\"message\":\" \"}");
+		
+		
+		
+		
+		Mechanic savedmech=mechanicRepository.save(newMechanic);
+		
+		Mechanic mechtemp =mechanicRepository.getbyrefrence(newMechanic.getReference());
+		
+		User usr=new User();
+		usr.setEmail("gmail.com");
+		usr.setPhone_number("254729312006");
+		usr.setUserable_id(mechtemp.getId());
+		usr.setUserable_type("App\\Models\\Mechanic");
+		usr.setRole(Role.MECHANIC);
+		
+		User newmechUser=userRepository.save(usr);
+		
+		
+		 
+		 
+		
+		
+		
+		
+		return usr;
 	}
 }
 	

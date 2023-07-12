@@ -1,5 +1,6 @@
 package app.karimax.cvt.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,16 +37,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Transactional
 	@Modifying
-	@Query(value="update users  set users.verification_code =?1,verification_status=?2 where users.id = ?3", nativeQuery = true)
-	int addphonevercode( String code,String status,int id );
+	@Query(value="update users  set users.otp_code =?1,users.otp_code_expires_at=?2 where users.id = ?3", nativeQuery = true)
+	int addphonevercode( String code,Date expires_at,int id );
 	
 
-	@Query("select u from User u WHERE u.id =?1 and u.verification_code=?2")
+	@Query("select u from User u WHERE u.id =?1 and u.otp_code=?2")
     User verifycode(int id,String code);
 
 	@Transactional
 	@Modifying
-	@Query(value="update users  set verification_status=?1 where users.id = ?2", nativeQuery = true)
+	@Query(value="update users  set otp_verified_at=?1 where users.id = ?2", nativeQuery = true)
 	  int setupdated(String status ,int id);
 	
 }
