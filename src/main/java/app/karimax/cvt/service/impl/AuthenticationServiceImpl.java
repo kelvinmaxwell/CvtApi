@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         customer.setGender("app");
         customer.setFirst_name(request.getFirstName());
         customer.setLast_name(request.getFirstName());
-        customer.setReference("	CUST-"+new UUIDGeneratorLogic().generateID());
+        customer.setReference("CUST-"+new UUIDGeneratorLogic().generateID());
         
         
         
