@@ -1,11 +1,15 @@
 package app.karimax.cvt.controller;
 
+
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.karimax.cvt.getFileExtension;
+
 import app.karimax.cvt.dao.request.SignUpRequest;
 import app.karimax.cvt.dao.request.SigninRequest;
 import app.karimax.cvt.dao.request.mechsignuprequest;
@@ -34,10 +38,18 @@ import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
+
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -53,7 +65,7 @@ public class AuthenticationController {
 	  @Autowired
 
 	  private ObjectMapper objectMapper;
-	
+	  private mechsignuprequest response=new mechsignuprequest();
 	
     private final AuthenticationService authenticationService;
     @PostMapping("/signup")
@@ -69,30 +81,51 @@ public class AuthenticationController {
     
     
     @PostMapping("/mechsignup")
-    public ResponseEntity<User> mechsignup(@RequestParam("model") String jsonObject, @RequestParam("file") MultipartFile file) {
-    	mechsignuprequest response = null;
+    public ResponseEntity<User> mechsignup(@RequestBody mechsignuprequest request) throws JsonProcessingException {
+    	
+    	 MultipartFile multipartFile=null;
+    	 
+    	 System.out.print(request.getResume_file_path());
     	
     
-
-    	      
+    	 try {
+			File file = File.createTempFile("image", ".png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+//    	 String carg=null;
+//		try {
+//			carg = URLDecoder.decode(request.getResume_file_path(), "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//    	 carg = carg.replace("\n","");
+    	 
+    	byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getResume_file_path());
     	
-    	try {
+    	 ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);
+    	
+		try {
+			multipartFile = new MockMultipartFile("file.png", inputStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	String fileName = fileStorageService.storeFile(multipartFile);
 
-    	      String fileName = fileStorageService.storeFile(file);
+		  ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName).toUriString();
 
-    	      ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName).toUriString();
+  	   
 
-    	      response = objectMapper.readValue(jsonObject, mechsignuprequest.class);
-
-    	      response.setResume_file_path(fileName);
-
-    	    } catch (JsonProcessingException e) {
-
-    	      e.printStackTrace();
-
-    	    }
+		  request.setResume_file_path(fileName);
     
-    	return new ResponseEntity<User>(userService.savemechanicbio(response),HttpStatus.OK);
+    	return new ResponseEntity<User>(authenticationService.savemechanicbio(request),HttpStatus.OK);
     }
 
     @PostMapping("/mechsignin")

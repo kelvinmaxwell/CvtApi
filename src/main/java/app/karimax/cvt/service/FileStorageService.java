@@ -1,6 +1,7 @@
 package app.karimax.cvt.service;
 
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.nio.file.Files;
@@ -53,11 +54,11 @@ public class FileStorageService {
 
     // Normalize file name
 		
-  	getFileExtension extension=new getFileExtension(file.getOriginalFilename());
+//  	getFileExtension extension=new getFileExtension(file.getOriginalFilename());
   	
   	
   	String fileName =
-  	        new Date().getTime() + "-file." + extension.getextension();
+  	        new Date().getTime() + "-file." + "png";
     
 
     try {
@@ -69,12 +70,27 @@ public class FileStorageService {
         throw new RuntimeException("Sorry! File name which contains invalid path sequence " + fileName);
 
       }
-
+//      try {
+//          FileOutputStream output = new FileOutputStream("output.txt");
+//
+//          byte[] array = data.getBytes();
+//
+//          // Writes byte to the file
+//          output.write(array);
+//
+//          output.close();
+//      }
+//
+//      catch(Exception e) {
+//          e.getStackTrace();
+//      }
       // Copy file to the target place (Replacing existing file with the same name)
 
       Path targetLocation = this.fileStorageLocation.resolve(fileName);
-
-      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      
+//      FileOutputStream output = new FileOutputStream(targetLocation, boolean value);
+//      FileOutputStream(targetLocation).write(imgContent);
+ Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
       return fileName;
 

@@ -17,10 +17,12 @@ import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -52,6 +54,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final MechanicRepository mechanicRepository;
+
     
     @Override
     public UserDetailsService userDetailsService() {
@@ -183,46 +186,7 @@ public class UserServiceImpl implements UserService {
 		
 		
 	}
-	@Override
-	public User savemechanicbio(mechsignuprequest mechrequest) {
-		Mechanic newMechanic=new Mechanic();
-		newMechanic.setReference("MEC-"+new UUIDGeneratorLogic().generateID());
-		newMechanic.setFirst_name(mechrequest.getFirst_name());
-		newMechanic .setLast_name(mechrequest.getLast_name());
-		newMechanic.setGender(mechrequest.getGender());
-		newMechanic.setSpecialized(mechrequest.getSpecialized());
-		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
-		newMechanic.setNext_of_kin("app");
-		newMechanic.setCountry("app");
-		newMechanic.setCity("app");
-		newMechanic.setBadge(mechrequest.getBadge());
-		newMechanic.setCurrent_address("{\"message\":\" \"}");
-		
-		
-		
-		
-		Mechanic savedmech=mechanicRepository.save(newMechanic);
-		
-		Mechanic mechtemp =mechanicRepository.getbyrefrence(newMechanic.getReference());
-		
-		User usr=new User();
-		usr.setEmail("gmail.com");
-		usr.setPhone_number("254729312006");
-		usr.setUserable_id(mechtemp.getId());
-		usr.setUserable_type("App\\Models\\Mechanic");
-		usr.setRole(Role.MECHANIC);
-		
-		User newmechUser=userRepository.save(usr);
-		
-		
-		 
-		 
-		
-		
-		
-		
-		return usr;
-	}
+
 }
 	
 

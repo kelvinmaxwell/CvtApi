@@ -1,5 +1,6 @@
 package app.karimax.cvt.response;
 
+import app.karimax.cvt.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class JwtAuthenticationResponse {
     private String email;
     private int id;
     private String phone;
+    private String role;
     
     
 }

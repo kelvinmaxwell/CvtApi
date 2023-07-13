@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.dao.request.SignUpRequest;
 import app.karimax.cvt.dao.request.SigninRequest;
+import app.karimax.cvt.dao.request.mechsignuprequest;
 import app.karimax.cvt.model.Customer;
+import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.Role;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.CustomerRepository;
+import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.JwtAuthenticationResponse;
 import app.karimax.cvt.response.PhonVerResponse;
@@ -27,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
+    private final MechanicRepository mechanicRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -69,8 +73,54 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwt = jwtService.generateToken(user);
         
         User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).role(newuser.getRole().toString()).build();
     }
+
+	@Override
+	public User savemechanicbio(mechsignuprequest mechrequest) {
+		Mechanic newMechanic=new Mechanic();
+		newMechanic.setReference("MEC-"+new UUIDGeneratorLogic().generateID());
+		newMechanic.setFirst_name(mechrequest.getFirst_name());
+		newMechanic .setLast_name(mechrequest.getLast_name());
+		newMechanic.setGender(mechrequest.getGender());
+		newMechanic.setSpecialized(mechrequest.getSpecialized());
+		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
+		
+		newMechanic.setNext_of_kin("app");
+		newMechanic.setCountry("app");
+		newMechanic.setCity("app");
+		newMechanic.setBadge(mechrequest.getBadge());
+		newMechanic.setCurrent_address("{\"message\":\" \"}");
+		
+		
+		
+		
+		Mechanic savedmech=mechanicRepository.save(newMechanic);
+		
+		Mechanic mechtemp =mechanicRepository.getbyrefrence(newMechanic.getReference());
+		
+		User usr=new User();
+		usr.setEmail(mechrequest.getEmail());
+		usr.setPhone_number(mechrequest.getPhone_number());
+		
+		usr.setUserable_id(mechtemp.getId());
+		usr.setPassword(passwordEncoder.encode(mechrequest.getPassword()));	
+		usr.setUserable_type("App\\Models\\Mechanic");
+		usr.setRole(Role.MECHANIC);
+		
+		User newmechUser=userRepository.save(usr);
+		
+		
+		 
+		 
+		
+		
+		
+		
+		return usr;
+	}
+
+	
 
 	
 }

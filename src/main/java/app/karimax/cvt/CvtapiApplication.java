@@ -14,8 +14,7 @@ public class CvtapiApplication {
 	}
 	
 	@Bean
-
-	  public ObjectMapper getObjectMapper() {
+  public ObjectMapper getObjectMapper() {
 
 	    return new ObjectMapper();
 

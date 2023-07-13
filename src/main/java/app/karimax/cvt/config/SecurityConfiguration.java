@@ -2,6 +2,7 @@ package app.karimax.cvt.config;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     private final UserService userService;
 
     @SuppressWarnings("removal")

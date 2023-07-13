@@ -1,6 +1,9 @@
 spring:
   application:
     name: spring-security
+
+  main: 
+      allow-circular-references: true
     
 
     
@@ -44,3 +47,7 @@ logging:
     root: DEBUG
     com.howtodoinjava: DEBUG
     org.hibernate: DEBUG
+    
+    
+ 
+  

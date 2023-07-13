@@ -28,7 +28,7 @@ public interface UserService {
   PhonVerResponse confirmcode(User user);
   
   
-  User savemechanicbio(mechsignuprequest mech);
+
   
 
   
