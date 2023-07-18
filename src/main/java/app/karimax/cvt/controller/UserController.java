@@ -24,7 +24,7 @@ public class UserController {
 		super();
 		this.userService = userService;
 	}
-	@GetMapping("getUserbyemail/{email}")
+	@GetMapping("savejob/{email}")
 		public  ResponseEntity <User> getUserByEmail(@PathVariable("email") String email)
 		
 		{

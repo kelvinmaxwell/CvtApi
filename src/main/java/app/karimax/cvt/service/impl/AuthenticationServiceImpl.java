@@ -1,7 +1,10 @@
 package app.karimax.cvt.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.Random;
+
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +27,7 @@ import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.JwtService;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.var;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final MechanicRepository mechanicRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final JwtServiceImpl jwtServiceimpl;
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
@@ -60,8 +65,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
         
         var jwt = jwtService.generateToken(user);
+        var jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
+        
+        SimpleDateFormat DateFormat
+        = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");
+
+      // Initializing the calendar Object
+      Calendar c = Calendar.getInstance();
+
+    
+
+      // Using format() method for conversion
+      String formateddate
+        = DateFormat.format(jwtexpiry);
+      System.out.println("Formatted Date: " +
+    		  formateddate);
+        
        User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).build();
     }
 
     @Override
@@ -72,8 +93,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
         
+ var jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
+        
+        SimpleDateFormat DateFormat
+        = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");
+
+      // Initializing the calendar Object
+      Calendar c = Calendar.getInstance();
+
+    
+
+      // Using format() method for conversion
+      String formateddate
+        = DateFormat.format(jwtexpiry);
+      System.out.println("Formatted Date: " +
+    		  formateddate);
+        
+        
         User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).id(newuser.getId()).role(newuser.getRole().toString()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).role(newuser.getRole().toString()).build();
     }
 
 	@Override
