@@ -11,5 +11,12 @@ public interface JobCardService {
 	  JobCard saveJobCard(JobCard jobCard);
 	  
 	  Job_Card_Service  checkalocated(JobCard jobCard);
+	  
+	  
+	  JobCard  checkactivemechbooking(long customerid);
+	  
+	  
+	  Job_Card_Service  getmechjob(long  mechid);
+	  
 
 }

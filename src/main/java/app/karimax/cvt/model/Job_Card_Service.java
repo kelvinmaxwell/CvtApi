@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,11 +32,17 @@ public class Job_Card_Service {
 	String estimated_repair_time;
 	String description;
 	
-	 @JdbcTypeCode(SqlTypes.JSON)
+	@Transient
 	  Mechanic mechanic;
 	 
-	 @JdbcTypeCode(SqlTypes.JSON)
+	@Transient
 	User user;
+	 
+	@Transient
+		Customer customer;
+	 
+	@Transient
+		JobCard jobCard;
 	
 	
 }
