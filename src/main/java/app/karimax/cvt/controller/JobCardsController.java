@@ -1,6 +1,8 @@
 package app.karimax.cvt.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,20 @@ public class JobCardsController {
     public ResponseEntity<Job_Card_Service> checkallocated(@RequestBody JobCard jobCard) {
         return ResponseEntity.ok(jobCardService.checkalocated(jobCard));
     }
+    
+    @GetMapping("/checkactivemechbooking/{id}")
+    public ResponseEntity<JobCard> checkactivemechbooking(@PathVariable("id") long customerid) {
+        return ResponseEntity.ok(jobCardService.checkactivemechbooking(customerid));
+    }
+    
+    @GetMapping("/getmechjob/{id}")
+    public ResponseEntity<Job_Card_Service> getmechjob(@PathVariable("id") long mechid) {
+        return ResponseEntity.ok(jobCardService.getmechjob(mechid));
+    }
+    
+    
+    
+    
 	
 	
 	
