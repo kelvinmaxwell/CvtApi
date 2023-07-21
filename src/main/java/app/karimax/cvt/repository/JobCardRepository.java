@@ -39,7 +39,7 @@ public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
 	
 	
-	@Query("select u from Job_Card_Service u where u.mechanic_id=?1")
+	@Query("select u from Job_Card_Service u where u.mechanic_id=?1 and u.completed_at=null")
 	Job_Card_Service getmechjob(String mechid);
 	
 	

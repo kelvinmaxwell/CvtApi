@@ -31,6 +31,7 @@ public class Job_Card_Service {
 	String mechanic_id;
 	String estimated_repair_time;
 	String description;
+	String completed_at;
 	
 	@Transient
 	  Mechanic mechanic;

@@ -36,6 +36,7 @@ import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.FileStorageService;
+import app.karimax.cvt.service.MpesaService;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -57,6 +58,7 @@ import java.nio.file.Paths;
 public class AuthenticationController {
 	
 	private final UserService userService;
+	private final MpesaService mpesaService;
 	
 	@Autowired
 
@@ -182,6 +184,20 @@ public class AuthenticationController {
     	
         return new  ResponseEntity <PhonVerResponse>(userService.confirmcode(user),HttpStatus.OK);
     }
+    
+    
+    @PostMapping("/safcallback")
+    public ResponseEntity<String> confirmcode(@RequestBody String body) {
+    	mpesaService.savesafresponse(body);
+    	System.out.print("safcallback"+body);
+    	
+        return new  ResponseEntity <String>("",HttpStatus.OK);
+    }
+    
+    
+    
+   
+   
     
     
     

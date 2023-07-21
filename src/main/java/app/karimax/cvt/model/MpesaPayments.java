@@ -10,26 +10,29 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="job_cards")
-public class JobCard {
+@Table(name = "mpesa_payments")
+public class MpesaPayments {
 	
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private long id;
-	String  reference;
-	String  customer_id;
-	String  vehicle_id;
-	String issue_description;
-	String  status;
-	String  source;
-	String created_by;
-	String completed_at;
+	    private Integer id;
+	int  invoice_id;
+	String merchant_request_id;
+	String checkout_request_id;
+	int result_code;
+	String result_desc;
+	Double amount;
+	String mpesa_receipt_number;
+	String transaction_date;
+	String phone_number;
+	String created_at;
+	
+	
 	
 	
 	

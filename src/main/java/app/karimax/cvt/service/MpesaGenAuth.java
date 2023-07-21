@@ -1,54 +1,53 @@
 package app.karimax.cvt.service;
 
 
-import static org.hamcrest.CoreMatchers.nullValue;
 
-import java.io.IOException;
+
 import java.util.Base64;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+
 
 import app.karimax.cvt.model.AuthTokenResponse;
 
 public class MpesaGenAuth {
 	
 	
-	public AuthTokenResponse returnauth() {
+	public String returnauth() {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		String url
+		  = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
 		
 		
-		String authString=null;
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder()
-		  .url("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials")
-		  .method("GET", null)
-		  .addHeader("Authorization", getBasicAuthenticationHeader("GITF3TWnSiLU8xGGKTcck1ft04GiWmu5","WAid5kKZZnMAS28G"))
-		  .build();
+		HttpHeaders headers = new HttpHeaders();
 		
+		 headers.set("Accept", "application/json");
+		 headers.set("Authorization", getBasicAuthenticationHeader("TmSdiHJFCFHx27rNFfArgZiJsS4GFpC4", "oc9dkBkh09RpUWdb"));
+		 HttpEntity request = new HttpEntity(headers);
+//	    HttpEntity<String> httpEntity = new HttpEntity<>("some body", headers);
+	    ResponseEntity<AuthTokenResponse> response = restTemplate.exchange(
+	    	    url,
+	    	    HttpMethod.GET,
+	    	    request,
+	    	    AuthTokenResponse.class,
+	    	    1
+	    	);
+		System.out.print("test response"+response.getBody().getAccess_token());
 		
-		Response response = null;
-	
-		try {
-			response = client.newCall(request).execute();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.print("safaricom response"+response.body().toString());
-		
-		AuthTokenResponse outputList=null;
-//		Gson gson = new Gson();
-//	   AuthTokenResponse outputList = gson.fromJson(response.toString(),AuthTokenResponse.class);
 //		
-		return outputList;
+		return "Bearer "+response.getBody().getAccess_token();
 		
 	}
 	
 	
-	private static final String getBasicAuthenticationHeader(String username, String password) {
+	public  final String getBasicAuthenticationHeader(String username, String password) {
 	    String valueToEncode = username + ":" + password;
 	    return "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
 	}

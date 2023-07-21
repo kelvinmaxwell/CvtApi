@@ -1,5 +1,7 @@
 package app.karimax.cvt.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,28 +12,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="job_cards")
-public class JobCard {
+@Table(name = "invoices")
+public class Invoices {
 	
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private long id;
-	String  reference;
-	String  customer_id;
-	String  vehicle_id;
-	String issue_description;
-	String  status;
-	String  source;
-	String created_by;
-	String completed_at;
-	
-	
-	
+	    private Integer id;
+String  reference;
+String job_card_id;
+int paymentable_id;
+String paymentable_type;
+String amount;
+String status;
+String created_at;
+
+
+
+
 
 }
