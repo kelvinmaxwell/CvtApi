@@ -38,6 +38,14 @@ public class MpesaController {
 			
 				return new ResponseEntity <Mpesa1ResponseBody>(mpesaService.sendrequest(request),HttpStatus.OK);
 			}
+		
+		@GetMapping("getjobcardstatus/{id}")
+		public  ResponseEntity <JobCard> getUserByEmail(@PathVariable("id") Long id)
+		
+		{
+		
+			return new ResponseEntity <JobCard>(mpesaService.getjobByID(id),HttpStatus.OK);
+		}
 
 
 }

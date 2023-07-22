@@ -14,7 +14,7 @@ import app.karimax.cvt.model.User;
 
 public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
-	@Query("select u from Job_Card_Service u WHERE u.job_card_id =?1")
+	@Query("select u from Job_Card_Service u WHERE u.job_card_id =?1 and u.completed_at=null")
 	Job_Card_Service findByJobCard(String jobcardid);
 	
 	@Query("select u from JobCard u WHERE u.id =?1")
@@ -35,13 +35,14 @@ public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
 	
 	@Query("select u from JobCard u where u.status=?1 and u.source=?2 and u.customer_id=?3")
-	JobCard findexistingmechbooking(String status,String source,String customerid);
+	List<JobCard> findexistingmechbooking(String status,String source,String customerid);
 	
 	
 	
 	@Query("select u from Job_Card_Service u where u.mechanic_id=?1 and u.completed_at=null")
 	Job_Card_Service getmechjob(String mechid);
 	
-	
+	@Query("select u from JobCard u  where  u.customer_id=?1 and u.customer_rating=null and u.created_by=?2")
+	List<JobCard> getpratings(String custid,String createdby);
 	
 }

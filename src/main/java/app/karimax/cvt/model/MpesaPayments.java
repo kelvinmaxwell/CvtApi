@@ -31,6 +31,7 @@ public class MpesaPayments {
 	String transaction_date;
 	String phone_number;
 	String created_at;
+	String updated_at;
 	
 	
 	

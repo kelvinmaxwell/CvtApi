@@ -64,7 +64,10 @@ public class Customer {
 	    private String resume_file_path; 
 	    
 
-
+	    @Column(name = "created_at")
+	    private String created_at;
+	    @Column(name = "updated_at")
+	    private String updated_at; 
 	    
 
 }

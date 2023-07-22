@@ -33,7 +33,7 @@ public class JobCardsController {
 	
 	@PostMapping("/checkallocated")
     public ResponseEntity<Job_Card_Service> checkallocated(@RequestBody JobCard jobCard) {
-        return ResponseEntity.ok(jobCardService.checkalocated(jobCard));
+        return ResponseEntity.ok(jobCardService.checkallocated(jobCard));
     }
     
     @GetMapping("/checkactivemechbooking/{id}")
@@ -46,6 +46,16 @@ public class JobCardsController {
         return ResponseEntity.ok(jobCardService.getmechjob(mechid));
     }
     
+    
+    @GetMapping("/getprarings/{id}")
+    public ResponseEntity<JobCard> getprarings(@PathVariable("id") String custid) {
+        return ResponseEntity.ok(jobCardService.getpratings(custid));
+    }
+    
+    @PostMapping("/submitrating")
+    public ResponseEntity<JobCard> submitrating(@RequestBody JobCard jobCard) {
+        return ResponseEntity.ok(jobCardService.submitrating(jobCard));
+    }
     
     
     

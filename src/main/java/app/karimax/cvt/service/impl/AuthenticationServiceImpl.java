@@ -2,6 +2,7 @@ package app.karimax.cvt.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -27,7 +28,7 @@ import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.JwtService;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.var;
+
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName()).phone_number(request.getPhone_number())
+        User user = User.builder().phone_number(request.getPhone_number())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER).build();
         
@@ -64,8 +65,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     		   userRepository.save(user);
         
         
-        var jwt = jwtService.generateToken(user);
-        var jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
+        String jwt = jwtService.generateToken(user);
+        Date jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
         
         SimpleDateFormat DateFormat
         = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");
@@ -89,11 +90,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse signin(SigninRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
-        var jwt = jwtService.generateToken(user);
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+        String jwt = jwtService.generateToken(user);
         
- var jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
+ Date jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
         
         SimpleDateFormat DateFormat
         = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");

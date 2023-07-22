@@ -30,6 +30,7 @@ String paymentable_type;
 String amount;
 String status;
 String created_at;
+String updated_at;
 
 
 

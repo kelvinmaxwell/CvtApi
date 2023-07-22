@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.JSONArray;
 
@@ -94,7 +96,7 @@ public class MpesaImplementation implements MpesaService {
 	
 		
 		
-		 mpesaRequestBody=MpesaRequestBody.builder().BusinessShortCode("174379").Password(lipapass(dateString)).Timestamp(dateString).TransactionType("CustomerPayBillOnline").Amount(Prequest.getAmount()).PartyA(Prequest.getPhone()).PartyB("174379").PhoneNumber(Prequest.getPhone()).CallBackURL("https://b598-41-80-116-88.ngrok-free.app/api/v1/auth/safcallback").AccountReference("myacc").TransactionDesc("transa").build();
+		 mpesaRequestBody=MpesaRequestBody.builder().BusinessShortCode("174379").Password(lipapass(dateString)).Timestamp(dateString).TransactionType("CustomerPayBillOnline").Amount(Prequest.getAmount()).PartyA(Prequest.getPhone()).PartyB("174379").PhoneNumber(Prequest.getPhone()).CallBackURL("https://4de9-41-80-116-88.ngrok-free.app/api/v1/auth/safcallback").AccountReference("myacc").TransactionDesc("transa").build();
 		 try {
 			 reqstrng = objectMapper.writeValueAsString(mpesaRequestBody);
 		} catch (JsonProcessingException e) {
@@ -139,6 +141,7 @@ public class MpesaImplementation implements MpesaService {
 	    	invoices.setPaymentable_type("App\\Models\\MpesaPayment");
 	    	invoices.setStatus("unpaid");
 	    	invoices.setCreated_at(date.date());
+	    	invoices.setUpdated_at(date.date());
 	    	
 	    	
 	   savedInvoices= mpesaReposotory.save(invoices);
@@ -184,6 +187,9 @@ public class MpesaImplementation implements MpesaService {
 
 	@Override
 	public String savesafresponse(String body) {
+		try {
+			
+		
 		JSONObject jObject=new JSONObject(body);
 		JSONObject bodycallback=jObject.getJSONObject("Body");
 		JSONObject callbackObject=bodycallback.getJSONObject("stkCallback");
@@ -191,6 +197,14 @@ public class MpesaImplementation implements MpesaService {
 		String CheckoutRequestID=callbackObject.getString("CheckoutRequestID");
 		String ResultCode=String.valueOf(callbackObject.getInt("ResultCode"));
 		String ResultDesc=callbackObject.getString("ResultDesc");
+		
+		MpesaPayments mpesaPayments;
+		
+		
+		
+		mpesaPayments	=   pMpesaPaymentsRepository.getbymerchantid(MerchantRequestID);
+		
+	if(ResultCode.equalsIgnoreCase("0")) {
 		JSONObject CallbackMetadata=callbackObject.getJSONObject("CallbackMetadata");
 		org.json.JSONArray jitemArray=CallbackMetadata.getJSONArray("Item");
 		
@@ -199,10 +213,7 @@ public class MpesaImplementation implements MpesaService {
 	String transdate=String.valueOf(jitemArray.getJSONObject(3).getLong("Value"));
 	String phone=String.valueOf(jitemArray.getJSONObject(4).getLong("Value"));
 	
-	MpesaPayments mpesaPayments;
 	
-	
-	mpesaPayments	=   pMpesaPaymentsRepository.getbymerchantid(MerchantRequestID);
 	 if(mpesaPayments!=null) {
 		 String completedat=date.date();
 		
@@ -211,6 +222,7 @@ public class MpesaImplementation implements MpesaService {
 			mpesaPayments.setTransaction_date(transdate);
 			mpesaPayments.setPhone_number(phone);
 			mpesaPayments.setCreated_at(completedat);
+			mpesaPayments.setUpdated_at(completedat);
 			mpesaPayments.setResult_desc(ResultDesc);
 			mpesaPayments=pMpesaPaymentsRepository.save(mpesaPayments);
 			
@@ -222,7 +234,7 @@ public class MpesaImplementation implements MpesaService {
 			
 			JobCard jcard=jobCardRepository.findByJobCardId(inv.getJob_card_id());
 			jcard.setCompleted_at(completedat);
-			jcard.setStatus("COMPLETE");
+			jcard.setStatus("Done");
 			jobCardRepository.save(jcard);
 			
 			Job_Card_Service jService=jobCardRepository.findByJobCard(String.valueOf(jcard.getId()));
@@ -242,8 +254,35 @@ public class MpesaImplementation implements MpesaService {
 			
 			
 		}
+	}
+	else {
+		Invoices inv=mpesaReposotory.findbyinvid((long) mpesaPayments.getInvoice_id());
+		inv.setStatus("paid");
+		mpesaReposotory.save(inv);
+		
+		JobCard jcard=jobCardRepository.findByJobCardId(inv.getJob_card_id());
+		
+		jcard.setStatus("failed");
+		jobCardRepository.save(jcard);
+		
+		Job_Card_Service jService=jobCardRepository.findByJobCard(String.valueOf(jcard.getId()));
+		
+		
+		jobCardServiceRepository.save(jService);
+		
+	}
+		} catch (JSONException e) {
+			// TODO: handle exception
+		}
 		
 		return null;
+	}
+
+	@Override
+	public JobCard getjobByID(long id) {
+		JobCard jobstatus=jobCardRepository.findByJobCardId(String.valueOf(id)); 
+		
+		return jobstatus;
 	}
 
 

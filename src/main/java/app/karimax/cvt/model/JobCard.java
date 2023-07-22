@@ -30,6 +30,10 @@ public class JobCard {
 	String  source;
 	String created_by;
 	String completed_at;
+	String customer_rating;
+	String customer_remarks;
+	String created_at;
+	String updated_at;
 	
 	
 	
