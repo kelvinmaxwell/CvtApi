@@ -25,8 +25,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName;
-    private String lastName;
+  
    
     private String email;
   
@@ -36,6 +35,11 @@ public class User implements UserDetails {
     private String otp_code_expires_at;
     private String otp_verified_at;
     
+    
+    @Column(name = "created_at")
+    private String created_at;
+    @Column(name = "updated_at")
+    private String updated_at; 
 
     private String userable_type;
     @Column(name = "userable_id")

@@ -80,6 +80,11 @@ public class Mechanic {
 	    @Column(name = "hourly_rate")
 	    private String hourly_rate; 
 	    
+	    @Column(name = "created_at")
+	    private String created_at;
+	    @Column(name = "updated_at")
+	    private String updated_at; 
+	    
 	    
 	    @Column(name = "resume_file_path")
 	    private String resume_file_path; 

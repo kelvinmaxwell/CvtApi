@@ -10,13 +10,16 @@ public interface JobCardService {
 	  
 	  JobCard saveJobCard(JobCard jobCard);
 	  
-	  Job_Card_Service  checkalocated(JobCard jobCard);
+	  Job_Card_Service  checkallocated(JobCard jobCard);
 	  
 	  
 	  JobCard  checkactivemechbooking(long customerid);
 	  
 	  
 	  Job_Card_Service  getmechjob(long  mechid);
+	  
+	  JobCard getpratings(String customerid);
+	  JobCard submitrating(JobCard jobCard);
 	  
 
 }
