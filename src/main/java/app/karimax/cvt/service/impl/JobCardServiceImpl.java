@@ -15,10 +15,12 @@ import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.JobCardRepository;
 import app.karimax.cvt.service.JobCardService;
+import app.karimax.cvt.service.UUIDGeneratorLogic;
 
 @Service
 public class JobCardServiceImpl  implements JobCardService{
 	private JobCardRepository jobCardRepository;
+	  
 	GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 	public JobCardServiceImpl(JobCardRepository jobCardRepository) {
 		super();
@@ -26,9 +28,10 @@ public class JobCardServiceImpl  implements JobCardService{
 	}
 	@Override
 	public JobCard saveJobCard(JobCard jobCard) {
-	
+		UUIDGeneratorLogic uuidGeneratorLogic=new UUIDGeneratorLogic();
 		jobCard.setCreated_at(date.date());
 		jobCard.setUpdated_at(date.date());
+		jobCard.setReference("JC-"+uuidGeneratorLogic.generateID());
 		// TODO Auto-generated method stub
 		return jobCardRepository.save(jobCard);
 	}

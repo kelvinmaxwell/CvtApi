@@ -126,6 +126,7 @@ public class AuthenticationController {
   	   
 
 		  request.setResume_file_path(fileName);
+		
     
     	return new ResponseEntity<User>(authenticationService.savemechanicbio(request),HttpStatus.OK);
     }

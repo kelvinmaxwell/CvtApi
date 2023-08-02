@@ -37,7 +37,7 @@ public class mechsignuprequest {
 	    private String gender;
 	    
 	    
-	    private String specialized;
+	    private String specialized_cars;
 	    
 
 	    
@@ -79,6 +79,7 @@ public class mechsignuprequest {
 	    private String otp_code;
 	    private String otp_code_expires_at;
 	    private String otp_verified_at;
+	    private  String mechanic_type;
 	    
 
 	    private String userable_type;
