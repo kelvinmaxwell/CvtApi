@@ -23,8 +23,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(employeeExceptions.class)
-    public ResponseEntity<ErrorDetails> handleBlogAPIException(employeeExceptions exception,
+    @ExceptionHandler(MainExceptions.class)
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(MainExceptions exception,
                                                                         WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false), "403");

@@ -21,4 +21,5 @@ public class SignUpRequest {
     
     @Enumerated(EnumType.STRING)
     private Role role;
+    
 }

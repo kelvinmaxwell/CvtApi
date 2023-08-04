@@ -3,17 +3,17 @@ package app.karimax.cvt.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class employeeExceptions extends RuntimeException {
+public class MainExceptions extends RuntimeException {
 
     private HttpStatus status;
     private String message;
 
-    public employeeExceptions(HttpStatus status, String message) {
+    public MainExceptions(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public employeeExceptions(String message, HttpStatus status, String message1) {
+    public MainExceptions(String message, HttpStatus status, String message1) {
         super(message);
         this.status = status;
         this.message = message1;
