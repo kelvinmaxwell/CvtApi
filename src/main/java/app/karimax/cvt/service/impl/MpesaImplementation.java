@@ -96,7 +96,7 @@ public class MpesaImplementation implements MpesaService {
 	
 		
 		
-		 mpesaRequestBody=MpesaRequestBody.builder().BusinessShortCode("174379").Password(lipapass(dateString)).Timestamp(dateString).TransactionType("CustomerPayBillOnline").Amount(Prequest.getAmount()).PartyA(Prequest.getPhone()).PartyB("174379").PhoneNumber(Prequest.getPhone()).CallBackURL("https://4de9-41-80-116-88.ngrok-free.app/api/v1/auth/safcallback").AccountReference("myacc").TransactionDesc("transa").build();
+		 mpesaRequestBody=MpesaRequestBody.builder().BusinessShortCode("174379").Password(lipapass(dateString)).Timestamp(dateString).TransactionType("CustomerPayBillOnline").Amount(Prequest.getAmount()).PartyA(Prequest.getPhone()).PartyB("174379").PhoneNumber(Prequest.getPhone()).CallBackURL("http://172.105.248.105:4000/api/v1/auth/safcallback").AccountReference("myacc").TransactionDesc("transa").build();
 		 try {
 			 reqstrng = objectMapper.writeValueAsString(mpesaRequestBody);
 		} catch (JsonProcessingException e) {

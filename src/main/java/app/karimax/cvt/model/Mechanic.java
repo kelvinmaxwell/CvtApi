@@ -44,8 +44,8 @@ public class Mechanic {
 	    @Column(name = "gender")
 	    private String gender;
 	    
-	    @Column(name = "specialized")
-	    private String specialized;
+	    @Column(name = "specialized_cars")
+	    private String specialized_cars;
 	    
 	    @Column(name = "badge")
 	    private String badge;

@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse signup(SignUpRequest request) {
         User user = User.builder().phone_number(request.getPhone_number())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER).build();
+                .build();
         
         Customer customer=new Customer();
         customer.setCity("app");
@@ -111,7 +111,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
         
         User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).role(newuser.getRole().toString()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).build();
     }
 
 	@Override
@@ -121,12 +121,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		newMechanic.setFirst_name(mechrequest.getFirst_name());
 		newMechanic .setLast_name(mechrequest.getLast_name());
 		newMechanic.setGender(mechrequest.getGender());
-		newMechanic.setSpecialized(mechrequest.getSpecialized());
+		newMechanic.setSpecialized_cars(mechrequest.getSpecialized_cars());
 		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
-		
+		newMechanic.setBlue_collar_position("appUser");
 		newMechanic.setNext_of_kin("app");
 		newMechanic.setCountry("app");
 		newMechanic.setCity("app");
+		newMechanic.setMechanic_type("app");
 		newMechanic.setBadge(mechrequest.getBadge());
 		newMechanic.setCurrent_address("{\"message\":\" \"}");
 		
@@ -144,7 +145,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		usr.setUserable_id(mechtemp.getId());
 		usr.setPassword(passwordEncoder.encode(mechrequest.getPassword()));	
 		usr.setUserable_type("App\\Models\\Mechanic");
-		usr.setRole(Role.MECHANIC);
+		
 		
 		User newmechUser=userRepository.save(usr);
 		

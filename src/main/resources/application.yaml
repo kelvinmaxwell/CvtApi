@@ -4,6 +4,8 @@ spring:
 
   main: 
       allow-circular-references: true
+      
+
     
 
     
@@ -25,6 +27,13 @@ spring:
     url: jdbc:mysql://localhost:3306/cvt
     username: root
     password: Karimax@2023
+  
+#  datasource:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/staging_cvt_database
+#    username: forge
+#    password: MuXaMinPLyX0eCYGJKKk
+ 
  
 token:
   signing:

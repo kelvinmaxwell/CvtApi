@@ -56,12 +56,7 @@ public class Customer {
 	    @Column(name = "current_address")
 	    private String current_address;
 	    
-	    @Column(name = "hourly_rate")
-	    private String hourly_rate; 
 	    
-	    
-	    @Column(name = "resume_file_path")
-	    private String resume_file_path; 
 	    
 
 	    @Column(name = "created_at")
