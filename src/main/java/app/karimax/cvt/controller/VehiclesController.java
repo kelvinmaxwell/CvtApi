@@ -18,6 +18,7 @@ import app.karimax.cvt.dao.request.VehicleRequest;
 import app.karimax.cvt.model.EngineCapacity;
 import app.karimax.cvt.model.Model;
 import app.karimax.cvt.model.VehicleModels;
+import app.karimax.cvt.model.VehicleModelsDao;
 import app.karimax.cvt.model.VehicleYear;
 import app.karimax.cvt.model.Vehicles;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
@@ -81,6 +82,15 @@ public class VehiclesController {
 	{
 	
 		return new ResponseEntity <ArrayList<VehicleDetails>> (vehiclesService.getcustomervehicles(customer_id),HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/getmodeldetails")
+	public  ResponseEntity <VehicleModelsDao> getmodelid(@RequestBody VehicleRequest request)
+	
+	{
+	
+		return new ResponseEntity <VehicleModelsDao>(vehiclesService.returnmodelid(request),HttpStatus.OK);
 	}
 	
 	
