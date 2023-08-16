@@ -170,6 +170,18 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		
 		
 	}
+	@Override
+	public VehicleModelsDao returnmodelid(VehicleRequest vRequest) {
+		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
+		if(vm!=null)
+		{
+			return vm;
+			
+		}
+		else {
+			throw new MainExceptions(HttpStatus.BAD_REQUEST, "Brand Not Found");
+		}
+	}
 	
 		
 		
