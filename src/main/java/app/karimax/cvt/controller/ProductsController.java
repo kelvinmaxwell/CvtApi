@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.karimax.cvt.model.Employee;
+import app.karimax.cvt.model.ProductCategories;
+import app.karimax.cvt.model.ProductSubCategories;
 import app.karimax.cvt.model.products;
 import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.ProductsService;
@@ -36,6 +38,34 @@ public class ProductsController {
 		
 		
 	}
+	
+	
+	@GetMapping("getproductcategories")
+	public ResponseEntity <List<ProductCategories>> getproductcategories(){
+		
+		return new ResponseEntity <List<ProductCategories>>(productsService.getproductcategories(),HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping("getproductsubcategories/{categoryid}")
+	public ResponseEntity <List<ProductSubCategories>> getproductcategories(@PathVariable("categoryid") Integer categoryid){
+		
+		return new ResponseEntity <List<ProductSubCategories>>(productsService.getsubcategories(categoryid),HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping("getbysubcatmodel/{modelid}/{subcategoryid}")
+	public ResponseEntity <List<products>> getbysubcatmodel(@PathVariable("modelid") long modelid,@PathVariable("subcategoryid") long subcategoryid){
+		
+		return new ResponseEntity <List<products>>(productsService.getbysubcatmodel(modelid,subcategoryid),HttpStatus.OK);
+		
+		
+	}
+	
+	
+	
 	
 	
 	
