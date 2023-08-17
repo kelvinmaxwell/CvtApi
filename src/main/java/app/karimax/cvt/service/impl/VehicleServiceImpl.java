@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.awt.image.BandedSampleModel;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -181,6 +182,12 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		else {
 			throw new MainExceptions(HttpStatus.BAD_REQUEST, "Brand Not Found");
 		}
+	}
+	@Override
+	public Vehicles getvmodelid(long id) {
+		Vehicles vehicles=vehiclesRepository.findvehiclebyid(id);
+		
+		return vehicles;
 	}
 	
 		

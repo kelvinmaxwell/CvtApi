@@ -64,6 +64,22 @@ public class ProductsController {
 		
 	}
 	
+	@GetMapping("getbyoem/{oem}")
+	public ResponseEntity <List<products>> getbysubcatmodel(@PathVariable("oem") String oem){
+		
+		return new ResponseEntity <List<products>>(productsService.getbyoem(oem),HttpStatus.OK);
+		
+		
+	}
+	
+	@GetMapping("getbychasisno/{chasisno}")
+	public ResponseEntity <List<products>> getbychasisno(@PathVariable("chasisno") String chasisno ){
+		
+		return new ResponseEntity <List<products>>(productsService.getbychasisno(chasisno),HttpStatus.OK);
+		
+		
+	}
+	
 	
 	
 	

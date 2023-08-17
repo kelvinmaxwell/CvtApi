@@ -12,6 +12,9 @@ public interface ProductsService {
 	
 	List<products>getbysubcatmodel(long modelid,long subcatid);
 	
+	List<products>getbyoem(String oem);
+	List<products>getbychasisno(String chasisno);
+	
 	List<ProductCategories> getproductcategories();
 	
 	List<ProductSubCategories> getsubcategories(long id);

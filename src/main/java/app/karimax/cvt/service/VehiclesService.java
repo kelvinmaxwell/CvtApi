@@ -1,8 +1,7 @@
 package app.karimax.cvt.service;
 
 import java.util.ArrayList;
-
-
+import java.util.Optional;
 
 import app.karimax.cvt.model.VehicleBrand;
 import app.karimax.cvt.model.VehicleDetails;
@@ -23,6 +22,8 @@ public interface VehiclesService {
 	  Vehicles savevehicle(VehicleRequest vehicleRequest);
 	  ArrayList<VehicleDetails> getcustomervehicles(long id);
 	  VehicleModelsDao returnmodelid(VehicleRequest vehicleRequest);
+	  
+	  Vehicles getvmodelid(long id);
 	  
 	 
 	  
