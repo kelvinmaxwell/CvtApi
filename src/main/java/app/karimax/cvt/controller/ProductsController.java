@@ -81,6 +81,26 @@ public class ProductsController {
 	}
 	
 	
+	@GetMapping("getproductbyid/{id}")
+	public ResponseEntity <List<products>> getbyid(@PathVariable("id") long id ){
+		
+		return new ResponseEntity <List<products>>(productsService.getbyid(id),HttpStatus.OK);
+		
+		
+	}
+	
+	
+	@GetMapping("getproductbymanufacturer/{id}/{name}")
+	public ResponseEntity <List<products>> getproductbymanufacturer(@PathVariable("id") long vmodelid, @PathVariable("name") String  name){
+		
+		return new ResponseEntity <List<products>>(productsService.getproductbymanufacturer(vmodelid,name),HttpStatus.OK);
+		
+		
+	}
+	
+	
+	
+	
 	
 	
 	

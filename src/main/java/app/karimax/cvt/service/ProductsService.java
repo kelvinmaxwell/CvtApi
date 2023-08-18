@@ -18,5 +18,8 @@ public interface ProductsService {
 	List<ProductCategories> getproductcategories();
 	
 	List<ProductSubCategories> getsubcategories(long id);
+	
+	List<products> getbyid(long id);
+	List<products> getproductbymanufacturer(long vmodelid,String name);
 
 }
