@@ -17,5 +17,7 @@ public interface MpesaReposotory extends JpaRepository<Invoices,Long>{
 	@Query("select u from Invoices u WHERE u.id =?1")
 	Invoices findbyinvid(Long invoice);
 	
+	
+	
 
 }

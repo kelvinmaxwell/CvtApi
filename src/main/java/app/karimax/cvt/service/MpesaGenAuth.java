@@ -29,7 +29,7 @@ public class MpesaGenAuth {
 		HttpHeaders headers = new HttpHeaders();
 		
 		 headers.set("Accept", "application/json");
-		 headers.set("Authorization", getBasicAuthenticationHeader("TmSdiHJFCFHx27rNFfArgZiJsS4GFpC4", "oc9dkBkh09RpUWdb"));
+		 headers.set("Authorization", getBasicAuthenticationHeader("KAUaAPc3wMOj7EOByD75gNUCCRy4uydU", "yNqRIqahyIeESxLY"));
 		 HttpEntity request = new HttpEntity(headers);
 //	    HttpEntity<String> httpEntity = new HttpEntity<>("some body", headers);
 	    ResponseEntity<AuthTokenResponse> response = restTemplate.exchange(

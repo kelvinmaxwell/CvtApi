@@ -257,7 +257,7 @@ public class MpesaImplementation implements MpesaService {
 	}
 	else {
 		Invoices inv=mpesaReposotory.findbyinvid((long) mpesaPayments.getInvoice_id());
-		inv.setStatus("paid");
+		inv.setStatus("failed");
 		mpesaReposotory.save(inv);
 		
 		JobCard jcard=jobCardRepository.findByJobCardId(inv.getJob_card_id());

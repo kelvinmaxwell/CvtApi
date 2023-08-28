@@ -14,7 +14,7 @@ public class CvtapiApplication {
 	public static void main(String[] args) {
 	
 		 SpringApplication app = new SpringApplication(CvtapiApplication.class);
-		 app.setDefaultProperties(Collections.singletonMap("server.port", "4000"));
+		 app.setDefaultProperties(Collections.singletonMap("server.port", "8080"));
         app.run(args);
 	}
 	
