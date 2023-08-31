@@ -72,7 +72,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 				Garage_product garage_product = garage_productRepository.findByGradgeProduct(Prequest.getGarage_id(),
 						pos_order_product.get(i).getProduct_id());
 
-				if (garage_product.getQuantity() > pos_order_product.get(i).getQuantity()) {
+				if (garage_product.getQuantity() >= pos_order_product.get(i).getQuantity()) {
 
 					isPresentString = true;
 				}
@@ -81,16 +81,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 		}
 		if (isPresentString) {
 
-			for (int i = 0; i < pos_order_product.size(); i++) {
-
-				Garage_product garage_product = garage_productRepository.findByGradgeProduct(Prequest.getGarage_id(),
-						pos_order_product.get(i).getProduct_id());
-
-				garage_product.setQuantity(garage_product.getQuantity() - pos_order_product.get(i).getQuantity());
-
-				garage_productRepository.save(garage_product);
-
-			}
+			
 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 			Date currentTime_1 = new Date();
@@ -112,7 +103,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 			mpesaRequestBody = MpesaRequestBody.builder().BusinessShortCode("174379").Password(lipapass(dateString))
 					.Timestamp(dateString).TransactionType("CustomerPayBillOnline").Amount(Prequest.getAmount())
 					.PartyA(Prequest.getPhone()).PartyB("174379").PhoneNumber(Prequest.getPhone())
-					.CallBackURL("https://b197-41-72-199-226.ngrok-free.app/api/v1/auth/safcallbackproducts")
+					.CallBackURL("https://3bea-41-60-239-70.ngrok-free.app/api/v1/auth/safcallbackproducts")
 					.AccountReference("myacc").TransactionDesc("transa").build();
 			try {
 				reqstrng = objectMapper.writeValueAsString(mpesaRequestBody);
@@ -140,6 +131,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 
 				posOrders posOrders = new posOrders();
 				posOrders.setAmount(Double.valueOf(Prequest.getAmount()));
+				posOrders.setCustomer_id(Prequest.getCustomer_id());
 				posOrders.setPaymentable_id(2);
 				posOrders.setReference("pos-" + new UUIDGeneratorLogic().generateID());
 				posOrders.setPaymentable_type("App\\Models\\MpesaPayment");
@@ -148,8 +140,25 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 				posOrders.setUpdated_at(date.gdate());
 
 				posOrders = posOrderRepository.save(posOrders);
+				
+				for (int i = 0; i < pos_order_product.size(); i++) {
 
-				;
+					Garage_product garage_product = garage_productRepository.findByGradgeProduct(Prequest.getGarage_id(),
+							pos_order_product.get(i).getProduct_id());
+					
+					pos_order_product.get(i).setPos_order_id((int) posOrders.getId());
+					pos_order_product.get(i).setCreated_at(newdate);
+					pos_order_product.get(i).setUpdated_at(newdate);
+					garage_product.setQuantity(garage_product.getQuantity() - pos_order_product.get(i).getQuantity());
+
+					garage_productRepository.save(garage_product);
+
+				}
+
+				
+				
+				posOrderProductRepository.saveAll(pos_order_product);
+				
 				MpesaPayments mp = new MpesaPayments();
 				mp.setInvoice_id(0);
 				mp.setPos_orders_id((int) posOrders.getId());
@@ -159,6 +168,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 				mp.setResult_desc(response.getBody().getResponseDescription());
 
 				pMpesaPaymentsRepository.save(mp);
+				response.getBody().setOrderId(posOrders.getId());
 
 			}
 			else {
@@ -176,6 +186,7 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 
 				
 			}
+			response.getBody().setCustomerMessage("1");
 
 			return response.getBody();
 
@@ -305,6 +316,31 @@ public class mpesaProductServiceImpl implements mpesaProductService {
 
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public posOrders getPaymentStatus(String mearcherantrequest) {
+		
+		MpesaPayments mpesaPayments;
+		mpesaPayments = pMpesaPaymentsRepository.getbymerchantid(mearcherantrequest);
+		
+		if (mpesaPayments != null) {
+
+			List<posOrders> posOrders = posOrderRepository.findById(mpesaPayments.getPos_orders_id());
+			try {
+				posOrders posOrders2 = posOrders.get(0);
+				
+return posOrders2;
+			} catch (Exception e) {
+				return null;
+				// TODO: handle exception
+			}
+
+		
+	} else {
+		return null;
+	}
+		
 	}
 
 }

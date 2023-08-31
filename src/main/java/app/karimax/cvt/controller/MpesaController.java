@@ -14,6 +14,7 @@ import app.karimax.cvt.dao.request.productSaveRequest;
 import app.karimax.cvt.model.AuthTokenResponse;
 import app.karimax.cvt.model.JobCard;
 import app.karimax.cvt.model.User;
+import app.karimax.cvt.model.posOrders;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
 import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.MpesaGenAuth;
@@ -62,6 +63,16 @@ public class MpesaController {
 		
 			return new ResponseEntity <Mpesa1ResponseBody>(mpesaProductService.sendrequest(request),HttpStatus.OK);
 		}
+		
+		
+		@PostMapping("/confirmpayment/{mearchantid}")
+		public  ResponseEntity <posOrders> confirmpayment(@PathVariable("mearchantid") String mearchantid)
+		
+		{
+		
+			return new ResponseEntity <posOrders>(mpesaProductService.getPaymentStatus(mearchantid),HttpStatus.OK);
+		}
+
 
 
 }

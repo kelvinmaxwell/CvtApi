@@ -14,4 +14,6 @@ public interface mpesaProductService {
 	String savesafresponseproduct(String body);
 	
 	int completepurchase(productSaveRequest Prequest);
+	
+	posOrders getPaymentStatus(String mearcherantrequest);
 }
