@@ -1,6 +1,7 @@
 package app.karimax.cvt.controller;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +92,14 @@ public class VehiclesController {
 	{
 	
 		return new ResponseEntity <VehicleModelsDao>(vehiclesService.returnmodelid(request),HttpStatus.OK);
+	}
+	
+	@GetMapping("/getvehiclebyid/{vehicleid}")
+	public  ResponseEntity <Vehicles> getvmodelid(@PathVariable("vehicleid") long vehicleid)
+	
+	{
+	
+		return new ResponseEntity <Vehicles>(vehiclesService.getvmodelid(vehicleid),HttpStatus.OK);
 	}
 	
 	

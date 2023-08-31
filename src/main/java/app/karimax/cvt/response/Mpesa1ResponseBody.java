@@ -24,5 +24,13 @@ public class Mpesa1ResponseBody {
 	String ResponseDescription;
 	@JsonProperty("CustomerMessage")
 	String CustomerMessage;
+	
+	
+	@JsonProperty("OrderId")
+	long OrderId;
+	
+	
+	
+	
 
 }

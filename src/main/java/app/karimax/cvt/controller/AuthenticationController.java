@@ -38,6 +38,8 @@ import app.karimax.cvt.service.EmployeeService;
 import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.MpesaService;
 import app.karimax.cvt.service.UserService;
+import app.karimax.cvt.service.mpesaProductService;
+
 import lombok.RequiredArgsConstructor;
 
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -59,6 +61,8 @@ public class AuthenticationController {
 	
 	private final UserService userService;
 	private final MpesaService mpesaService;
+	@Autowired
+	private final mpesaProductService mpesaProductService;
 	
 	@Autowired
 
@@ -194,6 +198,19 @@ public class AuthenticationController {
     	
         return new  ResponseEntity <String>("",HttpStatus.OK);
     }
+    
+    
+    @PostMapping("/safcallbackproducts")
+    public ResponseEntity<String> safcallbackproducts(@RequestBody String body) {
+    	mpesaProductService.savesafresponseproduct(body);
+    	
+    	
+        return new  ResponseEntity <String>("",HttpStatus.OK);
+    }
+    
+    
+    
+    
     
     
     
