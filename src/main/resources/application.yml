@@ -4,7 +4,7 @@ spring:
 
   main: 
       allow-circular-references: true
-      
+
 
     
 
@@ -14,7 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       # New database is created when application starts and destroyed when application is stopped
-      ddl-auto: update
+      ddl-auto: none
     # Show sql when spring data jpa performs query
     show-sql: true
     properties:
@@ -56,7 +56,29 @@ logging:
     root: DEBUG
     com.howtodoinjava: DEBUG
     org.hibernate: DEBUG
-    
+configs:
+  asyncSuccessStatusCode: 1
+  defaultCreatedBy: 1
+  defaultModifiedBy: 1
+  deleteSuccessStatusCode: 5
+  duplicateEntryDesc: Duplicate Entry
+  emailSubject: User Registration Email
+  failureResultCode: 0
+  failureStatusCode: 4
+  failureStatusDesc: An error occurred while processing request
+  failureStatusType: 4
+  fromEmail: cetontreasury@gmail.com
+  missingParamsStatusCode: 3
+  newUserPasswordStatus: 3
+  notFoundStatusDesc: The record was not found
+  permissionDeniedStatusDesc: Permission Denied
+  recordActive: 1
+  sessionExpired: Session expired
+  skipAuditLogArray: clients
+  successStatusCode: 1
+  successStatusDesc: Request processed successfully
+  successStatusType: 1
+
     
  
   

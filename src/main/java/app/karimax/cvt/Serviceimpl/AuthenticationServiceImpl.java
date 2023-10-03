@@ -1,10 +1,8 @@
-package app.karimax.cvt.service.impl;
+package app.karimax.cvt.Serviceimpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
-import java.util.Random;
 
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,13 +15,11 @@ import app.karimax.cvt.dao.request.SigninRequest;
 import app.karimax.cvt.dao.request.mechsignuprequest;
 import app.karimax.cvt.model.Customer;
 import app.karimax.cvt.model.Mechanic;
-import app.karimax.cvt.model.Role;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.CustomerRepository;
 import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.JwtAuthenticationResponse;
-import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.JwtService;
 import app.karimax.cvt.service.UUIDGeneratorLogic;

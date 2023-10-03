@@ -1,13 +1,11 @@
-package app.karimax.cvt.service.impl;
+package app.karimax.cvt.Serviceimpl;
 
 
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
-import java.awt.image.BandedSampleModel;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.logging.Logger;
 
+import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +16,14 @@ import app.karimax.cvt.exception.MainExceptions;
 import app.karimax.cvt.model.VehicleBrand;
 import app.karimax.cvt.model.VehicleDetails;
 import app.karimax.cvt.model.EngineCapacity;
-import app.karimax.cvt.model.Model;
 import app.karimax.cvt.model.VehicleModels;
 import app.karimax.cvt.model.VehicleModelsDao;
 import app.karimax.cvt.model.VehicleYear;
 import app.karimax.cvt.model.Vehicles;
-import app.karimax.cvt.repository.EmployeeRepository;
-import app.karimax.cvt.repository.MechanicRepository;
-import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.repository.VehicleDetailsRepository;
 import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.VehiclesService;
-import lombok.RequiredArgsConstructor;
 
 @Service
 
@@ -109,7 +102,7 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		{
 			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference("V-"+new UUIDGeneratorLogic().generateID()).vehicle_model_id(vm.getId()).build());
 			if(vehicles!=null) {
-				VehicleDetails vehicleDetails=vehicleDetailsRepository.save(VehicleDetails.builder().vehicle_registration_plate(vehicleRequest.getVehicle_registration_plate()).vehicle_id(vehicles.getId()).build());
+				VehicleDetails vehicleDetails=vehicleDetailsRepository.save(VehicleDetails.builder().vehicle_registration_plate(vehicleRequest.getVehicle_registration_plate()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
 				
 				if(vehicleDetails!=null)
 				{
@@ -144,11 +137,14 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 	public ArrayList<VehicleDetails> getcustomervehicles(long id) {
 		ArrayList<VehicleDetails> returnVehicleDetails=new ArrayList<>();
 		ArrayList<Vehicles> vehicles= vehiclesRepository.findvehiclebycust(id);
+		System.out.println("...............................>userId"+ id);
+		System.out.println("...............................>array size"+ vehicles.size());
 		
 		if(!vehicles.isEmpty()) {
 		for(int k=0;k<vehicles.size();k++)	
 		{
 			VehicleDetails vehicleDetails=vehiclesRepository.findvehiclebyvid((long)vehicles.get(k).getId() );
+			System.out.println("...............................>vehcile details size"+vehicles.get(k).getId());
 			if(vehicleDetails!=null)
 			{
 				

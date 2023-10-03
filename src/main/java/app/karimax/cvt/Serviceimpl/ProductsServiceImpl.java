@@ -1,4 +1,4 @@
-package app.karimax.cvt.service.impl;
+package app.karimax.cvt.Serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.GetDate;
-import app.karimax.cvt.exception.ResourceNotFoundException;
 import app.karimax.cvt.mapper.ProductsMapper;
 import app.karimax.cvt.model.ProductCategories;
 import app.karimax.cvt.model.ProductSubCategories;
 import app.karimax.cvt.model.products;
-import app.karimax.cvt.repository.JobCardRepository;
 import app.karimax.cvt.repository.ProductCategoriesRepository;
 import app.karimax.cvt.repository.ProductsRepository;
 import app.karimax.cvt.service.ProductsService;
