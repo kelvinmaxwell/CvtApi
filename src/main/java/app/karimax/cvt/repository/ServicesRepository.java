@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ServicesRepository extends JpaRepository<Services, Long> {
-    @Query("select u from Services u WHERE u.service_category_id =?1")
-    List<Services> findAllByService_category_id(Integer id);
+    @Query("select u from Services u WHERE u.service_category_id =?1 and u.garage_id=?2")
+    List<Services> findAllByService_category_id(Integer id,Integer garadgeId);
 
 
 }

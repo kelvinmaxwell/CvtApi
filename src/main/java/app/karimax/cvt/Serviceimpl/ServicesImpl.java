@@ -22,8 +22,8 @@ public class ServicesImpl implements ServicesService {
     ServiceDto serviceDto=new ServiceDto();
     private final Configs serviceConfig;
     @Override
-    public ApiResponseDTO getAllServiceByCategory(Integer category) {
-        List<app.karimax.cvt.model.Services> listgroupGroups=servicesRepository.findAllByService_category_id(category);
+    public ApiResponseDTO getAllServiceByCategory(Integer category,Integer garadgeId) {
+        List<app.karimax.cvt.model.Services> listgroupGroups=servicesRepository.findAllByService_category_id(category,garadgeId);
 
         List<ServiceDto> listDto=listgroupGroups.stream()
                 .map(service -> modelMapper.map(service, ServiceDto.class))

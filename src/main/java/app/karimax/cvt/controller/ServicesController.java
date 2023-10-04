@@ -26,9 +26,9 @@ public class ServicesController {
 
 
 
-    @GetMapping("getByCategory/{categoryId}")
-    public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@PathVariable("categoryId") Integer  category) {
-        return new ResponseEntity<ApiResponseDTO>(services.getAllServiceByCategory(category), HttpStatus.OK);
+    @GetMapping("getByCategory/{categoryId}/{garadgeId}")
+    public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@PathVariable("categoryId") Integer  category,@PathVariable("garadgeId") Integer  garadgeId) {
+        return new ResponseEntity<ApiResponseDTO>(services.getAllServiceByCategory(category,garadgeId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
