@@ -1,15 +1,12 @@
-package app.karimax.cvt.service.impl;
+package app.karimax.cvt.Serviceimpl;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
 
-import org.aspectj.weaver.NewMemberClassTypeMunger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,30 +19,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.JSONArray;
 
 import app.karimax.cvt.GetDate;
 import app.karimax.cvt.dao.request.MpesaRequestBody;
 import app.karimax.cvt.dao.request.PhoneRequest;
-import app.karimax.cvt.exception.ResourceNotFoundException;
-import app.karimax.cvt.model.AuthTokenResponse;
 import app.karimax.cvt.model.Invoices;
 import app.karimax.cvt.model.JobCard;
 import app.karimax.cvt.model.Job_Card_Service;
 import app.karimax.cvt.model.MpesaPayments;
-import app.karimax.cvt.repository.EmployeeRepository;
 import app.karimax.cvt.repository.JobCardRepository;
 import app.karimax.cvt.repository.JobCardServiceRepository;
-import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.repository.MpesaPaymentsRepository;
 import app.karimax.cvt.repository.MpesaReposotory;
-import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
 import app.karimax.cvt.service.MpesaGenAuth;
 import app.karimax.cvt.service.MpesaService;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
-import ch.qos.logback.core.testUtil.NPEAppender;
-import lombok.RequiredArgsConstructor;
 
 
 @Service

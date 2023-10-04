@@ -11,17 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.karimax.cvt.dao.request.PhoneRequest;
 import app.karimax.cvt.dao.request.productSaveRequest;
-import app.karimax.cvt.model.AuthTokenResponse;
 import app.karimax.cvt.model.JobCard;
-import app.karimax.cvt.model.User;
 import app.karimax.cvt.model.posOrders;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
-import app.karimax.cvt.service.EmployeeService;
-import app.karimax.cvt.service.MpesaGenAuth;
 import app.karimax.cvt.service.MpesaService;
-import app.karimax.cvt.service.UserService;
 import app.karimax.cvt.service.mpesaProductService;
-import app.karimax.cvt.service.impl.MpesaImplementation;
 import lombok.RequiredArgsConstructor;
 
 @RestController

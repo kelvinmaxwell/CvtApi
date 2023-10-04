@@ -18,6 +18,7 @@ public class SignUpRequest {
     private String email;
     private String password;
     private String phone_number;
+    private String phone;
     
     @Enumerated(EnumType.STRING)
     private Role role;

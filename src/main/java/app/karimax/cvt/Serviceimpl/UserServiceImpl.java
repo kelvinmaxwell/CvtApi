@@ -1,50 +1,29 @@
-package app.karimax.cvt.service.impl;
+package app.karimax.cvt.Serviceimpl;
 
 
-
-import java.io.IOException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import app.karimax.cvt.dao.request.mechsignuprequest;
 import app.karimax.cvt.exception.ResourceNotFoundException;
-import app.karimax.cvt.model.Mechanic;
-import app.karimax.cvt.model.Role;
 import app.karimax.cvt.model.SmsCall;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.PhonVerResponse;
-import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
 

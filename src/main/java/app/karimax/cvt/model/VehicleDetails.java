@@ -40,7 +40,7 @@ public class VehicleDetails {
 	String engine_variations;
 	Integer has_super_charger;
 	Integer has_turbo;
-	Integer Iodometer_reading;
+	Integer odometer_reading;
 	String odometer_status;
 	Integer no_of_gears;
 	Integer no_of_cylinders;

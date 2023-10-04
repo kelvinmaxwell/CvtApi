@@ -1,6 +1,4 @@
-package app.karimax.cvt.service.impl;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+package app.karimax.cvt.Serviceimpl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -24,20 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.karimax.cvt.GetDate;
 import app.karimax.cvt.dao.request.MpesaRequestBody;
-import app.karimax.cvt.dao.request.PhoneRequest;
 import app.karimax.cvt.dao.request.productSaveRequest;
 import app.karimax.cvt.model.Garage_product;
-import app.karimax.cvt.model.Invoices;
-import app.karimax.cvt.model.JobCard;
-import app.karimax.cvt.model.Job_Card_Service;
 import app.karimax.cvt.model.MpesaPayments;
 import app.karimax.cvt.model.Pos_order_product;
 import app.karimax.cvt.model.posOrders;
 import app.karimax.cvt.repository.Garage_productRepository;
-import app.karimax.cvt.repository.JobCardRepository;
-import app.karimax.cvt.repository.JobCardServiceRepository;
 import app.karimax.cvt.repository.MpesaPaymentsRepository;
-import app.karimax.cvt.repository.MpesaReposotory;
 import app.karimax.cvt.repository.PosOrderProductRepository;
 import app.karimax.cvt.repository.PosOrderRepository;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
@@ -45,8 +35,6 @@ import app.karimax.cvt.response.Mpesa1ResponseBody;
 import app.karimax.cvt.service.MpesaGenAuth;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.mpesaProductService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
