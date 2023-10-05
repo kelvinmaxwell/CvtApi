@@ -119,7 +119,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public User savemechanicbio(mechsignuprequest mechrequest) {
 		Mechanic newMechanic=new Mechanic();
-		newMechanic.setReference("MEC-"+new UUIDGeneratorLogic().generateID());
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("MEC-","customers","mechanics",12);
+		newMechanic.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
 		newMechanic.setFirst_name(mechrequest.getFirst_name());
 		newMechanic .setLast_name(mechrequest.getLast_name());
 		newMechanic.setGender(mechrequest.getGender());
