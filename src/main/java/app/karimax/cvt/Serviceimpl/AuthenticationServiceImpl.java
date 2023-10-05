@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,9 +37,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final JwtServiceImpl jwtServiceimpl;
+    private final JdbcTemplate jdbcTemplate;
     private final AuthenticationManager authenticationManager;
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
+
+        System.out.println("....................user phone number.................................>"+request.getPhone_number());
         User user = User.builder().phone_number(request.getPhone_number())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .build();
@@ -48,7 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         customer.setGender("app");
         customer.setFirst_name(request.getFirstName());
         customer.setLast_name(request.getFirstName());
-        customer.setReference("CUST-"+new UUIDGeneratorLogic().generateID());
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("CUS-","customers","reference",12);
+        customer.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
         
         
         
