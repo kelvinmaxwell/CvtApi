@@ -101,4 +101,17 @@ public class QuotationsSeviceImpl implements QuotationsService {
         }
 
     }
+
+    @Override
+    public ApiResponseDTO getAlluserquotations(Integer userId) {
+        List<Object[]> getActivequotes=quotationRepository.getPendingQuotations(userId);
+
+        if(getActivequotes.isEmpty())
+        {
+            return new SuccessResponseHandler(serviceConfig,userId).SuccResponse();
+        }
+        else{
+            return  new ErrorExceptionHandler(serviceConfig,"No record found").ErrorResponse();
+        }
+    }
 }
