@@ -3,6 +3,7 @@ package app.karimax.cvt.Serviceimpl;
 import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dao.request.QuotationsPostRequest;
+import app.karimax.cvt.dto.ActiveQuotation;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.model.QuotationService;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import static app.karimax.cvt.dto.ActiveQuotation.mapToListOfObjects;
+
 
 
 @Service
@@ -106,12 +110,17 @@ public class QuotationsSeviceImpl implements QuotationsService {
     public ApiResponseDTO getAlluserquotations(Integer userId) {
         List<Object[]> getActivequotes=quotationRepository.getPendingQuotations(userId);
 
+
         if(getActivequotes.isEmpty())
         {
-            return new SuccessResponseHandler(serviceConfig,userId).SuccResponse();
+            return  new ErrorExceptionHandler(serviceConfig,"No record found").ErrorResponse();
+
         }
         else{
-            return  new ErrorExceptionHandler(serviceConfig,"No record found").ErrorResponse();
+
+            List<ActiveQuotation> activeQuotations = mapToListOfObjects(getActivequotes);
+
+            return new SuccessResponseHandler(serviceConfig,activeQuotations).SuccResponse();
         }
     }
 }
