@@ -31,6 +31,11 @@ public class GaragesController {
         return new ResponseEntity<ApiResponseDTO>(services.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("getAll/{category}")
+    public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@PathVariable("category") String category) {
+        return new ResponseEntity<ApiResponseDTO>(services.getGarageByCategory(category), HttpStatus.OK);
+    }
+
     @GetMapping("getGarageServices/{id}")
     public ResponseEntity<ApiResponseDTO> getAllGarageServiceByCategory(@PathVariable("id") Integer garageId) {
         return new ResponseEntity<ApiResponseDTO>(services.getGarageServices(garageId), HttpStatus.OK);

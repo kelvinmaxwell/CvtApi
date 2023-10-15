@@ -60,4 +60,13 @@ public class GarageServiceImpl implements GaragesService {
 
         return new SuccessResponseHandler(serviceConfig,result).SuccResponse();
     }
+
+    @Override
+    public ApiResponseDTO getGarageByCategory(String category) {
+        List<Object[]> listGarageServices=garageRepository.getgarageByService(category);
+        GaradgesDto garadgesDto=new GaradgesDto();
+
+        List<GaradgesDto> garadgesDtos=garadgesDto.mapToListOfObjects(listGarageServices);
+        return new SuccessResponseHandler(serviceConfig,garadgesDtos).SuccResponse();
+    }
 }
