@@ -34,7 +34,7 @@ public class VehicleDetailsDto {
 
                 VehicleDetailsDto vehicleDetailsDto=new VehicleDetailsDto();
                vehicleDetailsDto.setUserId((int)((long) objectArray[0]));
-                vehicleDetailsDto.setVehicleMake(String.valueOf((String) objectArray[1]));
+                vehicleDetailsDto.setVehicleModel(String.valueOf((String) objectArray[1]));
                vehicleDetailsDto.setVehicleMake(String.valueOf((String) objectArray[2]));
                vehicleDetailsDto.setVehicleYear((String) objectArray[3]);
                 vehicleDetailsDto.setVehicleEngineCc(String.valueOf((int) objectArray[4]));
