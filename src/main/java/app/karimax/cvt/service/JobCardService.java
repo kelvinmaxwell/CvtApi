@@ -1,5 +1,6 @@
 package app.karimax.cvt.service;
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.model.JobCard;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.model.Job_Card_Service;
@@ -20,6 +21,6 @@ public interface JobCardService {
 	  
 	  JobCard getpratings(String customerid);
 	  JobCard submitrating(JobCard jobCard);
-	  
+	ApiResponseDTO getJobCardhistory(Integer customerId);
 
 }
