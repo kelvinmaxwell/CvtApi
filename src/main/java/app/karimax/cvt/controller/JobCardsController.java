@@ -1,5 +1,6 @@
 package app.karimax.cvt.controller;
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +57,16 @@ public class JobCardsController {
     public ResponseEntity<JobCard> submitrating(@RequestBody JobCard jobCard) {
         return ResponseEntity.ok(jobCardService.submitrating(jobCard));
     }
+
+
+
+    @GetMapping("/getJobCardhistory/{customerid}")
+    public ResponseEntity<ApiResponseDTO> getJobCardhistory(@PathVariable("customerid") Integer customerid) {
+        return ResponseEntity.ok(jobCardService.getJobCardhistory(customerid));
+    }
+
+
+
     
     
     

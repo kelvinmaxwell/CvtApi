@@ -53,4 +53,14 @@ public class QuotationsController {
     }
 
 
+    @GetMapping("getquotations/{userId}")
+    public ResponseEntity<ApiResponseDTO> getAlluserquotations(@PathVariable("userId") Integer  userId) {
+
+
+
+
+        return new ResponseEntity<ApiResponseDTO>(quotationsService.getAlluserquotations(userId), HttpStatus.OK);
+    }
+
+
 }

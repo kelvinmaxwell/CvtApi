@@ -3,8 +3,14 @@ package app.karimax.cvt.Serviceimpl;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
+import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.GaradgesDto;
+import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.response.SuccessResponseHandler;
 import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,12 +37,14 @@ public class VehicleServiceImpl implements VehiclesService {
 	
 private VehiclesRepository vehiclesRepository;
 private VehicleDetailsRepository vehicleDetailsRepository;
+private  Configs serviceConfig;
 GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 
-	public VehicleServiceImpl(VehiclesRepository vehiclesRepository,VehicleDetailsRepository vehicleDetailsRepository) {
+	public VehicleServiceImpl(VehiclesRepository vehiclesRepository,VehicleDetailsRepository vehicleDetailsRepository,Configs serviceConfig) {
 		super();
 		this.vehiclesRepository = vehiclesRepository;
 		this.vehicleDetailsRepository = vehicleDetailsRepository;
+		this.serviceConfig=serviceConfig;
 	}
 	@Override
 	public ArrayList<VehicleBrand> getbrands() {
@@ -185,9 +193,15 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		
 		return vehicles;
 	}
-	
-		
-		
-	
+
+	@Override
+	public ApiResponseDTO getCustomerVehicles(Integer customerId) {
+		List<Object[]> listGarageServices=vehiclesRepository.getCustomerVehicles(customerId);
+		VehicleDetailsDto vehicleDetailsDto=new VehicleDetailsDto();
+
+		List<VehicleDetailsDto> vehicleDetailsDtos=vehicleDetailsDto.mapToListOfObjects(listGarageServices);
+		return new SuccessResponseHandler(serviceConfig,vehicleDetailsDtos).SuccResponse();
+	}
+
 
 }

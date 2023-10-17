@@ -44,5 +44,9 @@ public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
 	@Query("select u from JobCard u  where  u.customer_id=?1 and u.customer_rating=null and u.created_by=?2")
 	List<JobCard> getpratings(String custid,String createdby);
+
+	@Query(value="select job_cards.reference as reference,vehicle_details.vehicle_registration_plate as vehicleRegistration,job_cards.issue_description as description ,job_cards.completed_at as closedAt,garages.name as garageName    from job_cards inner join garages on garages.id=job_cards.garage_id inner join vehicle_details on vehicle_details.vehicle_id=job_cards.vehicle_id where job_cards.customer_id=?1 ;", nativeQuery = true)
+	List<Object[]> getJobCardHistory(Integer customerId);
+
 	
 }

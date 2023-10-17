@@ -4,6 +4,11 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
 
+import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.JobCardDto;
+import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.response.SuccessResponseHandler;
 import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.GetDate;
@@ -19,11 +24,13 @@ import app.karimax.cvt.service.UUIDGeneratorLogic;
 @Service
 public class JobCardServiceImpl  implements JobCardService{
 	private JobCardRepository jobCardRepository;
+	private Configs serviceConfig;
 	  
 	GetDate date=new GetDate("yyyy-MM-dd HH:mm");
-	public JobCardServiceImpl(JobCardRepository jobCardRepository) {
+	public JobCardServiceImpl(JobCardRepository jobCardRepository,Configs serviceConfig) {
 		super();
 		this.jobCardRepository = jobCardRepository;
+		this.serviceConfig=serviceConfig;
 	}
 	@Override
 	public JobCard saveJobCard(JobCard jobCard) {
@@ -121,8 +128,15 @@ JobCard empltyCard=null;
 		}
 		return jcrd.builder().customer_remarks("not set").build();
 	}
-	
-	
+
+	@Override
+	public ApiResponseDTO getJobCardhistory(Integer customerId) {
+		List<Object[]> listGarageServices=jobCardRepository.getJobCardHistory(customerId);
+		JobCardDto jobCardDto=new JobCardDto();
+
+		List<JobCardDto> JobDetailsDtos=jobCardDto.mapToListOfObjects(listGarageServices);
+		return new SuccessResponseHandler(serviceConfig,JobDetailsDtos).SuccResponse();
+	}
 
 
 }

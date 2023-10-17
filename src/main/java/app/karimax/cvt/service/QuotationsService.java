@@ -12,5 +12,7 @@ public interface QuotationsService {
 
     ApiResponseDTO getActiveQuotation(Integer userId, Integer serviceId);
 
+    ApiResponseDTO getAlluserquotations(Integer userId  );
+
 
 }

@@ -6,6 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Data
 public class GaradgesDto {
 
@@ -35,4 +40,33 @@ public class GaradgesDto {
 
 
     private Integer type;
+
+
+    public  List<GaradgesDto> mapToListOfObjects(List<Object[]> listOfObjectArrays) {
+        List<GaradgesDto> resultList = new ArrayList<>();
+
+        for (Object[] objectArray : listOfObjectArrays) {
+            if (objectArray != null && objectArray.length == 5) {
+
+                GaradgesDto garadgesDto=new GaradgesDto();
+                garadgesDto.setId((int)((long) objectArray[0]));
+                garadgesDto.setName((String) objectArray[1]);
+                garadgesDto.setCountry((String) objectArray[2]);
+                garadgesDto.setCity((String) objectArray[3]);
+
+
+                garadgesDto.setGarage_location(((String) objectArray[4]));
+
+                // Assuming the order is: garageName, vehicleRegistration, status, created_at
+
+
+
+
+
+                resultList.add(garadgesDto);
+            }
+        }
+
+        return resultList;
+    }
 }

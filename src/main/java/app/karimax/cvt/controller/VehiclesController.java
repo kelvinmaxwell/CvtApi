@@ -3,6 +3,7 @@ package app.karimax.cvt.controller;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,6 +102,19 @@ public class VehiclesController {
 	
 		return new ResponseEntity <Vehicles>(vehiclesService.getvmodelid(vehicleid),HttpStatus.OK);
 	}
+
+
+	@GetMapping("/getCustomerVehicles/{customerid}")
+	public  ResponseEntity <ApiResponseDTO> getCustomerVehicles(@PathVariable("customerid") Integer customerid)
+
+	{
+
+		return new ResponseEntity <ApiResponseDTO>(vehiclesService.getCustomerVehicles(customerid),HttpStatus.OK);
+	}
+
+
+
+
 	
 	
 	
