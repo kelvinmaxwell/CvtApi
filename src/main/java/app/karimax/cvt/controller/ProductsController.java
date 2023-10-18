@@ -2,6 +2,7 @@ package app.karimax.cvt.controller;
 
 import java.util.List;
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import app.karimax.cvt.service.ProductsService;
 public class ProductsController {
 
 	private ProductsService productsService;
+
 
 	public ProductsController(ProductsService productsService) {
 		super();
@@ -97,6 +99,38 @@ public class ProductsController {
 		
 		
 	}
+
+	@GetMapping("returnProductsCategories")
+	public ResponseEntity <ApiResponseDTO> getproductbymanufacturer(){
+
+		return new ResponseEntity <ApiResponseDTO>(productsService.returnProductsCategories(),HttpStatus.OK);
+
+
+	}
+
+	@GetMapping("returnProductssubcategories/{id}")
+	public ResponseEntity <ApiResponseDTO> returnProductssubcategories(@PathVariable("id") long categoryId){
+
+		return new ResponseEntity <ApiResponseDTO>(productsService.returnProductssubcategories(categoryId),HttpStatus.OK);
+
+
+	}
+
+
+
+	@GetMapping("returnProductssubcategoriesproduct/{id}")
+	public ResponseEntity <ApiResponseDTO> returnProductssubcategoriesproduct(@PathVariable("id") long SubcategoryId){
+
+		return new ResponseEntity <ApiResponseDTO>(productsService.returnProductssubcategoriesproduct(SubcategoryId),HttpStatus.OK);
+
+
+	}
+
+
+
+
+
+
 	
 	
 	
