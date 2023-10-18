@@ -127,6 +127,17 @@ public class ProductsController {
 	}
 
 
+	@GetMapping("getbyproductName/{productName}")
+	public ResponseEntity <List<products>> returnProductssubcategoriesproduct(@PathVariable("productName") String productName){
+
+		return new ResponseEntity <List<products>>(productsService.getbyproductName(productName),HttpStatus.OK);
+
+
+	}
+
+
+
+
 
 
 

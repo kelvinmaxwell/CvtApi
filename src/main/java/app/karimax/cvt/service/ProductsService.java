@@ -29,5 +29,7 @@ public interface ProductsService {
 
 	ApiResponseDTO returnProductssubcategoriesproduct(long id);
 
+	List<products> getbyproductName(String productName);
+
 
 }
