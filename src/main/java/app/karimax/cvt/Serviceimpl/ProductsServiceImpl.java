@@ -3,6 +3,9 @@ package app.karimax.cvt.Serviceimpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.response.SuccessResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,13 @@ public class ProductsServiceImpl implements ProductsService {
 	
 	
 	private ProductsRepository productsRepository;
+
 	private ProductsMapper productsMapper;
 	
 	@Autowired
 	private ProductCategoriesRepository productCategoriesRepository;
+	@Autowired
+	private  Configs serviceConfig;
 	  
 	GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 	public ProductsServiceImpl(ProductsRepository productsRepository) {
@@ -231,6 +237,91 @@ public class ProductsServiceImpl implements ProductsService {
 		List<Object[]> resultList=productsRepository.getproductbymanufacturer(vmodelid,name);
 		productsMapper=new ProductsMapper(resultList);
 		return productsMapper.mapproducts();
+	}
+
+	@Override
+	public ApiResponseDTO returnProductsCategories() {
+		List<ProductCategories> productCategories=productCategoriesRepository.findAll();
+
+		return new SuccessResponseHandler(serviceConfig,productCategories).SuccResponse();
+	}
+
+	@Override
+	public ApiResponseDTO returnProductssubcategories(long id) {
+		List<ProductSubCategories> productCategories=productCategoriesRepository.getsubcategories(id);
+		return new SuccessResponseHandler(serviceConfig,productCategories).SuccResponse();
+	}
+
+	@Override
+	public ApiResponseDTO returnProductssubcategoriesproduct(long id) {
+		List<Object[]> resultList=productsRepository.returnProductssubcategoriesproduct((int) id);
+		List<products> productsdto = new ArrayList<>();
+
+		if(!resultList.isEmpty()) {
+
+			for (Object[] row : resultList) {
+				products dto = new products();
+				Long k= (Long)row[0];
+				int m=k.intValue();
+				dto.setVehicle_model_id(m);
+				dto.setBrand((String) row[1]);
+				dto.setModel_name((String) row[2]);
+				dto.setEngine_capacity((Integer) row[3]);
+				dto.setYear_of_manufacture((String) row[4]);
+				dto.setManufacturer((String) row[5]);
+				dto.setSelling_price((Double) row[6]);
+				dto.setPart_name((String) row[7]);
+
+
+				Long l= (Long)row[8];
+				int i=l.intValue();
+
+				dto.setProduct_id(i);
+				dto.setChasis_no((String) row[9]);
+				dto.setOem((String) row[10]);
+				productsdto.add(dto);
+			}
+			return new SuccessResponseHandler(serviceConfig,productsdto).SuccResponse();
+		}
+		else {
+			return new SuccessResponseHandler(serviceConfig,productsdto).SuccResponse();
+		}
+	}
+
+	@Override
+	public List<products> getbyproductName(String productName) {
+		List<Object[]> resultList=productsRepository.getbyproductName(productName);
+		List<products> productsdto = new ArrayList<>();
+
+		if(!resultList.isEmpty()) {
+
+			for (Object[] row : resultList) {
+				products dto = new products();
+				Long k= (Long)row[0];
+				int m=k.intValue();
+				dto.setVehicle_model_id(m);
+				dto.setBrand((String) row[1]);
+				dto.setModel_name((String) row[2]);
+				dto.setEngine_capacity((Integer) row[3]);
+				dto.setYear_of_manufacture((String) row[4]);
+				dto.setManufacturer((String) row[5]);
+				dto.setSelling_price((Double) row[6]);
+				dto.setPart_name((String) row[7]);
+
+
+				Long l= (Long)row[8];
+				int i=l.intValue();
+
+				dto.setProduct_id(i);
+				dto.setChasis_no((String) row[9]);
+				dto.setOem((String) row[10]);
+				productsdto.add(dto);
+			}
+			return productsdto;
+		}
+		else {
+			return productsdto;
+		}
 	}
 
 }
