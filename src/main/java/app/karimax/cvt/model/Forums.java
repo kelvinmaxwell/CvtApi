@@ -18,7 +18,7 @@ public class Forums {
     private String reference;
 
     @Column(name="name",nullable=false)
-    private String name;
+    private String forumName;
 
     @Column(name="image",nullable=true)
     private String image;

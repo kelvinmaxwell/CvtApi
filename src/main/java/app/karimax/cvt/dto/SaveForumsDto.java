@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SaveForumsDto {
 
-    String name;
+    String forumName;
     String county;
     String summary;
     String description;
@@ -29,12 +29,12 @@ public class SaveForumsDto {
         this.isPrivate = isPrivate;
     }
 
-    public String getName() {
-        return name;
+    public String getForumName() {
+        return forumName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setForumName(String name) {
+        this.forumName = forumName;
     }
 
     public String getCounty() {

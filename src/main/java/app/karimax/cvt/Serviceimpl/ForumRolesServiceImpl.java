@@ -50,7 +50,7 @@ public class ForumRolesServiceImpl  implements ForumRolesService {
     @Override
     public ApiResponseDTO saveForum(SaveForumsDto saveForumsDto) {
 
-      List<Forums> forumstest=  forumsRepository.findForumsByName(saveForumsDto.getName());
+      List<Forums> forumstest=  forumsRepository.findForumsByForumName(saveForumsDto.getForumName());
 
         if(forumstest.isEmpty()){
 
@@ -58,7 +58,7 @@ public class ForumRolesServiceImpl  implements ForumRolesService {
         Forums forums = new Forums();
         UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("FOR-", "forums", "reference", 12);
         forums.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
-        forums.setName(saveForumsDto.getName());
+        forums.setForumName(saveForumsDto.getForumName());
         forums.setSummary(saveForumsDto.getSummary());
         forums.setDescription(saveForumsDto.getDescription());
         forums.setCreated_by(saveForumsDto.getCreated_by());
