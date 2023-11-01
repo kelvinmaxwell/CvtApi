@@ -6,7 +6,7 @@ import lombok.Data;
 public class MakeModelDto {
 
     String brand;
-    String model;
+    String vehicle_model;
     Integer modelId;
 
 

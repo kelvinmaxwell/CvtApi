@@ -9,5 +9,6 @@ public class ForumsDto {
     String forumName;
     String summary;
     Integer folowers;
+    String vehicle_model;
 
 }

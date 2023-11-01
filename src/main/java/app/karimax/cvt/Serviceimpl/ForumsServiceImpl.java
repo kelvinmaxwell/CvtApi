@@ -53,7 +53,7 @@ public class ForumsServiceImpl implements ForumsService {
                 Long t= (long)row[3];
                 int g=t.intValue();
                 dto.setFolowers(g);
-
+                dto.setVehicle_model((String) row[4]);
                 forumsDtos.add(dto);
             }
             return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
@@ -101,7 +101,7 @@ public class ForumsServiceImpl implements ForumsService {
             for (Object[] row : resultList) {
                 MakeModelDto dto = new MakeModelDto();
 
-                dto.setModel((String)row[0]);
+                dto.setVehicle_model((String)row[0]);
                 dto.setBrand((String) row[1]);
 
 
@@ -111,6 +111,35 @@ public class ForumsServiceImpl implements ForumsService {
         }
         else {
             return new SuccessResponseHandler(serviceConfig,makeModelDtoArrayList).SuccResponse();
+        }
+    }
+
+    @Override
+    public ApiResponseDTO discoverbymodel(String model,Integer userId) {
+        List<Object[]> resultList=forumsRepository.discoverbymodel(model,userId);
+        List<ForumsDto> forumsDtos = new ArrayList<>();
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+                ForumsDto dto = new ForumsDto();
+
+                dto.setId((Integer)row[1]);
+                dto.setSummary((String) row[2]);
+                dto.setForumName((String) row[0]);
+
+                Long t= (long)row[3];
+                int g=t.intValue();
+                dto.setFolowers(g);
+
+                dto.setVehicle_model((String) row[4]);
+
+                forumsDtos.add(dto);
+            }
+            return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
+        }
+        else {
+            return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
         }
     }
 }

@@ -14,6 +14,8 @@ public interface ForumsService {
 
     ApiResponseDTO getAllForumModels();
 
+    ApiResponseDTO discoverbymodel(String model,Integer userId);
+
 
 
 }

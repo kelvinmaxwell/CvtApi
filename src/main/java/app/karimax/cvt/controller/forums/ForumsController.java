@@ -37,6 +37,11 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.getAllForumModels(), HttpStatus.OK);
     }
 
+    @GetMapping("discoverbymodel/{model}/{id}")
+    public ResponseEntity<ApiResponseDTO> discoverbymodel(@PathVariable("model") String model,@PathVariable("id") Integer userId) {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.discoverbymodel(model,userId), HttpStatus.OK);
+    }
+
 
 
 

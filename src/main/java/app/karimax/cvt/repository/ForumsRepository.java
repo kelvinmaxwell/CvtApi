@@ -11,7 +11,7 @@ public interface ForumsRepository    extends JpaRepository<Forums,Long> {
 
     List<Forums> findForumsByForumName(String name);
 
-    @Query(value="select forums.name as forumName,forums.id,forums.summary,ifnull((select count(*) from forum_users where forum_id=forums.id),0)as followers from forums where forums.is_private=0 and forums.id NOT IN (select forum_users.forum_id from forum_users where user_id=?1)", nativeQuery = true)
+    @Query(value="select forums.name as forumName,forums.id,forums.summary,ifnull((select count(*) from forum_users where forum_id=forums.id),0)as followers,forums.vehicle_model from forums where forums.is_private=0 and forums.id NOT IN (select forum_users.forum_id from forum_users where user_id=?1)", nativeQuery = true)
     List<Object[]> getAllForums(Integer userId);
 
     @Query("SELECT f FROM Forums f WHERE f.id IN (SELECT fu.forum_id FROM ForumUsers fu WHERE fu.user_id = ?1)")
@@ -32,5 +32,10 @@ public interface ForumsRepository    extends JpaRepository<Forums,Long> {
             "GROUP BY\n" +
             "    forums.vehicle_model;",nativeQuery = true)
     List<Object[]> getAllForumModels();
+
+
+    @Query(value="select forums.name as forumName,forums.id,forums.summary,ifnull((select count(*) from forum_users where forum_id=forums.id),0)as followers,forums.vehicle_model from forums where  forums.id NOT IN (select forum_users.forum_id from forum_users where  forum_users.user_id=?2) and  forums.vehicle_model=?1 and is_private=0", nativeQuery = true)
+    List<Object[]> discoverbymodel(String model,Integer userId);
+
 
 }
