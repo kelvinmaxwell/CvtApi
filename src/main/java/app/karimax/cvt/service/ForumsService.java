@@ -12,4 +12,8 @@ public interface ForumsService {
 
     ApiResponseDTO followForum(ForumUsersDto forumUsersDto);
 
+    ApiResponseDTO getAllForumModels();
+
+
+
 }

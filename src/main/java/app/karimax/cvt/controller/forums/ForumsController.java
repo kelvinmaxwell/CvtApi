@@ -32,6 +32,13 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.myForums(customerId), HttpStatus.OK);
     }
 
+    @GetMapping("getAllMakeModels")
+    public ResponseEntity<ApiResponseDTO> myForums() {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getAllForumModels(), HttpStatus.OK);
+    }
+
+
+
 
 
 }

@@ -23,6 +23,9 @@ public class Forums {
     @Column(name="image",nullable=true)
     private String image;
 
+    @Column(name="vehicle_model",nullable=true)
+    private String vehicle_model;
+
     @Column(name="summary",nullable=false)
     private String summary;
 

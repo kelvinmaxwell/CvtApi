@@ -4,6 +4,7 @@ import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.ForumsDto;
+import app.karimax.cvt.dto.MakeModelDto;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.model.ForumUsers;
 import app.karimax.cvt.model.Forums;
@@ -88,5 +89,28 @@ public class ForumsServiceImpl implements ForumsService {
             return new SuccessResponseHandler(serviceConfig, forumUsers).SuccResponse();
         }
 
+    }
+
+    @Override
+    public ApiResponseDTO getAllForumModels() {
+        List<Object[]> resultList=forumsRepository.getAllForumModels();
+        List<MakeModelDto> makeModelDtoArrayList = new ArrayList<>();
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+                MakeModelDto dto = new MakeModelDto();
+
+                dto.setModel((String)row[0]);
+                dto.setBrand((String) row[1]);
+
+
+                makeModelDtoArrayList.add(dto);
+            }
+            return new SuccessResponseHandler(serviceConfig,makeModelDtoArrayList).SuccResponse();
+        }
+        else {
+            return new SuccessResponseHandler(serviceConfig,makeModelDtoArrayList).SuccResponse();
+        }
     }
 }
