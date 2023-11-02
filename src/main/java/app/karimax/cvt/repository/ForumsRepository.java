@@ -38,4 +38,7 @@ public interface ForumsRepository    extends JpaRepository<Forums,Long> {
     List<Object[]> discoverbymodel(String model,Integer userId);
 
 
+
+
+
 }

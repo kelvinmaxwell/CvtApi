@@ -8,10 +8,12 @@ import app.karimax.cvt.dto.MakeModelDto;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.model.ForumUsers;
 import app.karimax.cvt.model.Forums;
+import app.karimax.cvt.model.User;
 import app.karimax.cvt.model.products;
 import app.karimax.cvt.repository.ForumsRepository;
 import app.karimax.cvt.repository.ForumsUsersRepository;
 import app.karimax.cvt.repository.GarageRepository;
+import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.ForumsService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import java.util.List;
 public class ForumsServiceImpl implements ForumsService {
 
     private final ForumsRepository forumsRepository;
+    private final UserRepository userRepository;
     private final ForumsUsersRepository forumsUsersRepository;
     private final ModelMapper modelMapper;
     LocalDate currentDate = LocalDate.now();
@@ -141,5 +144,12 @@ public class ForumsServiceImpl implements ForumsService {
         else {
             return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
         }
+    }
+
+    @Override
+    public ApiResponseDTO getforumUsersbyRole(Integer roleId, Integer forumId) {
+
+       List<User> users= userRepository.findUsersByRoleIdAndForumId(roleId,forumId);
+        return new SuccessResponseHandler(serviceConfig,users).SuccResponse();
     }
 }

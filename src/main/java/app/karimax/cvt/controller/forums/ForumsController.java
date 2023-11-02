@@ -42,6 +42,13 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.discoverbymodel(model,userId), HttpStatus.OK);
     }
 
+    @GetMapping("getforumUsersbyRole/{roleId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getforumUsersbyRole(@PathVariable("roleId") Integer roleId,@PathVariable("forumId") Integer forumId) {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getforumUsersbyRole(roleId,forumId), HttpStatus.OK);
+    }
+
+
+
 
 
 

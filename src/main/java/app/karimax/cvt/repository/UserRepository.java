@@ -48,5 +48,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Modifying
 	@Query(value="update users  set otp_verified_at=?1 where users.id = ?2", nativeQuery = true)
 	  int setupdated(String status ,int id);
+
+
+
+	@Query("SELECT u FROM User u " +
+			"JOIN ForumUsers fu ON u.id = fu.user_id " +
+			"WHERE fu.roles_id = :roleId AND fu.forum_id = :forumId")
+	List<User> findUsersByRoleIdAndForumId(@Param("roleId") Integer roleId, @Param("forumId") Integer forumId);
 	
 }
