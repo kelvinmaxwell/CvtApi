@@ -1,23 +1,16 @@
 package app.karimax.cvt.Serviceimpl;
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
-import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.dto.ForumUsersDto;
-import app.karimax.cvt.dto.ForumsDto;
-import app.karimax.cvt.dto.MakeModelDto;
+import app.karimax.cvt.dto.*;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
-import app.karimax.cvt.model.ForumUsers;
-import app.karimax.cvt.model.Forums;
-import app.karimax.cvt.model.User;
-import app.karimax.cvt.model.products;
-import app.karimax.cvt.repository.ForumsRepository;
-import app.karimax.cvt.repository.ForumsUsersRepository;
-import app.karimax.cvt.repository.GarageRepository;
-import app.karimax.cvt.repository.UserRepository;
+import app.karimax.cvt.model.*;
+import app.karimax.cvt.repository.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.ForumsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -31,7 +24,9 @@ public class ForumsServiceImpl implements ForumsService {
     private final ForumsRepository forumsRepository;
     private final UserRepository userRepository;
     private final ForumsUsersRepository forumsUsersRepository;
+    private final PostsRepository postsRepository;
     private final ModelMapper modelMapper;
+    private final JdbcTemplate jdbcTemplate;
     LocalDate currentDate = LocalDate.now();
 
     // Convert to java.sql.Date
@@ -151,5 +146,22 @@ public class ForumsServiceImpl implements ForumsService {
 
        List<User> users= userRepository.findUsersByRoleIdAndForumId(roleId,forumId);
         return new SuccessResponseHandler(serviceConfig,users).SuccResponse();
+    }
+
+    @Override
+    public ApiResponseDTO savePosts(PostDto postDto) {
+
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("POS-","posts","reference",12);
+        Posts posts=new Posts();
+        posts.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
+        posts.setUser_id(postDto.getUserId());
+        posts.setForum_id(posts.getForum_id());
+        posts.setContent(postDto.getReplacedHtml());
+
+        posts.setCreated_at(sqlDate);
+       posts= postsRepository.save(posts);
+
+
+        return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
     }
 }
