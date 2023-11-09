@@ -29,5 +29,6 @@ public class Configs {
 
     private String permissionDeniedStatusDesc;
     private String counties;
+    private String serverImageUrl;
 
 }

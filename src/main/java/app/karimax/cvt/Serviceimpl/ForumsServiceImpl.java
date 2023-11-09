@@ -14,9 +14,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 @Service
 @RequiredArgsConstructor
 public class ForumsServiceImpl implements ForumsService {
@@ -164,4 +169,54 @@ public class ForumsServiceImpl implements ForumsService {
 
         return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
     }
+
+    @Override
+    public ApiResponseDTO getPosts(Integer userId, Integer forumId) throws ParseException {
+        List<Object[]> resultList=postsRepository.getPosts(userId,forumId);
+        List<GetPostDto> posts = new ArrayList<>();
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+                GetPostDto dto = new GetPostDto();
+
+                dto.setId((Integer)row[0]);
+                dto.setContent((String) row[1]);
+              dto.setLikes((Integer) row[2]);
+
+                Long t= (long)row[5];
+                int g=t.intValue();
+           dto.setLiked(g);
+
+                Long s= (long)row[4];
+                int u=s.intValue();
+             dto.setDislike(u);
+
+                long v= (long)row[6];
+                int x= (int) v;
+dto.setCommentsNumber(x);
+                Timestamp timestamp = ((java.sql.Timestamp) row[7]);
+
+                // Convert Timestamp to Date
+                Date sqlDate = new Date(timestamp.getTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDateString = dateFormat.format(sqlDate);
+                Date formattedDate = new Date(dateFormat.parse(formattedDateString).getTime());
+
+
+
+                dto.setCreated_at(formattedDateString);
+dto.setUsername((String) row[8]);
+
+
+                posts.add(dto);
+            }
+            return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
+        }
+        else {
+            return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
+        }
+    }
+
+
 }

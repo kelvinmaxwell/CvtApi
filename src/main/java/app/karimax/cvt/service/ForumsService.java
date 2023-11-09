@@ -6,6 +6,8 @@ import app.karimax.cvt.dto.ForumsDto;
 import app.karimax.cvt.dto.PostDto;
 import app.karimax.cvt.model.ForumUsers;
 
+import java.text.ParseException;
+
 public interface ForumsService {
     ApiResponseDTO getAll(Integer customerId);
 
@@ -20,6 +22,8 @@ public interface ForumsService {
     ApiResponseDTO getforumUsersbyRole(Integer  roleId,Integer forumId);
 
     ApiResponseDTO savePosts(PostDto postDto);
+
+    ApiResponseDTO getPosts(Integer userId,Integer forumId) throws ParseException;
 
 
 

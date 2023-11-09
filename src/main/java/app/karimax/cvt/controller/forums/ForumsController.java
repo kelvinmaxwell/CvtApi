@@ -1,6 +1,7 @@
 package app.karimax.cvt.controller.forums;
 
 import app.karimax.cvt.Utils.ReplaceExistingSrcWithNewUrls;
+import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.PostDto;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Base64;
 
 import static app.karimax.cvt.Utils.ReplaceExistingSrcWithNewUrls.replaceExistingSrcWithNewUrls;
@@ -28,6 +30,7 @@ import static app.karimax.cvt.Utils.ReplaceExistingSrcWithNewUrls.replaceExistin
 @RequestMapping("/api/v1/forums")
 public class ForumsController {
     private final ForumsService forumsService;
+    private  final Configs configs;
     MultipartFile multipartFile=null;
     private  final FileStorageService fileStorageService;
 
@@ -82,7 +85,7 @@ public class ForumsController {
 
             ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName).toUriString();
 
-            postDto.getImageBitmaps().set(i,fileName);
+            postDto.getImageBitmaps().set(i,configs.getServerImageUrl()+fileName);
 
         }
 
@@ -90,6 +93,11 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.savePosts(postDto), HttpStatus.OK);
     }
 
+
+    @GetMapping("getAllPosts/{userId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getPosts(@PathVariable("userId") Integer userId,@PathVariable("forumId") Integer forumId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getPosts(userId,forumId), HttpStatus.OK);
+    }
 
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
