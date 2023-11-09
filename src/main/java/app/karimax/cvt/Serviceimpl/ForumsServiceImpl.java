@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,10 +34,12 @@ public class ForumsServiceImpl implements ForumsService {
     private final PostsRepository postsRepository;
     private final ModelMapper modelMapper;
     private final JdbcTemplate jdbcTemplate;
-    LocalDate currentDate = LocalDate.now();
+    LocalDateTime currentDate = LocalDateTime.now();
 
     // Convert to java.sql.Date
-    Date sqlDate = Date.valueOf(currentDate);
+
+    Timestamp sqlTimestamp = Timestamp.valueOf(currentDate);
+    Date sqlDate = Date.valueOf(currentDate.toLocalDate());
 
 
     private final Configs serviceConfig;
@@ -161,10 +164,12 @@ public class ForumsServiceImpl implements ForumsService {
         Posts posts=new Posts();
         posts.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
         posts.setUser_id(postDto.getUserId());
-        posts.setForum_id(posts.getForum_id());
+        posts.setForum_id(postDto.getForumId());
         posts.setContent(postDto.getReplacedHtml());
 
-        posts.setCreated_at(sqlDate);
+
+
+        posts.setCreated_at(sqlTimestamp);
        posts= postsRepository.save(posts);
 
 
@@ -183,7 +188,11 @@ public class ForumsServiceImpl implements ForumsService {
 
                 dto.setId((Integer)row[0]);
                 dto.setContent((String) row[1]);
-              dto.setLikes((Integer) row[2]);
+
+
+                Long m= (long)row[5];
+                int n=m.intValue();
+              dto.setLikes(n);
 
                 Long t= (long)row[5];
                 int g=t.intValue();
@@ -237,7 +246,10 @@ public class ForumsServiceImpl implements ForumsService {
 
                     dto.setId((Integer)row[0]);
                     dto.setContent((String) row[1]);
-                    dto.setLikes((Integer) row[2]);
+                    Long q= (long)row[2];
+                    int z=q.intValue();
+
+                    dto.setLikes(z);
 
 
 
@@ -281,6 +293,13 @@ public class ForumsServiceImpl implements ForumsService {
 
     }
 
+    @Override
+    public ApiResponseDTO saveComment(PostComments postComments) {
+        postComments.setCreated_at(sqlDate);
+        PostComments postComments1 =postCommentsRepository.save(postComments);
+        return new SuccessResponseHandler(serviceConfig, postComments1).SuccResponse();
+    }
+
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
 
         List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
@@ -296,7 +315,10 @@ public class ForumsServiceImpl implements ForumsService {
 
                     dto.setId((Integer)row[0]);
                     dto.setContent((String) row[1]);
-                    dto.setLikes((Integer) row[2]);
+                    Long q= (long)row[4];
+                    int z=q.intValue();
+
+                   dto.setLikes(z);
 
 
 
@@ -306,8 +328,8 @@ public class ForumsServiceImpl implements ForumsService {
 
 
 
-                    long v= (long)row[6];
-                    int x= (int) v;
+                    Long v= (long)row[6];
+                    int x= v.intValue();
                     dto.setCommentsNumber(x);
                     Timestamp timestamp = ((java.sql.Timestamp) row[7]);
 
@@ -321,6 +343,7 @@ public class ForumsServiceImpl implements ForumsService {
 
                     dto.setCreated_at(formattedDateString);
                     dto.setUsername((String) row[8]);
+
                     dto.setReplies(fetchRepliesForReply((Integer)row[0],userId,forumId));
 
 
@@ -341,7 +364,7 @@ public class ForumsServiceImpl implements ForumsService {
     private List<Comment> fetchRepliesForReply(Integer commentId,Integer userId,Integer forumId) {
         List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
 
-
+System.out.println("Reached");
         List<Comment> comments=new ArrayList<>();
 
 
@@ -352,7 +375,11 @@ public class ForumsServiceImpl implements ForumsService {
 
                 dto.setId((Integer)row[0]);
                 dto.setContent((String) row[1]);
-                dto.setLikes((Integer) row[2]);
+
+                Long a= (long)row[2];
+                int b=a.intValue();
+
+                dto.setLikes(b);
 
 
 
@@ -362,8 +389,8 @@ public class ForumsServiceImpl implements ForumsService {
 
 
 
-                long v= (long)row[6];
-                int x= (int) v;
+                Long v= (long)row[6];
+                int x= v.intValue();
                 dto.setCommentsNumber(x);
                 Timestamp timestamp = ((java.sql.Timestamp) row[7]);
 

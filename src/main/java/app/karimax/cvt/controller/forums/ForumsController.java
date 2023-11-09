@@ -6,6 +6,7 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.PostDto;
 import app.karimax.cvt.dto.SaveForumsDto;
+import app.karimax.cvt.model.PostComments;
 import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.ForumRolesService;
 import app.karimax.cvt.service.ForumsService;
@@ -112,7 +113,10 @@ public class ForumsController {
         return  null;
     }
 
-
+    @PostMapping("saveComment")
+    public ResponseEntity<ApiResponseDTO> saveComment(@RequestBody PostComments postComments) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.saveComment(postComments), HttpStatus.OK);
+    }
 
 
 

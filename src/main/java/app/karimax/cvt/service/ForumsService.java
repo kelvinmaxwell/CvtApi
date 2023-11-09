@@ -5,6 +5,7 @@ import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.ForumsDto;
 import app.karimax.cvt.dto.PostDto;
 import app.karimax.cvt.model.ForumUsers;
+import app.karimax.cvt.model.PostComments;
 
 import java.text.ParseException;
 
@@ -26,5 +27,5 @@ public interface ForumsService {
     ApiResponseDTO getPosts(Integer userId,Integer forumId) throws ParseException;
 
     ApiResponseDTO  fetchCommentsAndReplies(Integer postId,Integer userId,Integer forumId);
-
+    ApiResponseDTO saveComment(PostComments postComments);
 }

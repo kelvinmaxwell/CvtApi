@@ -1,11 +1,11 @@
 package app.karimax.cvt.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class Posts {
     private Integer dislikes;
 
     @Column(name = "created_at")
-    private Date created_at;
+    private Timestamp created_at;
     @Column(name = "updated_at")
     private Date updated_at;
 
