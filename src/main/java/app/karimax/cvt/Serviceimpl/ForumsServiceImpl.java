@@ -28,6 +28,7 @@ public class ForumsServiceImpl implements ForumsService {
 
     private final ForumsRepository forumsRepository;
     private final UserRepository userRepository;
+    private final PostCommentsRepository postCommentsRepository;
     private final ForumsUsersRepository forumsUsersRepository;
     private final PostsRepository postsRepository;
     private final ModelMapper modelMapper;
@@ -194,7 +195,7 @@ public class ForumsServiceImpl implements ForumsService {
 
                 long v= (long)row[6];
                 int x= (int) v;
-dto.setCommentsNumber(x);
+                    dto.setCommentsNumber(x);
                 Timestamp timestamp = ((java.sql.Timestamp) row[7]);
 
                 // Convert Timestamp to Date
@@ -206,7 +207,7 @@ dto.setCommentsNumber(x);
 
 
                 dto.setCreated_at(formattedDateString);
-dto.setUsername((String) row[8]);
+              dto.setUsername((String) row[8]);
 
 
                 posts.add(dto);
@@ -216,6 +217,179 @@ dto.setUsername((String) row[8]);
         else {
             return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
         }
+    }
+
+
+
+    @Override
+    public  ApiResponseDTO fetchCommentsAndReplies(Integer postId,Integer userId,Integer forumId) {
+
+        List<Object[]>  resultList=postCommentsRepository.findPostCommentsByPost_id(postId,userId,forumId);
+
+
+            List<PostMainComment> postMainComments=new ArrayList<>();
+
+
+            if(!resultList.isEmpty()) {
+
+                for (Object[] row : resultList) {
+                    PostMainComment dto = new PostMainComment();
+
+                    dto.setId((Integer)row[0]);
+                    dto.setContent((String) row[1]);
+                    dto.setLikes((Integer) row[2]);
+
+
+
+                    Long t= (long)row[5];
+                    int g=t.intValue();
+                    dto.setLikeCount(g);
+
+
+
+                    long v= (long)row[6];
+                    int x= (int) v;
+                    dto.setCommentsNumber(x);
+                    Timestamp timestamp = ((java.sql.Timestamp) row[7]);
+
+                    // Convert Timestamp to Date
+                    Date sqlDate = new Date(timestamp.getTime());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateString = dateFormat.format(sqlDate);
+
+
+
+
+                    dto.setCreated_at(formattedDateString);
+                    dto.setUsername((String) row[8]);
+                    dto.setComments(fetchRepliesForComment((Integer)row[0],userId,forumId));
+
+
+                    postMainComments.add(dto);
+                }
+                return new SuccessResponseHandler(serviceConfig,postMainComments).SuccResponse();
+            }
+            else {
+                return new SuccessResponseHandler(serviceConfig,postMainComments).SuccResponse();
+            }
+
+
+
+
+
+
+
+    }
+
+    private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
+
+        List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
+
+
+            List<Comment> comments=new ArrayList<>();
+
+
+            if(!resultList.isEmpty()) {
+
+                for (Object[] row : resultList) {
+                    Comment dto = new Comment();
+
+                    dto.setId((Integer)row[0]);
+                    dto.setContent((String) row[1]);
+                    dto.setLikes((Integer) row[2]);
+
+
+
+                    Long t= (long)row[5];
+                    int g=t.intValue();
+                    dto.setLikeCount(g);
+
+
+
+                    long v= (long)row[6];
+                    int x= (int) v;
+                    dto.setCommentsNumber(x);
+                    Timestamp timestamp = ((java.sql.Timestamp) row[7]);
+
+                    // Convert Timestamp to Date
+                    Date sqlDate = new Date(timestamp.getTime());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateString = dateFormat.format(sqlDate);
+
+
+
+
+                    dto.setCreated_at(formattedDateString);
+                    dto.setUsername((String) row[8]);
+                    dto.setReplies(fetchRepliesForReply((Integer)row[0],userId,forumId));
+
+
+                    comments.add(dto);
+                }
+                return comments;
+            }
+            else {
+                return comments;
+            }
+
+
+
+
+
+    }
+
+    private List<Comment> fetchRepliesForReply(Integer commentId,Integer userId,Integer forumId) {
+        List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
+
+
+        List<Comment> comments=new ArrayList<>();
+
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+                Comment dto = new Comment();
+
+                dto.setId((Integer)row[0]);
+                dto.setContent((String) row[1]);
+                dto.setLikes((Integer) row[2]);
+
+
+
+                Long t= (long)row[5];
+                int g=t.intValue();
+                dto.setLikeCount(g);
+
+
+
+                long v= (long)row[6];
+                int x= (int) v;
+                dto.setCommentsNumber(x);
+                Timestamp timestamp = ((java.sql.Timestamp) row[7]);
+
+                // Convert Timestamp to Date
+                Date sqlDate = new Date(timestamp.getTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDateString = dateFormat.format(sqlDate);
+
+
+
+
+                dto.setCreated_at(formattedDateString);
+                dto.setUsername((String) row[8]);
+                dto.setReplies(fetchRepliesForComment((Integer)row[0],userId,forumId));
+
+
+                comments.add(dto);
+            }
+            return comments;
+        }
+        else {
+            return comments;
+        }
+
+
+
     }
 
 

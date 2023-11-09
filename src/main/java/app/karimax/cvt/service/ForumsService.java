@@ -25,6 +25,6 @@ public interface ForumsService {
 
     ApiResponseDTO getPosts(Integer userId,Integer forumId) throws ParseException;
 
-
+    ApiResponseDTO  fetchCommentsAndReplies(Integer postId,Integer userId,Integer forumId);
 
 }

@@ -100,6 +100,11 @@ public class ForumsController {
     }
 
 
+    @GetMapping("getPostsComments/{postId}/{userId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getPostsComments(@PathVariable("userId") Integer userId,@PathVariable("forumId") Integer forumId,@PathVariable("postId") Integer postId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.fetchCommentsAndReplies(postId,userId,forumId), HttpStatus.OK);
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity maxUploadSizeExceeded(MaxUploadSizeExceededException e) {
      System.out.println("max allowed size exceeded");
