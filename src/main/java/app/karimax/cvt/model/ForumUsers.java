@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 @Data
 @Entity
 @Table(name="forum_users")
@@ -26,5 +29,5 @@ public class ForumUsers {
 
 
     @Column(name="created_at",nullable=false)
-    private  Date created_at;
+    private Timestamp created_at;
 }

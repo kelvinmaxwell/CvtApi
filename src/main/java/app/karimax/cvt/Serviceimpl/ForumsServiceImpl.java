@@ -87,7 +87,7 @@ public class ForumsServiceImpl implements ForumsService {
         forumUsers.setRoles_id(forumUsersDto.getRoles_id());
         forumUsers.setForum_id(forumUsersDto.getForum_id());
         forumUsers.setIs_terms_agreed(forumUsersDto.getIs_terms_agreed());
-        forumUsers.setCreated_at(sqlDate);
+        forumUsers.setCreated_at(sqlTimestamp);
 
       forumUsers= forumsUsersRepository.save(forumUsers);
 
@@ -340,6 +340,53 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
         return new SuccessResponseHandler(serviceConfig, forumReportRepository.save(forumReport)).SuccResponse();
 
+    }
+
+    @Override
+    public ApiResponseDTO getUserSubscription(Integer userId, Integer forumId) {
+
+
+        return new SuccessResponseHandler(serviceConfig, forumsUsersRepository.findByUser_idAndAndForum_id(userId,forumId)).SuccResponse();
+
+    }
+
+    @Override
+    public ApiResponseDTO getforumDetails(Integer forumId) {
+        forumsUsersRepository.getforumDetails(forumId);
+        List<Object[]>  resultList= forumsUsersRepository.getforumDetails(forumId);
+
+
+       ForumDetailsDto dto=new ForumDetailsDto();
+
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+
+
+                dto.setForumId((Integer)row[0]);
+                dto.setName((String) row[1]);
+                dto.setSummary((String) row[2]);
+                Long q= (long)row[3];
+                int z=q.intValue();
+
+                dto.setFollowers(z);
+
+
+
+                Long t= (long)row[4];
+                int g=t.intValue();
+                dto.setPosts(g);
+
+
+
+
+            }
+            return new SuccessResponseHandler(serviceConfig,dto).SuccResponse();
+        }
+        else {
+            return new SuccessResponseHandler(serviceConfig,dto).SuccResponse();
+        }
     }
 
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {

@@ -129,5 +129,16 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.saveReports(forumReport), HttpStatus.OK);
     }
 
+    @GetMapping("getUserForumsBoolean/{userId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getUserForums(@PathVariable("userId") Integer userId,@PathVariable("forumId") Integer forumId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getUserSubscription(userId,forumId), HttpStatus.OK);
+    }
+
+    @GetMapping("getforumDetails/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getforumDetails(@PathVariable("forumId") Integer forumId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getforumDetails(forumId), HttpStatus.OK);
+    }
+
+
 
 }

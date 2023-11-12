@@ -34,4 +34,11 @@ public interface ForumsService {
 
 
     ApiResponseDTO saveReports(ForumReport forumReport);
+
+
+    ApiResponseDTO getUserSubscription(Integer  userId,Integer forumId);
+
+    ApiResponseDTO getforumDetails(Integer forumId);
+
+
 }
