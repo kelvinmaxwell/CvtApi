@@ -6,6 +6,7 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.PostDto;
 import app.karimax.cvt.dto.SaveForumsDto;
+import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.PostComments;
 import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.ForumRolesService;
@@ -118,6 +119,15 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.saveComment(postComments), HttpStatus.OK);
     }
 
+
+    @PostMapping("handlelikesPosts/{postId}/{customerId}/{action}/{reactionType}/{dislikelike}")
+    public ResponseEntity<ApiResponseDTO> handlelikesPosts(@PathVariable("postId") Integer postId,@PathVariable("customerId") Integer customerId,@PathVariable("action") String action,@PathVariable("reactionType") String reactionType,@PathVariable("dislikelike") String dislikelike) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.handlelikesPosts(postId,customerId,action, reactionType, dislikelike), HttpStatus.OK);
+    }
+    @PostMapping("saveReportAction")
+    public ResponseEntity<ApiResponseDTO> saveReportAction(@RequestBody ForumReport forumReport) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.saveReports(forumReport), HttpStatus.OK);
+    }
 
 
 }

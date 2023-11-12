@@ -28,7 +28,9 @@ import java.util.logging.Logger;
 public class ForumsServiceImpl implements ForumsService {
 
     private final ForumsRepository forumsRepository;
+    private  final  PostReactionsRepository postReactionsRepository;
     private final UserRepository userRepository;
+    private  final  ForumReportRepository forumReportRepository;
     private final PostCommentsRepository postCommentsRepository;
     private final ForumsUsersRepository forumsUsersRepository;
     private final PostsRepository postsRepository;
@@ -298,6 +300,46 @@ public class ForumsServiceImpl implements ForumsService {
         postComments.setCreated_at(sqlDate);
         PostComments postComments1 =postCommentsRepository.save(postComments);
         return new SuccessResponseHandler(serviceConfig, postComments1).SuccResponse();
+    }
+
+    @Override
+    public ApiResponseDTO handlelikesPosts(Integer postId, Integer customerId, String action,String reactionType,String dislikelike) {
+
+        if(action.equalsIgnoreCase("postLike"))
+        {
+List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idAndAndReaction_typeAndAndUser_idAndDislike_like(postId,reactionType,customerId,dislikelike);
+        if((postReactions.size()>0))
+        {
+
+        }
+        else {
+            System.out.println("reached to this seaction");
+            PostReactions postReactions1=new PostReactions();
+            postReactions1.setPost_comment_id(postId);
+            postReactions1.setReaction_type(reactionType);
+            postReactions1.setUser_id(customerId);
+            postReactions1.setDislike_like(dislikelike);
+            postReactions1.setCreated_at(sqlTimestamp);
+            postReactionsRepository.save(postReactions1);
+        }
+
+        }
+            else if(action.equalsIgnoreCase("postLike0"))
+        {
+            postReactionsRepository.deletePostReactionsByPost_comment_idAndReaction_typeAndUser_idAndDislike_like(postId,reactionType,customerId,dislikelike);
+
+        }
+
+        return null;
+    }
+
+    @Override
+    public ApiResponseDTO saveReports(ForumReport forumReport) {
+
+        forumReport.setCreated_at(sqlTimestamp);
+
+        return new SuccessResponseHandler(serviceConfig, forumReportRepository.save(forumReport)).SuccResponse();
+
     }
 
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {

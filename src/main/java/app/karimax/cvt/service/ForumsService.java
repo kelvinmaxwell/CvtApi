@@ -4,6 +4,7 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ForumUsersDto;
 import app.karimax.cvt.dto.ForumsDto;
 import app.karimax.cvt.dto.PostDto;
+import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.ForumUsers;
 import app.karimax.cvt.model.PostComments;
 
@@ -28,4 +29,9 @@ public interface ForumsService {
 
     ApiResponseDTO  fetchCommentsAndReplies(Integer postId,Integer userId,Integer forumId);
     ApiResponseDTO saveComment(PostComments postComments);
+
+    ApiResponseDTO handlelikesPosts(Integer postId,Integer customerId,String action,String reactionType,String dislikelike );
+
+
+    ApiResponseDTO saveReports(ForumReport forumReport);
 }

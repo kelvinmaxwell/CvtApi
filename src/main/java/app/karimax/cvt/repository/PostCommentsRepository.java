@@ -21,4 +21,6 @@ public interface PostCommentsRepository  extends JpaRepository<PostComments,Long
             "FROM post_comments inner join users on users.id=post_comments.user_id where post_comments.user_id=?2 and post_comments.forum_id=?3 and post_comments.comment_id=?1", nativeQuery = true)
 
     List<Object[]> findPostCommentsByComment_id(Integer commentId,Integer userId,Integer forumId);
+
+
 }
