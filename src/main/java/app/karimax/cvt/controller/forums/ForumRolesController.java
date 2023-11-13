@@ -3,8 +3,10 @@ package app.karimax.cvt.controller.forums;
 import app.karimax.cvt.GetDate;
 import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.InviteUser;
 import app.karimax.cvt.dto.SaveForumsDto;
 import app.karimax.cvt.model.Employee;
+import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.Forums;
 import app.karimax.cvt.service.ForumRolesService;
 import app.karimax.cvt.service.ServicesService;
@@ -16,6 +18,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,4 +41,11 @@ public class ForumRolesController {
 
         return new ResponseEntity<ApiResponseDTO>(forumRolesService.saveForum(saveForumsDto), HttpStatus.OK);
     }
+
+    @PostMapping("inviteUsers")
+    public ResponseEntity<ApiResponseDTO> saveReportAction(@RequestBody List<InviteUser>  inviteUserList) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumRolesService.inviteUsers(inviteUserList), HttpStatus.OK);
+    }
+
+
 }

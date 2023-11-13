@@ -140,5 +140,14 @@ public class ForumsController {
     }
 
 
+    @GetMapping("getUserRoles/{userId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getforumUserRoles(@PathVariable("forumId") Integer forumId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getforumDetails(forumId), HttpStatus.OK);
+    }
+
+
+
+
+
 
 }

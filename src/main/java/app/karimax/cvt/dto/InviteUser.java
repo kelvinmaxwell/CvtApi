@@ -8,7 +8,26 @@ public class InviteUser {
     Integer position;
     String email;
     String role;
+    Integer invitedby;
+
     String id;
+
+    Integer forumId;
+
+    public Integer getForumId() {
+        return forumId;
+    }
+
+    public void setForumId(Integer forumId) {
+        this.forumId = forumId;
+    }
+
+    public Integer getInvitedby() {
+        return invitedby;
+    }
+
+    public void setInvitedby(Integer invitedby) {
+        this.invitedby = invitedby;}
 
     public String getId() {
         return id;

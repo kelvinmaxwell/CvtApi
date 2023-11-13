@@ -40,5 +40,7 @@ public interface ForumsService {
 
     ApiResponseDTO getforumDetails(Integer forumId);
 
+    ApiResponseDTO getForumUserRoles(Integer  userId,Integer forumId);
+
 
 }

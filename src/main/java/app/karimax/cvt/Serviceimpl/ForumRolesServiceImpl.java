@@ -84,16 +84,35 @@ public class ForumRolesServiceImpl  implements ForumRolesService {
 
         forumInvites = forumInvitesRepository.saveAll(forumInvites);
 
-        if (forumInvites.isEmpty()) {
+            return new SuccessResponseHandler(serviceConfig, forums).SuccResponse();
 
-return  new ErrorExceptionHandler(serviceConfig,"error").ErrorResponse();
-        } else {
-            return new SuccessResponseHandler(serviceConfig, forumInvites).SuccResponse();
-        }
 
 
     }
     else{
             return  new ErrorExceptionHandler(serviceConfig,"Duplicate Forum Name").ErrorResponse();
     }}
+
+    @Override
+    public ApiResponseDTO inviteUsers(List<InviteUser> inviteUserList) {
+        List<ForumInvites> forumInvites = new ArrayList<>();
+        for (InviteUser inviteUser : inviteUserList
+        ) {
+            ForumInvites forumInvite = new ForumInvites();
+            forumInvite.setInvited_by(String.valueOf(inviteUserList.get(0).getInvitedby()));
+            forumInvite.setInvite_to(inviteUser.getEmail());
+            forumInvite.setInvite_status(0);
+            forumInvite.setForum(String.valueOf(inviteUserList.get(0).getForumId()));
+            forumInvite.setSending_status(0);
+            forumInvite.setCreated_at(sqlDate);
+
+            forumInvites.add(forumInvite);
+
+
+        }
+
+        forumInvites = forumInvitesRepository.saveAll(forumInvites);
+
+        return new SuccessResponseHandler(serviceConfig, forumInvites).SuccResponse();
+    }
 }

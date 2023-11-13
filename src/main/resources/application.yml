@@ -7,6 +7,19 @@ spring:
     name: spring-security
   main: 
       allow-circular-references: true
+  mail:
+    host: smtp.gmail.com
+    password: flskuymfirtxupqa
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    tls: true
+    username: cvtautokenyampesa@gmail.com
 
 
     

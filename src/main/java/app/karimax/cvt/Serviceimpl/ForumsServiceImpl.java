@@ -352,7 +352,7 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
     @Override
     public ApiResponseDTO getforumDetails(Integer forumId) {
-        forumsUsersRepository.getforumDetails(forumId);
+
         List<Object[]>  resultList= forumsUsersRepository.getforumDetails(forumId);
 
 
@@ -377,6 +377,7 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
                 Long t= (long)row[4];
                 int g=t.intValue();
                 dto.setPosts(g);
+                dto.setDescription((String)row[5] );
 
 
 
@@ -387,6 +388,11 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
         else {
             return new SuccessResponseHandler(serviceConfig,dto).SuccResponse();
         }
+    }
+
+    @Override
+    public ApiResponseDTO getForumUserRoles(Integer userId, Integer forumId) {
+        return null;
     }
 
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {

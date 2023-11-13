@@ -8,6 +8,7 @@ public class ForumDetailsDto {
     Integer forumId;
     String name;
     String summary;
+    String description;
     Integer followers;
     Integer posts;
 }
