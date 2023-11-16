@@ -220,6 +220,10 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setCreated_at(formattedDateString);
               dto.setUsername((String) row[8]);
 
+                long k= (long)row[9];
+                int l= (int) k;
+              dto.setUserId(l);
+
 
                 posts.add(dto);
             }
@@ -230,6 +234,61 @@ public class ForumsServiceImpl implements ForumsService {
         }
     }
 
+    @Override
+    public ApiResponseDTO getUserPosts(Integer userId,Integer userId2) {
+        List<Object[]> resultList=postsRepository.getUserPosts(userId,userId2);
+        List<GetPostDto> posts = new ArrayList<>();
+
+        if(!resultList.isEmpty()) {
+
+            for (Object[] row : resultList) {
+                GetPostDto dto = new GetPostDto();
+
+                dto.setId((Integer)row[0]);
+                dto.setContent((String) row[1]);
+
+
+                Long m= (long)row[5];
+                int n=m.intValue();
+                dto.setLikes(n);
+
+                Long t= (long)row[5];
+                int g=t.intValue();
+                dto.setLiked(g);
+
+                Long s= (long)row[4];
+                int u=s.intValue();
+                dto.setDislike(u);
+
+                long v= (long)row[6];
+                int x= (int) v;
+                dto.setCommentsNumber(x);
+                Timestamp timestamp = ((java.sql.Timestamp) row[7]);
+
+                // Convert Timestamp to Date
+                Date sqlDate = new Date(timestamp.getTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDateString = dateFormat.format(sqlDate);
+
+
+
+
+                dto.setCreated_at(formattedDateString);
+                dto.setUsername((String) row[8]);
+
+                long k= (long)row[9];
+                int l= (int) k;
+                dto.setUserId(l);
+
+
+                posts.add(dto);
+            }
+            return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
+        }
+        else {
+            return new SuccessResponseHandler(serviceConfig,posts).SuccResponse();
+        }
+    }
 
 
     @Override

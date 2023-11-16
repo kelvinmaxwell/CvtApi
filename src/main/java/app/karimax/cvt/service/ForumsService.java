@@ -26,7 +26,7 @@ public interface ForumsService {
     ApiResponseDTO savePosts(PostDto postDto);
 
     ApiResponseDTO getPosts(Integer userId,Integer forumId) throws ParseException;
-
+    ApiResponseDTO  getUserPosts(Integer userId,Integer userId2);
     ApiResponseDTO  fetchCommentsAndReplies(Integer postId,Integer userId,Integer forumId);
     ApiResponseDTO saveComment(PostComments postComments);
 

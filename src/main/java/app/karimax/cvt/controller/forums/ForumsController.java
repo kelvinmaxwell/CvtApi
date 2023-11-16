@@ -101,6 +101,14 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.getPosts(userId,forumId), HttpStatus.OK);
     }
 
+    @GetMapping("getUserPosts/{userId}/{userId2}")
+    public ResponseEntity<ApiResponseDTO> getForumPostsUser(@PathVariable("userId") Integer userId,@PathVariable("userId2") Integer userId2) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getUserPosts(userId,userId2), HttpStatus.OK);
+    }
+
+
+
+
 
     @GetMapping("getPostsComments/{postId}/{userId}/{forumId}")
     public ResponseEntity<ApiResponseDTO> getPostsComments(@PathVariable("userId") Integer userId,@PathVariable("forumId") Integer forumId,@PathVariable("postId") Integer postId) throws ParseException {

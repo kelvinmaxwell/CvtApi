@@ -12,6 +12,7 @@ public class GetPostDto {
     Integer liked;
     Integer dislike;
     Integer commentsNumber;
+    Integer userId;
     private String username;
     private String content;
     private String created_at;
