@@ -11,4 +11,6 @@ public class ForumDetailsDto {
     String description;
     Integer followers;
     Integer posts;
+    ForumProfileImages forumProfileImages;
+
 }

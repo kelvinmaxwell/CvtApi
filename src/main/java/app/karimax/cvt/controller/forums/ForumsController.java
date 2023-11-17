@@ -2,10 +2,7 @@ package app.karimax.cvt.controller.forums;
 
 import app.karimax.cvt.Utils.ReplaceExistingSrcWithNewUrls;
 import app.karimax.cvt.config.Configs;
-import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.dto.ForumUsersDto;
-import app.karimax.cvt.dto.PostDto;
-import app.karimax.cvt.dto.SaveForumsDto;
+import app.karimax.cvt.dto.*;
 import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.PostComments;
 import app.karimax.cvt.service.FileStorageService;
@@ -34,6 +31,8 @@ public class ForumsController {
     private final ForumsService forumsService;
     private  final Configs configs;
     MultipartFile multipartFile=null;
+    MultipartFile multipartFile1=null;
+    MultipartFile multipartFile2=null;
     private  final FileStorageService fileStorageService;
 
     @GetMapping("getAll/{id}")
@@ -155,7 +154,58 @@ public class ForumsController {
 
 
 
+    @PostMapping("updateForumInfo")
+    public ResponseEntity<ApiResponseDTO> updateForumInfo(@RequestBody UpdateForumDto updateForumDto) throws ParseException {
 
+        if(updateForumDto.getForumProfileImages().getImageOne().length()>40 && updateForumDto.getForumProfileImages().getImageOne()!=null) {
+            byte[] decodedBytes1 = Base64.getMimeDecoder().decode(updateForumDto.getForumProfileImages().getImageOne());
+
+            ByteArrayInputStream inputStream1 = new ByteArrayInputStream(decodedBytes1);
+
+            try {
+                multipartFile1 = new MockMultipartFile("file.png", inputStream1);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            String fileName1 = fileStorageService.storeFile(multipartFile1);
+
+            ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName1).toUriString();
+
+
+            updateForumDto.getForumProfileImages().setImageOne(fileName1);
+        }
+        if(updateForumDto.getForumProfileImages().getImageTwo().length()>40 && updateForumDto.getForumProfileImages().getImageTwo()!=null) {
+            byte[] decodedBytes2 = Base64.getMimeDecoder().decode(updateForumDto.getForumProfileImages().getImageTwo());
+
+            ByteArrayInputStream inputStream2 = new ByteArrayInputStream(decodedBytes2);
+
+            try {
+                multipartFile2 = new MockMultipartFile("file.png", inputStream2);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            String fileName2 = fileStorageService.storeFile(multipartFile2);
+
+            ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName2).toUriString();
+
+
+            updateForumDto.getForumProfileImages().setImageTwo(fileName2);
+        }
+
+        return new ResponseEntity<ApiResponseDTO>(forumsService.updateForumInfo(updateForumDto), HttpStatus.OK);
+    }
+
+
+    @GetMapping("getForumById/{forumId}")
+    public ResponseEntity<ApiResponseDTO> getForumById(@PathVariable("forumId") Integer forumId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getForumById(forumId), HttpStatus.OK);
+    }
 
 
 }

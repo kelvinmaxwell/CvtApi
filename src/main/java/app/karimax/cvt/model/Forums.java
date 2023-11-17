@@ -1,5 +1,6 @@
 package app.karimax.cvt.model;
 
+import app.karimax.cvt.dto.UpdateForumDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -41,6 +42,21 @@ public class Forums {
     private Integer created_by;
     @Column(name="is_private",nullable=false)
     private Integer is_private;
+
+
+    public void setValuesFromUpdateForumDto(UpdateForumDto updateForumDto) {
+        this.id = updateForumDto.getId();
+        this.reference = updateForumDto.getReference();
+        this.forumName = updateForumDto.getForumName();
+        this.image = updateForumDto.getImage();
+        this.vehicle_model = updateForumDto.getVehicle_model();
+        this.summary = updateForumDto.getSummary();
+        this.description = updateForumDto.getDescription();
+        this.created_at = updateForumDto.getCreated_at();
+        this.created_by = updateForumDto.getCreated_by();
+        this.is_private = updateForumDto.getIs_private();
+    }
+
 
 
 

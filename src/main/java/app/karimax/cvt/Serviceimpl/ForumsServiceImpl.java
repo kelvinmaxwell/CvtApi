@@ -8,6 +8,7 @@ import app.karimax.cvt.model.*;
 import app.karimax.cvt.repository.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.ForumsService;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -438,6 +439,16 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
                 dto.setPosts(g);
                 dto.setDescription((String)row[5] );
 
+                Gson gson = new Gson();
+
+                // Convert JSON string to UpdateForumDto object
+                ForumProfileImages forumProfileImages = gson.fromJson((String)row[6] , ForumProfileImages.class);
+                dto.setForumProfileImages(forumProfileImages);
+
+
+
+
+
 
 
 
@@ -452,6 +463,31 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
     @Override
     public ApiResponseDTO getForumUserRoles(Integer userId, Integer forumId) {
         return null;
+    }
+
+    @Override
+    public ApiResponseDTO updateForumInfo(UpdateForumDto updateForumDto) {
+
+        Forums forum = new Forums();
+
+        // Set values in the Forum instance from UpdateForumDto
+        forum.setValuesFromUpdateForumDto(updateForumDto);
+
+        Gson gson = new Gson();
+
+        // Convert UpdateForumDto to JSON string
+        String jsonString = gson.toJson(updateForumDto.getForumProfileImages());
+        forum.setImage(jsonString);
+
+          return new SuccessResponseHandler(serviceConfig,forumsRepository.save(forum)).SuccResponse();
+    }
+
+    @Override
+    public ApiResponseDTO getForumById(Integer forumId) {
+
+
+        return new SuccessResponseHandler(serviceConfig,forumsRepository.findById(Long.valueOf(forumId)).get()).SuccResponse();
+
     }
 
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
