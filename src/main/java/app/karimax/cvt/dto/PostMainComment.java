@@ -13,6 +13,7 @@ public class PostMainComment {
     Integer likes;
 
     Integer commentsNumber;
+    Integer userId;
     private String username;
     private String content;
     private Integer commentCount;

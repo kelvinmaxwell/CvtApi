@@ -19,4 +19,6 @@ public interface PostReactionsRepository extends JpaRepository<PostReactions,Lon
     @Transactional
     @Query("DELETE FROM PostReactions pr WHERE pr.post_comment_id = ?1 and  pr.reaction_type=?2 and pr.user_id=?3 and pr.dislike_like=?4")
     void deletePostReactionsByPost_comment_idAndReaction_typeAndUser_idAndDislike_like(Integer postcommentid,String reactiontype,Integer userid,String dislikelike);
+
+
 }

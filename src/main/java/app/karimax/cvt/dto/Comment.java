@@ -13,6 +13,7 @@ public class Comment {
     Integer commentsNumber;
     private String username;
     private String content;
+    Integer userId;
     private List<Comment> replies;
     private String created_at;
 

@@ -64,6 +64,8 @@ public class ForumsServiceImpl implements ForumsService {
                 int g=t.intValue();
                 dto.setFolowers(g);
                 dto.setVehicle_model((String) row[4]);
+
+                dto.setImage((String) row[5]);
                 forumsDtos.add(dto);
             }
             return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
@@ -143,7 +145,7 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setFolowers(g);
 
                 dto.setVehicle_model((String) row[4]);
-
+                dto.setImage((String) row[5]);
                 forumsDtos.add(dto);
             }
             return new SuccessResponseHandler(serviceConfig,forumsDtos).SuccResponse();
@@ -338,6 +340,10 @@ public class ForumsServiceImpl implements ForumsService {
                     dto.setUsername((String) row[8]);
                     dto.setComments(fetchRepliesForComment((Integer)row[0],userId,forumId));
 
+
+                    long k= (long)row[9];
+                    int l= (int) k;
+                    dto.setUserId(l);
 
                     postMainComments.add(dto);
                 }
@@ -536,6 +542,9 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
                     dto.setReplies(fetchRepliesForReply((Integer)row[0],userId,forumId));
 
+                    long k= (long)row[9];
+                    int l= (int) k;
+                    dto.setUserId(l);
 
                     comments.add(dto);
                 }

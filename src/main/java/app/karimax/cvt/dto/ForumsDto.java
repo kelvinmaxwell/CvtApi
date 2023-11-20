@@ -10,5 +10,6 @@ public class ForumsDto {
     String summary;
     Integer folowers;
     String vehicle_model;
+    String image;
 
 }
