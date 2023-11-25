@@ -63,7 +63,9 @@ public class ForumRolesServiceImpl  implements ForumRolesService {
         forums.setDescription(saveForumsDto.getDescription());
         forums.setCreated_by(saveForumsDto.getCreated_by());
         forums.setCreated_at(sqlDate);
+        forums.setVehicle_model(saveForumsDto.getVehicle_model());
         forums.setIs_private(saveForumsDto.getIsPrivate());
+        forums.setImage("{\"imageone\":\"logo.png\",\"imagetwo\":\"logo.png\"}");
         forums = forumsRepository.save(forums);
 
         List<ForumInvites> forumInvites = new ArrayList<>();

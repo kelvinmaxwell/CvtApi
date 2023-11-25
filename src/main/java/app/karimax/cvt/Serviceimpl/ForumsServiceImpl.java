@@ -223,9 +223,8 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setCreated_at(formattedDateString);
               dto.setUsername((String) row[8]);
 
-                long k= (long)row[9];
-                int l= (int) k;
-              dto.setUserId(l);
+        
+              dto.setUserId((Integer)row[9]);
 
 
                 posts.add(dto);
@@ -279,9 +278,7 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setCreated_at(formattedDateString);
                 dto.setUsername((String) row[8]);
 
-                long k= (long)row[9];
-                int l= (int) k;
-                dto.setUserId(l);
+                dto.setUserId((Integer)row[9]);
 
 
                 posts.add(dto);
@@ -341,9 +338,8 @@ public class ForumsServiceImpl implements ForumsService {
                     dto.setComments(fetchRepliesForComment((Integer)row[0],userId,forumId));
 
 
-                    long k= (long)row[9];
-                    int l= (int) k;
-                    dto.setUserId(l);
+                   
+                    dto.setUserId((int)row[9]);
 
                     postMainComments.add(dto);
                 }
@@ -542,9 +538,8 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
                     dto.setReplies(fetchRepliesForReply((Integer)row[0],userId,forumId));
 
-                    long k= (long)row[9];
-                    int l= (int) k;
-                    dto.setUserId(l);
+                  
+                    dto.setUserId((int)row[9]);
 
                     comments.add(dto);
                 }
