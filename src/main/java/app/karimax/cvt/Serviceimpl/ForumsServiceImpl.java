@@ -195,7 +195,7 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setContent((String) row[1]);
 
 
-                Long m= (long)row[5];
+                Long m= (long)row[2];
                 int n=m.intValue();
               dto.setLikes(n);
 
