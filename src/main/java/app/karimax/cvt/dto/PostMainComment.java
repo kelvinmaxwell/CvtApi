@@ -11,7 +11,9 @@ import java.util.List;
 public class PostMainComment {
     Integer id;
     Integer likes;
-
+    String profile_photo_path;
+    String user_summary;
+    String email;
     Integer commentsNumber;
     Integer userId;
     private String username;

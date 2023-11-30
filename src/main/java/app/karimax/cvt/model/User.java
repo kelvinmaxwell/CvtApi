@@ -2,6 +2,7 @@ package app.karimax.cvt.model;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class User implements UserDetails {
     private String phone_number;
     private String password;
     private String otp_code;
+    public String username;
+    public String user_summary;
+    public String profile_photo_path;
     private String otp_code_expires_at;
     private String otp_verified_at;
     
@@ -41,7 +45,7 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private String created_at;
     @Column(name = "updated_at")
-    private String updated_at; 
+    private Timestamp updated_at;
 
     private String userable_type;
     @Column(name = "userable_id")

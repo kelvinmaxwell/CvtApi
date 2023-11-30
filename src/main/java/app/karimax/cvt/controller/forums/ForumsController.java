@@ -5,6 +5,7 @@ import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.*;
 import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.PostComments;
+import app.karimax.cvt.model.User;
 import app.karimax.cvt.service.FileStorageService;
 import app.karimax.cvt.service.ForumRolesService;
 import app.karimax.cvt.service.ForumsService;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Base64;
@@ -205,6 +207,55 @@ public class ForumsController {
     @GetMapping("getForumById/{forumId}")
     public ResponseEntity<ApiResponseDTO> getForumById(@PathVariable("forumId") Integer forumId) throws ParseException {
         return new ResponseEntity<ApiResponseDTO>(forumsService.getForumById(forumId), HttpStatus.OK);
+    }
+
+
+    @PostMapping("updateUserProfile/{userId}/{userName}")
+    public ResponseEntity<ApiResponseDTO> updateUserProfile(@PathVariable("userId") Integer userId,@RequestBody User user,@PathVariable("userName")String userName) throws ParseException {
+        MultipartFile multipartFile=null;
+
+        System.out.print(user.getProfile_photo_path());
+
+
+        try {
+            File file = File.createTempFile("image", ".png");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+//    	 String carg=null;
+//		try {
+//			carg = URLDecoder.decode(request.getResume_file_path(), "UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//    	 carg = carg.replace("\n","");
+
+        byte[] decodedBytes = Base64.getMimeDecoder().decode(user.getProfile_photo_path());
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);
+
+        try {
+            multipartFile = new MockMultipartFile("file.png", inputStream);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        String fileName = fileStorageService.storeFile(multipartFile);
+
+        ServletUriComponentsBuilder.fromCurrentContextPath().path(fileName).toUriString();
+
+
+
+        user.setProfile_photo_path(fileName);
+
+
+        return new ResponseEntity<ApiResponseDTO>(forumsService.updateUserProfile(user,userId, userName), HttpStatus.OK);
     }
 
 

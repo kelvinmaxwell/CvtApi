@@ -14,6 +14,9 @@ public class Comment {
     private String username;
     private String content;
     Integer userId;
+    String profile_photo_path;
+    String user_summary;
+    String email;
     private List<Comment> replies;
     private String created_at;
 

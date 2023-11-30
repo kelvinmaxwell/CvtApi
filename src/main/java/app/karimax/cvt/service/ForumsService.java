@@ -4,6 +4,7 @@ import app.karimax.cvt.dto.*;
 import app.karimax.cvt.model.ForumReport;
 import app.karimax.cvt.model.ForumUsers;
 import app.karimax.cvt.model.PostComments;
+import app.karimax.cvt.model.User;
 
 import java.text.ParseException;
 
@@ -43,5 +44,9 @@ public interface ForumsService {
 
 
     ApiResponseDTO getForumById(Integer forumId);
+
+    ApiResponseDTO updateUserProfile(User user, Integer userId,String userName);
+
+
 
 }

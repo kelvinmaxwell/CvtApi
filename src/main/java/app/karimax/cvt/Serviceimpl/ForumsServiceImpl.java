@@ -221,10 +221,14 @@ public class ForumsServiceImpl implements ForumsService {
 
 
                 dto.setCreated_at(formattedDateString);
-              dto.setUsername((String) row[8]);
+              dto.setEmail((String) row[8]);
 
         
               dto.setUserId((Integer)row[9]);
+
+                dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
+                dto.setUsername((String)row[11]);
+                dto.setUser_summary((String)row[12]);
 
 
                 posts.add(dto);
@@ -243,6 +247,8 @@ public class ForumsServiceImpl implements ForumsService {
 
         if(!resultList.isEmpty()) {
 
+
+
             for (Object[] row : resultList) {
                 GetPostDto dto = new GetPostDto();
 
@@ -250,7 +256,7 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setContent((String) row[1]);
 
 
-                Long m= (long)row[5];
+                Long m= (long)row[2];
                 int n=m.intValue();
                 dto.setLikes(n);
 
@@ -276,9 +282,13 @@ public class ForumsServiceImpl implements ForumsService {
 
 
                 dto.setCreated_at(formattedDateString);
-                dto.setUsername((String) row[8]);
+                dto.setEmail((String) row[8]);
 
                 dto.setUserId((Integer)row[9]);
+
+                dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
+                dto.setUsername((String)row[11]);
+                dto.setUser_summary((String)row[12]);
 
 
                 posts.add(dto);
@@ -334,12 +344,16 @@ public class ForumsServiceImpl implements ForumsService {
 
 
                     dto.setCreated_at(formattedDateString);
-                    dto.setUsername((String) row[8]);
+                    dto.setEmail((String) row[8]);
                     dto.setComments(fetchRepliesForComment((Integer)row[0],userId,forumId));
 
 
                    
                     dto.setUserId((int)row[9]);
+
+                    dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
+                    dto.setUsername((String)row[11]);
+                    dto.setUser_summary((String)row[12]);
 
                     postMainComments.add(dto);
                 }
@@ -492,6 +506,22 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
     }
 
+    @Override
+    public ApiResponseDTO updateUserProfile(User user, Integer userId,String userName) {
+
+        User user1=userRepository.findById(Long.valueOf(userId)).get();
+        if(user1!=null){
+
+            user1.setProfile_photo_path(user.getProfile_photo_path());
+            user1.setUser_summary(user.getUser_summary());
+            user1.setUsername(userName);
+            user1.setUpdated_at(sqlTimestamp);
+            System.out.println("....................."+user.getUsername());
+            userRepository.save(user1);
+        }
+        return null;
+    }
+
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
 
         List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
@@ -540,6 +570,10 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
 
                   
                     dto.setUserId((int)row[9]);
+
+                    dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
+                    dto.setUsername((String)row[11]);
+                    dto.setUser_summary((String)row[12]);
 
                     comments.add(dto);
                 }
