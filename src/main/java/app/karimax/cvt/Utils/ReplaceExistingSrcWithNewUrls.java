@@ -21,8 +21,10 @@ public class ReplaceExistingSrcWithNewUrls {
 
             // Check if the current index is within the bounds of the newUrls list
             if (currentIndex < newUrls.size()) {
-                // Replace the existing src attribute with the corresponding URL from the list
-                matcher.appendReplacement(stringBuffer, "src=\"" + newUrls.get(currentIndex) + "\"" + matcher.group(2));
+                String replacedSrc = "src=\"" + newUrls.get(currentIndex) + "\"";
+                String onclickAttribute = "onclick='onImageClick(\"" + newUrls.get(currentIndex) + "\");'";
+                matcher.appendReplacement(stringBuffer, replacedSrc + " " + onclickAttribute + matcher.group(2));
+
             } else {
                 // If there are no more new URLs, keep the original match
                 matcher.appendReplacement(stringBuffer, matcher.group(0));
