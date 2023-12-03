@@ -17,7 +17,7 @@ public interface PostsRepository extends JpaRepository<Posts,Long> {
     		+ "ifnull((select count(post_id) from post_comments where post_id=postId),0) as commentCount,"
     		+ "posts.created_at ,"
     		+ "users.email"
-    		+ ",users.id as userId,users.profile_photo_path,users.username,users.user_summary FROM posts inner join users on users.id=posts.user_id  where   posts.forum_id=?2", nativeQuery = true)
+    		+ ",users.id as userId,users.profile_photo_path,users.username,users.user_summary FROM posts inner join users on users.id=posts.user_id  where   posts.forum_id=?2 order by posts.created_at DESC", nativeQuery = true)
            List<Object[]> getPosts(Integer userId,Integer forumId);
 
     @Query(value="SELECT posts.id as postId"
@@ -33,7 +33,7 @@ public interface PostsRepository extends JpaRepository<Posts,Long> {
 			"users.profile_photo_path," +
 			"users.username," +
 			"users.user_summary" +
-			" FROM posts inner join users on users.id=posts.user_id  where   posts.user_id=?2", nativeQuery = true)
+			" FROM posts inner join users on users.id=posts.user_id  where   posts.user_id=?2 order by posts.created_at DESC ", nativeQuery = true)
     List<Object[]> getUserPosts(Integer userId,Integer userId2);
 
 

@@ -519,7 +519,7 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
             System.out.println("....................."+user.getUsername());
             userRepository.save(user1);
         }
-        return null;
+        return new SuccessResponseHandler(serviceConfig,user1).SuccResponse();
     }
 
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
