@@ -2,6 +2,7 @@ package app.karimax.cvt.repository;
 
 import app.karimax.cvt.model.ForumRoles;
 import app.karimax.cvt.model.Forums;
+import app.karimax.cvt.model.Mechanic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -37,7 +38,8 @@ public interface ForumsRepository    extends JpaRepository<Forums,Long> {
     @Query(value="select forums.name as forumName,forums.id,forums.summary,ifnull((select count(*) from forum_users where forum_id=forums.id),0)as followers,forums.vehicle_model ,forums.image from forums where  forums.id NOT IN (select forum_users.forum_id from forum_users where  forum_users.user_id=?2) and  forums.vehicle_model=?1 and is_private=0", nativeQuery = true)
     List<Object[]> discoverbymodel(String model,Integer userId);
 
-
+    @Query("SELECT m FROM Mechanic m INNER  JOIN User u ON u.userable_id = m.id where u.userable_type LIKE ?2  and u.id=?1 ")
+   Mechanic findMechanicsWithUsers(Integer userId,String like);
 
 
 

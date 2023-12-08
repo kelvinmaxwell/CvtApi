@@ -63,8 +63,8 @@ public class Mechanic {
 	    @Column(name = "next_of_kin")
 	    private String next_of_kin;
 	    
-	    @Column(name = "car_make_and_model")
-	    private String car_make_and_model;
+//	    @Column(name = "car_make_and_model")
+//	    private String car_make_and_model;
 	    
 	    @Column(name = "country")
 	    private String country;

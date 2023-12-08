@@ -47,6 +47,6 @@ public interface ForumsService {
 
     ApiResponseDTO updateUserProfile(User user, Integer userId,String userName);
 
-
+    ApiResponseDTO  getMechDetails(Integer userId);
 
 }

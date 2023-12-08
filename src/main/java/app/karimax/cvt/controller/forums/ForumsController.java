@@ -258,5 +258,10 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.updateUserProfile(user,userId, userName), HttpStatus.OK);
     }
 
+    @GetMapping("getMechDetails/{userId}")
+    public ResponseEntity<ApiResponseDTO> getMechDetails(@PathVariable("userId") Integer userId) throws ParseException {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.getMechDetails(userId), HttpStatus.OK);
+    }
+
 
 }

@@ -522,6 +522,11 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
         return new SuccessResponseHandler(serviceConfig,user1).SuccResponse();
     }
 
+    @Override
+    public ApiResponseDTO getMechDetails(Integer userId) {
+        return new SuccessResponseHandler(serviceConfig,forumsRepository.findMechanicsWithUsers(userId,"%Mechanic")).SuccResponse();
+    }
+
     private List<Comment>  fetchRepliesForComment(Integer commentId,Integer userId,Integer forumId) {
 
         List<Object[]>  resultList=postCommentsRepository.findPostCommentsByComment_id(commentId,userId,forumId);
