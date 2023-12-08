@@ -16,6 +16,8 @@ public class JwtAuthenticationResponse {
     private int id;
     private String phone;
     private String role;
+    private String userable_type;
+
     private String auth_expiry;
     
 }

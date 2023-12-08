@@ -113,7 +113,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
         
         User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).userable_type(newuser.getUserable_type()).build();
     }
 
 	@Override
