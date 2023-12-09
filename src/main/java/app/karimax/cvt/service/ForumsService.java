@@ -14,7 +14,7 @@ public interface ForumsService {
     ApiResponseDTO myForums(Integer customerId);
 
     ApiResponseDTO followForum(ForumUsersDto forumUsersDto);
-
+    ApiResponseDTO  unfollowForum(Integer userId, Integer forumId);
     ApiResponseDTO getAllForumModels();
 
     ApiResponseDTO discoverbymodel(String model,Integer userId);

@@ -26,7 +26,7 @@ public class EmailProcessor {
 
     private final JavaMailSender mailSender;
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 */3 * * *")
     public boolean sendUserRegistrationEmail(){
 
 

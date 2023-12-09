@@ -47,6 +47,13 @@ public class ForumsController {
         return new ResponseEntity<ApiResponseDTO>(forumsService.followForum(saveForumsDto), HttpStatus.OK);
     }
 
+    @GetMapping("unfollowForum/{userId}/{forumId}")
+    public ResponseEntity<ApiResponseDTO> unfollowForum(@PathVariable("userId") Integer userId,@PathVariable("forumId") Integer forumId) {
+        return new ResponseEntity<ApiResponseDTO>(forumsService.unfollowForum(userId,forumId), HttpStatus.OK);
+    }
+
+
+
     @GetMapping("myForums/{id}")
     public ResponseEntity<ApiResponseDTO> myForums(@PathVariable("id") Integer customerId) {
         return new ResponseEntity<ApiResponseDTO>(forumsService.myForums(customerId), HttpStatus.OK);

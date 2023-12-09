@@ -104,6 +104,12 @@ public class ForumsServiceImpl implements ForumsService {
     }
 
     @Override
+    public ApiResponseDTO unfollowForum(Integer userId, Integer forumId) {
+        forumsUsersRepository.unfollowForum(userId,forumId);
+        return new SuccessResponseHandler(serviceConfig, userId).SuccResponse();
+    }
+
+    @Override
     public ApiResponseDTO getAllForumModels() {
         List<Object[]> resultList=forumsRepository.getAllForumModels();
         List<MakeModelDto> makeModelDtoArrayList = new ArrayList<>();
