@@ -23,4 +23,7 @@ public interface JobCardService {
 	  JobCard submitrating(JobCard jobCard);
 	ApiResponseDTO getJobCardhistory(Integer customerId);
 
+
+	ApiResponseDTO getJobCardServices(Integer customerId);
+
 }

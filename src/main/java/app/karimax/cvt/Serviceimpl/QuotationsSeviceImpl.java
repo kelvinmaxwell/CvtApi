@@ -58,6 +58,7 @@ public class QuotationsSeviceImpl implements QuotationsService {
       quotations.setCustomer_id(quotationsPostRequest.getCustomer_id());
       quotations.setVehicle_id(quotationsPostRequest.getVehicle_id());
       quotations.setStatus("Pending");
+      quotations.setJob_card_id(String.valueOf(0));
       quotations.setIssue_description("<p>"+quotationsPostRequest.getIssue_description()+"</p>");
       quotations.setInitiated_by(quotationsPostRequest.getInitiated_by());
       quotations.setCreated_at(currentTimestamp);

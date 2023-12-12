@@ -66,6 +66,12 @@ public class JobCardsController {
     }
 
 
+    @GetMapping("/getJobCardServices/{jobCardId}")
+    public ResponseEntity<ApiResponseDTO> getJobCardServices(@PathVariable("jobCardId") Integer jobCardId) {
+        return ResponseEntity.ok(jobCardService.getJobCardServices(jobCardId));
+    }
+
+
 
     
     

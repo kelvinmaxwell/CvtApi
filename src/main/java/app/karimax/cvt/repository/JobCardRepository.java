@@ -28,12 +28,12 @@ public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
 	@Query("select u from User u WHERE u.id =?1 ")
 	User findByuserid(Long userid);
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	@Query("select u from JobCard u where u.status=?1 and u.source=?2 and u.customer_id=?3")
 	List<JobCard> findexistingmechbooking(String status,String source,String customerid);
 	
@@ -48,5 +48,9 @@ public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	@Query(value="select job_cards.reference as reference,vehicle_details.vehicle_registration_plate as vehicleRegistration,job_cards.issue_description as description ,job_cards.completed_at as closedAt,garages.name as garageName    from job_cards inner join garages on garages.id=job_cards.garage_id inner join vehicle_details on vehicle_details.vehicle_id=job_cards.vehicle_id where job_cards.customer_id=?1 ;", nativeQuery = true)
 	List<Object[]> getJobCardHistory(Integer customerId);
 
-	
+
+
+	@Query(value="select services.name from quotation_service inner  join services on  services.id=quotation_service.service_id  where quotation_service.quotation_id=?1", nativeQuery = true)
+	List<String> getJobCardServices(Integer id);
+
 }

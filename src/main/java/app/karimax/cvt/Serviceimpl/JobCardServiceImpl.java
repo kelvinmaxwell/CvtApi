@@ -138,5 +138,10 @@ JobCard empltyCard=null;
 		return new SuccessResponseHandler(serviceConfig,JobDetailsDtos).SuccResponse();
 	}
 
+	@Override
+	public ApiResponseDTO getJobCardServices(Integer jobCradId) {
+		return new SuccessResponseHandler(serviceConfig,jobCardRepository.getJobCardServices(jobCradId)).SuccResponse();
+	}
+
 
 }
