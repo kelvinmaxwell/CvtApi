@@ -3,6 +3,7 @@ package app.karimax.cvt.Serviceimpl;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.ServiceDto;
+import app.karimax.cvt.model.Services;
 import app.karimax.cvt.repository.ServicesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.ServicesService;
@@ -38,5 +39,16 @@ public class ServicesImpl implements ServicesService {
     @Override
     public ApiResponseDTO getServiceById(Integer id) {
         return null;
+    }
+
+    @Override
+    public ApiResponseDTO getServicesByCategory(String serviceCategory) {
+
+        List<Services> services=servicesRepository.getServicesByCategory(serviceCategory);
+
+        List<ServiceDto> listDto=services.stream()
+                .map(service -> modelMapper.map(service, ServiceDto.class))
+                .toList();
+        return new SuccessResponseHandler(serviceConfig,services).SuccResponse();
     }
 }

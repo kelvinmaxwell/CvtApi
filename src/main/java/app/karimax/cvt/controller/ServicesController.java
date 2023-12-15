@@ -35,4 +35,8 @@ public class ServicesController {
     public ResponseEntity<Object> getServiceById(@PathVariable("id") Integer id) {
         return new ResponseEntity<Object>(services.getServiceById(id), HttpStatus.OK);
     }
+    @GetMapping("getServicesByCategory/{category}")
+    public ResponseEntity<Object> getServiceById(@PathVariable("category") String  serviceCategory) {
+        return new ResponseEntity<Object>(services.getServicesByCategory(serviceCategory), HttpStatus.OK);
+    }
 }
