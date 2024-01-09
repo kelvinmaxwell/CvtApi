@@ -15,7 +15,7 @@ public class ForumUsers {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     Integer user_id;
-    @Column(name="roles_id",nullable=true)
+    @Column(name="forum_role_id",nullable=true)
     Integer roles_id;
     @Column(name="forum_id",nullable=true)
     Integer forum_id;

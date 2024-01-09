@@ -21,7 +21,7 @@ public class Forums {
     @Column(name="name",nullable=false)
     private String forumName;
 
-    @Column(name="image",nullable=true)
+    @Column(name="forum_profile_images",nullable=true)
     private String image;
 
     @Column(name="vehicle_model",nullable=true)

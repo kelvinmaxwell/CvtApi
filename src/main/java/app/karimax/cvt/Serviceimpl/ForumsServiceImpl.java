@@ -6,6 +6,7 @@ import app.karimax.cvt.dto.*;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.model.*;
 import app.karimax.cvt.repository.*;
+import app.karimax.cvt.repository.Forums.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.ForumsService;
 import com.google.gson.Gson;
@@ -18,20 +19,18 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
 public class ForumsServiceImpl implements ForumsService {
 
     private final ForumsRepository forumsRepository;
-    private  final  PostReactionsRepository postReactionsRepository;
+    private  final PostReactionsRepository postReactionsRepository;
     private final UserRepository userRepository;
-    private  final  ForumReportRepository forumReportRepository;
+    private  final ForumReportRepository forumReportRepository;
     private final PostCommentsRepository postCommentsRepository;
     private final ForumsUsersRepository forumsUsersRepository;
     private final PostsRepository postsRepository;
@@ -56,7 +55,7 @@ public class ForumsServiceImpl implements ForumsService {
             for (Object[] row : resultList) {
                 ForumsDto dto = new ForumsDto();
 
-                dto.setId((Integer)row[1]);
+                dto.setId(Math.toIntExact((long) row[1]));
                 dto.setSummary((String) row[2]);
                 dto.setForumName((String) row[0]);
 
@@ -142,7 +141,7 @@ public class ForumsServiceImpl implements ForumsService {
             for (Object[] row : resultList) {
                 ForumsDto dto = new ForumsDto();
 
-                dto.setId((Integer)row[1]);
+                dto.setId(Math.toIntExact((long) row[1]));
                 dto.setSummary((String) row[2]);
                 dto.setForumName((String) row[0]);
 
@@ -171,12 +170,15 @@ public class ForumsServiceImpl implements ForumsService {
     @Override
     public ApiResponseDTO savePosts(PostDto postDto) {
 
-        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("POS-","posts","reference",12);
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("POS-","forum_posts","reference",12);
         Posts posts=new Posts();
         posts.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
         posts.setUser_id(postDto.getUserId());
         posts.setForum_id(postDto.getForumId());
         posts.setContent(postDto.getReplacedHtml());
+        posts.setDescription("no ds");
+        posts.setDislikes(0);
+        posts.setLikes(0);
 
 
 
@@ -197,7 +199,7 @@ public class ForumsServiceImpl implements ForumsService {
             for (Object[] row : resultList) {
                 GetPostDto dto = new GetPostDto();
 
-                dto.setId((Integer)row[0]);
+                dto.setId(Math.toIntExact((long) row[0]));
                 dto.setContent((String) row[1]);
 
 
@@ -230,7 +232,7 @@ public class ForumsServiceImpl implements ForumsService {
               dto.setEmail((String) row[8]);
 
         
-              dto.setUserId((Integer)row[9]);
+              dto.setUserId(Math.toIntExact((long) row[9]));
 
                 dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
                 dto.setUsername((String)row[11]);
@@ -258,7 +260,7 @@ public class ForumsServiceImpl implements ForumsService {
             for (Object[] row : resultList) {
                 GetPostDto dto = new GetPostDto();
 
-                dto.setId((Integer)row[0]);
+                dto.setId(Math.toIntExact((long) row[0]));
                 dto.setContent((String) row[1]);
 
 
@@ -290,7 +292,7 @@ public class ForumsServiceImpl implements ForumsService {
                 dto.setCreated_at(formattedDateString);
                 dto.setEmail((String) row[8]);
 
-                dto.setUserId((Integer)row[9]);
+                dto.setUserId(Math.toIntExact((long) row[9]));
 
                 dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
                 dto.setUsername((String)row[11]);
@@ -321,7 +323,7 @@ public class ForumsServiceImpl implements ForumsService {
                 for (Object[] row : resultList) {
                     PostMainComment dto = new PostMainComment();
 
-                    dto.setId((Integer)row[0]);
+                    dto.setId(Math.toIntExact((long) row[0]));
                     dto.setContent((String) row[1]);
                     Long q= (long)row[2];
                     int z=q.intValue();
@@ -351,11 +353,11 @@ public class ForumsServiceImpl implements ForumsService {
 
                     dto.setCreated_at(formattedDateString);
                     dto.setEmail((String) row[8]);
-                    dto.setComments(fetchRepliesForComment((Integer)row[0],userId,forumId));
+                    dto.setComments(fetchRepliesForComment(Math.toIntExact((long) row[0]),userId,forumId));
 
 
                    
-                    dto.setUserId((int)row[9]);
+                    dto.setUserId(Math.toIntExact((long) row[9]));
 
                     dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
                     dto.setUsername((String)row[11]);
@@ -380,6 +382,9 @@ public class ForumsServiceImpl implements ForumsService {
     @Override
     public ApiResponseDTO saveComment(PostComments postComments) {
         postComments.setCreated_at(sqlDate);
+        postComments.setDislikes(0);
+        postComments.setLikes(0);
+        postComments.setPost_id(0);
         PostComments postComments1 =postCommentsRepository.save(postComments);
         return new SuccessResponseHandler(serviceConfig, postComments1).SuccResponse();
     }
@@ -446,7 +451,7 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
             for (Object[] row : resultList) {
 
 
-                dto.setForumId((Integer)row[0]);
+                dto.setForumId(Math.toIntExact((long) row[0]));
                 dto.setName((String) row[1]);
                 dto.setSummary((String) row[2]);
                 Long q= (long)row[3];
@@ -546,7 +551,7 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
                 for (Object[] row : resultList) {
                     Comment dto = new Comment();
 
-                    dto.setId((Integer)row[0]);
+                    dto.setId(Math.toIntExact((long) row[0]));
                     dto.setContent((String) row[1]);
                     Long q= (long)row[4];
                     int z=q.intValue();
@@ -577,10 +582,10 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
                     dto.setCreated_at(formattedDateString);
                     dto.setUsername((String) row[8]);
 
-                    dto.setReplies(fetchRepliesForReply((Integer)row[0],userId,forumId));
+                    dto.setReplies(fetchRepliesForReply(Math.toIntExact((long) row[0]),userId,forumId));
 
                   
-                    dto.setUserId((int)row[9]);
+                    dto.setUserId(Math.toIntExact((long) row[9]));
 
                     dto.setProfile_photo_path(serviceConfig.getServerImageUrl()+ (String)row[10]);
                     dto.setUsername((String)row[11]);
@@ -612,7 +617,7 @@ System.out.println("Reached");
             for (Object[] row : resultList) {
                 Comment dto = new Comment();
 
-                dto.setId((Integer)row[0]);
+                dto.setId(Math.toIntExact((long) row[0]));
                 dto.setContent((String) row[1]);
 
                 Long a= (long)row[2];
@@ -643,7 +648,7 @@ System.out.println("Reached");
 
                 dto.setCreated_at(formattedDateString);
                 dto.setUsername((String) row[8]);
-                dto.setReplies(fetchRepliesForComment((Integer)row[0],userId,forumId));
+                dto.setReplies(fetchRepliesForComment(Math.toIntExact((long) row[0]),userId,forumId));
 
 
                 comments.add(dto);

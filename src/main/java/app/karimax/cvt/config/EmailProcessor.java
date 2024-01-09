@@ -1,8 +1,7 @@
 package app.karimax.cvt.config;
 
-import app.karimax.cvt.dto.InviteUser;
 import app.karimax.cvt.model.ForumInvites;
-import app.karimax.cvt.repository.InviteUserRepsitory;
+import app.karimax.cvt.repository.Forums.InviteUserRepsitory;
 
 import lombok.RequiredArgsConstructor;
 

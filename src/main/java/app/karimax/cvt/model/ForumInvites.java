@@ -22,7 +22,7 @@ public class ForumInvites {
     @Column(name="invite_status",nullable=false)
     private Integer invite_status;
 
-    @Column(name="forum",nullable=false)
+    @Column(name="forum_id",nullable=false)
     private String forum;
 
     @Column(name="sending_status",nullable=false)

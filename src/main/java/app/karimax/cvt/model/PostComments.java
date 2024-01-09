@@ -10,7 +10,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="post_comments")
+@Table(name="forum_post_comments")
 public class PostComments {
 
     @Id
