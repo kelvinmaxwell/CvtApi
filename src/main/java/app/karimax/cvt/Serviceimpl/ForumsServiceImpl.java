@@ -469,8 +469,20 @@ List<PostReactions> postReactions=postReactionsRepository.findByPost_comment_idA
                 Gson gson = new Gson();
 
                 // Convert JSON string to UpdateForumDto object
+
                 ForumProfileImages forumProfileImages = gson.fromJson((String)row[6] , ForumProfileImages.class);
-                dto.setForumProfileImages(forumProfileImages);
+
+                if(forumProfileImages==null) {
+
+                    ForumProfileImages profileImages = new ForumProfileImages();
+                    profileImages.setImageOne(serviceConfig.getDefaultImage());
+                    profileImages.setImageTwo(serviceConfig.getDefaultImage());
+                    dto.setForumProfileImages(profileImages);
+
+                }
+                else{
+                    dto.setForumProfileImages(forumProfileImages);
+                }
 
 
 
