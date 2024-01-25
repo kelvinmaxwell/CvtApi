@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @Data
@@ -36,7 +37,7 @@ public class PostComments {
     @Column(name = "dislikes",nullable = true)
     Integer dislikes;
     @Column(name = "created_at",nullable = true)
-    Date created_at;
+    Timestamp created_at;
     @Column(name = "updated_at",nullable = true)
     Date updated_at;
 

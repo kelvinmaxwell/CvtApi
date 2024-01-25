@@ -170,7 +170,7 @@ public class ForumsServiceImpl implements ForumsService {
     @Override
     public ApiResponseDTO savePosts(PostDto postDto) {
 
-        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("POS-","forum_posts","reference",12);
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("FRP-","forum_posts","reference",12);
         Posts posts=new Posts();
         posts.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
         posts.setUser_id(postDto.getUserId());
@@ -381,10 +381,10 @@ public class ForumsServiceImpl implements ForumsService {
 
     @Override
     public ApiResponseDTO saveComment(PostComments postComments) {
-        postComments.setCreated_at(sqlDate);
+        postComments.setCreated_at(sqlTimestamp);
         postComments.setDislikes(0);
         postComments.setLikes(0);
-        postComments.setPost_id(0);
+//        postComments.setPost_id(0);
         PostComments postComments1 =postCommentsRepository.save(postComments);
         return new SuccessResponseHandler(serviceConfig, postComments1).SuccResponse();
     }
