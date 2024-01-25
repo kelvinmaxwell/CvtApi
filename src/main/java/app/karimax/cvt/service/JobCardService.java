@@ -26,4 +26,5 @@ public interface JobCardService {
 
 	ApiResponseDTO getJobCardServices(Integer customerId);
 
+	ApiResponseDTO getJobCardhistoryVehicle(Integer customerId,Integer vehicleId);
 }

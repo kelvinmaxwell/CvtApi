@@ -143,5 +143,14 @@ JobCard empltyCard=null;
 		return new SuccessResponseHandler(serviceConfig,jobCardRepository.getJobCardServices(jobCradId)).SuccResponse();
 	}
 
+	@Override
+	public ApiResponseDTO getJobCardhistoryVehicle(Integer customerId, Integer vehicleId) {
+		List<Object[]> listGarageServices=jobCardRepository.getJobCardHistoryVehicle(customerId,vehicleId);
+		JobCardDto jobCardDto=new JobCardDto();
+
+		List<JobCardDto> JobDetailsDtos=jobCardDto.mapToListOfObjects(listGarageServices);
+		return new SuccessResponseHandler(serviceConfig,JobDetailsDtos).SuccResponse();
+	}
+
 
 }

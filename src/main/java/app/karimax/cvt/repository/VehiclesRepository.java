@@ -30,7 +30,7 @@ public interface VehiclesRepository extends JpaRepository<Vehicles, Long> {
    @Query( "SELECT m  FROM VehicleModelsDao  m WHERE m.brand = ?1 and m.model_name=?2 and m.year_of_manufacture=?3 ")
    ArrayList<VehicleModelsDao>  findVehicleByDetails(String brand,String model,String year);
 
-   @Query(value="select vehicles.customer_id,vehicle_models.model_name,vehicle_models.brand,vehicle_models.year_of_manufacture,vehicle_models.engine_capacity ,vehicle_details.vehicle_registration_plate ,vehicles.created_at from vehicles inner join vehicle_details on vehicle_details.vehicle_id=vehicles.id inner join vehicle_models on vehicle_models.id=vehicles.vehicle_model_id where vehicles.customer_id=?1 ",nativeQuery = true)
+   @Query(value="select vehicles.customer_id,vehicle_models.model_name,vehicle_models.brand,vehicle_models.year_of_manufacture,vehicle_models.engine_capacity ,vehicle_details.vehicle_registration_plate ,vehicles.created_at,vehicles.id from vehicles inner join vehicle_details on vehicle_details.vehicle_id=vehicles.id inner join vehicle_models on vehicle_models.id=vehicles.vehicle_model_id where vehicles.customer_id=?1 ",nativeQuery = true)
    List<Object[]> getCustomerVehicles(Integer customerId);
    @Query("SELECT v  FROM VehicleModelsDao v WHERE v.brand = ?1 and v.model_name=?2 and v.year_of_manufacture=?3 and v.engine_capacity=?4 ")
    VehicleModelsDao  findmodelid(String brand,String model,String year,String enginecc);
