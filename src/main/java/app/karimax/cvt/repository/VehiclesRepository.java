@@ -47,4 +47,9 @@ public interface VehiclesRepository extends JpaRepository<Vehicles, Long> {
    
    @Query("SELECT v  FROM Vehicles v WHERE v.id = ?1")
    Vehicles  findvehiclebyid(Long  id);
+
+
+   @Query(value="SELECT vehicle_models.model_name from vehicle_details inner join vehicles on vehicle_details.vehicle_id=vehicles.id inner join vehicle_models on\n" +
+           "        vehicle_models.id=vehicles.vehicle_model_id  where vehicle_details.vehicle_registration_plate=?1 limit 100",nativeQuery = true)
+   List<Object[]> getVehicleDetailsByReg(String  vehiclereg);
 }

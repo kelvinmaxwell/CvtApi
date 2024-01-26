@@ -49,6 +49,8 @@ public class Mechanic {
 	    
 	    @Column(name = "badge")
 	    private String badge;
+	@Column(name = "color_code")
+	private String color_code;
 	    
 	    @Column(name = "mechanic_status_id")
 	    private String mechanic_status_id;

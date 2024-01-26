@@ -3,6 +3,9 @@ package app.karimax.cvt.Serviceimpl;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.MechTypes;
+import app.karimax.cvt.dto.MechanicsDto;
+import app.karimax.cvt.model.Mechanic;
+import app.karimax.cvt.repository.MechanicRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.JwtService;
 import app.karimax.cvt.service.MechTypesService;
@@ -10,10 +13,14 @@ import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MechTypesServiceImpl implements MechTypesService {
     private final Configs serviceConfig;
+    private  final MechanicRepository mechanicRepository;
     @Override
     public ApiResponseDTO getMechTypes() {
 
@@ -25,5 +32,35 @@ public class MechTypesServiceImpl implements MechTypesService {
 
         return new SuccessResponseHandler(serviceConfig,arrayOfObjects).SuccResponse();
 
+    }
+
+    @Override
+    public ApiResponseDTO getmechtypesfiltered(String speialization, String model) {
+      List<Mechanic> mechanics=mechanicRepository.getMechTypesFiltered(speialization,"%"+model+"%");
+        List<MechanicsDto> mechanicsDtoList = new ArrayList<>();
+        for (Mechanic mechanic:mechanics
+             ) {
+
+            mechanicsDtoList.add(mapMechanicToDto(mechanic));
+
+        }
+
+
+        return new SuccessResponseHandler(serviceConfig,mechanicsDtoList).SuccResponse();
+
+    }
+
+
+    public  MechanicsDto mapMechanicToDto(Mechanic mechanic) {
+        MechanicsDto mechanicsDto = new MechanicsDto();
+        mechanicsDto.setMechanic_id((int) mechanic.getId());
+        mechanicsDto.setFirst_name(mechanic.getFirst_name());
+        mechanicsDto.setLast_name(mechanic.getLast_name());
+        mechanicsDto.setColor_code(mechanic.getColor_code()); // Assuming badge represents color code
+        mechanicsDto.setMechanic_type(mechanic.getMechanic_type());
+        mechanicsDto.setSpecialized_car(mechanic.getSpecialized_cars());
+        // Map other fields as needed
+
+        return mechanicsDto;
     }
 }

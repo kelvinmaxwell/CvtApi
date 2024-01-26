@@ -113,6 +113,13 @@ public class VehiclesController {
 	}
 
 
+	@GetMapping("/getVehicleDetailsByReg/{vregno}")
+	public  ResponseEntity <ApiResponseDTO> getVehicleDetailsByReg(@PathVariable("vregno") String vregno)
+
+	{
+
+		return new ResponseEntity <ApiResponseDTO>(vehiclesService.getVehicleDetailsByReg(vregno),HttpStatus.OK);
+	}
 
 
 	

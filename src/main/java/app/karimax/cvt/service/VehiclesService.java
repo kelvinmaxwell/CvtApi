@@ -27,6 +27,8 @@ public interface VehiclesService {
 	  Vehicles getvmodelid(long id);
 
 	  ApiResponseDTO getCustomerVehicles(Integer customerId);
+
+	  ApiResponseDTO getVehicleDetailsByReg(String regno);
 	  
 	 
 	  

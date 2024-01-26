@@ -2,7 +2,9 @@ package app.karimax.cvt.Serviceimpl;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -201,6 +203,38 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 
 		List<VehicleDetailsDto> vehicleDetailsDtos=vehicleDetailsDto.mapToListOfObjects(listGarageServices);
 		return new SuccessResponseHandler(serviceConfig,vehicleDetailsDtos).SuccResponse();
+	}
+
+	@Override
+	public ApiResponseDTO getVehicleDetailsByReg(String regno) {
+		List<Object[]> vehicledetails=vehiclesRepository.getVehicleDetailsByReg(regno);
+		List<VehicleModels> resultList = new ArrayList<>();
+
+		for (Object[] objectArray : vehicledetails) {
+			if (objectArray != null && objectArray.length == 1 ){
+
+				VehicleModels vehicleModels=new VehicleModels();
+
+				vehicleModels.setName(String.valueOf((String) objectArray[0]));
+
+
+
+
+
+				// Assuming the order is: garageName, vehicleRegistration, status, created_at
+
+
+
+
+
+				resultList.add(vehicleModels);
+			}
+		}
+
+
+
+
+		return new SuccessResponseHandler(serviceConfig,resultList).SuccResponse();
 	}
 
 
