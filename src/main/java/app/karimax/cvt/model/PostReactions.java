@@ -18,13 +18,13 @@ public class PostReactions {
     @Column(name = "forum_post_comment_id")
     private Integer post_comment_id;
 
-    @Column(name = "reaction_type")
+    @Column(name = "reaction_for")
     private String reaction_type;
 
     @Column(name = "user_id")
     private Integer user_id;
 
-    @Column(name = "reaction_for")
+    @Column(name = "reaction_type")
     private String dislike_like;
     @Column(name = "created_at")
     private Timestamp created_at;
