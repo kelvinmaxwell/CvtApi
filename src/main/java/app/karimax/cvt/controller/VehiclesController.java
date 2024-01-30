@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,16 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.karimax.cvt.model.VehicleBrand;
-import app.karimax.cvt.model.VehicleDetails;
 import app.karimax.cvt.dao.request.PhoneRequest;
 import app.karimax.cvt.dao.request.VehicleRequest;
-import app.karimax.cvt.model.EngineCapacity;
-import app.karimax.cvt.model.Model;
-import app.karimax.cvt.model.VehicleModels;
-import app.karimax.cvt.model.VehicleModelsDao;
-import app.karimax.cvt.model.VehicleYear;
-import app.karimax.cvt.model.Vehicles;
 import app.karimax.cvt.response.Mpesa1ResponseBody;
 import app.karimax.cvt.service.VehiclesService;
 
@@ -59,6 +52,14 @@ public class VehiclesController {
 	
 		return new ResponseEntity <ArrayList<VehicleYear>>(vehiclesService.getyears(brand,model),HttpStatus.OK);
 	}
+
+    @GetMapping("trim/{brand}/{model}/{year}")
+    public  ResponseEntity <ArrayList<VehicleTrim>> gettrim(@PathVariable("brand") String brand, @PathVariable("model") String model, @PathVariable("year") String year)
+
+    {
+
+        return new ResponseEntity <ArrayList<VehicleTrim>>(vehiclesService.gettrims(brand,model,year),HttpStatus.OK);
+    }
 	
 	@GetMapping("enginecapacity/{brand}/{model}/{year}")
 	public  ResponseEntity <ArrayList<EngineCapacity>> getEnginecc(@PathVariable("brand") String brand,@PathVariable("model") String model,@PathVariable("year") String year)

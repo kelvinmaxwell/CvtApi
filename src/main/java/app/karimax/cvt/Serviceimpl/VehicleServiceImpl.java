@@ -12,6 +12,7 @@ import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.GaradgesDto;
 import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.model.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
@@ -21,13 +22,6 @@ import app.karimax.cvt.GetDate;
 import app.karimax.cvt.SetBrands;
 import app.karimax.cvt.dao.request.VehicleRequest;
 import app.karimax.cvt.exception.MainExceptions;
-import app.karimax.cvt.model.VehicleBrand;
-import app.karimax.cvt.model.VehicleDetails;
-import app.karimax.cvt.model.EngineCapacity;
-import app.karimax.cvt.model.VehicleModels;
-import app.karimax.cvt.model.VehicleModelsDao;
-import app.karimax.cvt.model.VehicleYear;
-import app.karimax.cvt.model.Vehicles;
 import app.karimax.cvt.repository.VehicleDetailsRepository;
 import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
@@ -83,6 +77,22 @@ GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 		}
 			return myreturnyears;
 	}
+
+	@Override
+	public ArrayList<VehicleTrim> gettrims(String brand, String model, String year) {
+		ArrayList<String> mytrimssArrayList=	vehiclesRepository.findtrims(brand,model,year);
+
+		ArrayList<VehicleTrim> myreturntrim=new ArrayList<>();
+
+		for(int k=0;k<mytrimssArrayList.size();k++) {
+			VehicleTrim listTrim=new VehicleTrim();
+			listTrim.setName(mytrimssArrayList.get(k));
+			myreturntrim.add(listTrim);
+
+		}
+		return myreturntrim;
+	}
+
 	@Override
 	public ArrayList<EngineCapacity> getEngineCapacity(String brand, String model, String year) {
 ArrayList<String> mymodelsArrayList=	vehiclesRepository.findEnginecc(brand,model,year);

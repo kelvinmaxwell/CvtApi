@@ -53,7 +53,7 @@ public class PreInspectionServiceImpl implements PreInspectionService {
         Gson gson=new Gson();
         String jsonLocation = gson.toJson(preInspectionRequestDao.getSeller_location());
         String[] dataArray = preInspectionRequestDao.getModel().split(",");
-        List<VehicleModelsDao> vehicleModelsDao=vehiclesRepository.findVehicleByDetails(dataArray[0],dataArray[1],dataArray[2]);
+        List<VehicleModelsDao> vehicleModelsDao=vehiclesRepository.findVehicleByDetails(dataArray[0],dataArray[1],dataArray[2],dataArray[3]);
 
         PreInspectionRequest newPreInspection=new PreInspectionRequest();
         newPreInspection.setVehicle_model_id(Long.valueOf(vehicleModelsDao.get(0).getId()));
