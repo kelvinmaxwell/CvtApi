@@ -1,5 +1,6 @@
 package app.karimax.cvt.Serviceimpl;
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.JobCardDto;
@@ -64,6 +65,8 @@ public class PreInspectionServiceImpl implements PreInspectionService {
         newPreInspection.setSeller_location(jsonLocation);
         newPreInspection.setGarage_id(preInspectionRequestDao.getGarage_id());
         newPreInspection.setCreated_at(currentTimestamp);
+        UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("PPI-", "pre_purchase_inspection_booking_requests", "reference", 12);
+        newPreInspection.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
 
 
 

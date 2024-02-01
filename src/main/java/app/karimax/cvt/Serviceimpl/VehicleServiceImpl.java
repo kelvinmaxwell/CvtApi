@@ -8,14 +8,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.GaradgesDto;
 import app.karimax.cvt.dto.VehicleDetailsDto;
 import app.karimax.cvt.model.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
+import lombok.RequiredArgsConstructor;
 import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.GetDate;
@@ -28,20 +31,16 @@ import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.VehiclesService;
 
 @Service
-
+@RequiredArgsConstructor
 public class VehicleServiceImpl implements VehiclesService {
 	
-private VehiclesRepository vehiclesRepository;
-private VehicleDetailsRepository vehicleDetailsRepository;
+private final VehiclesRepository vehiclesRepository;
+private final JdbcTemplate jdbcTemplate;
+private final VehicleDetailsRepository vehicleDetailsRepository;
 private  Configs serviceConfig;
 GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 
-	public VehicleServiceImpl(VehiclesRepository vehiclesRepository,VehicleDetailsRepository vehicleDetailsRepository,Configs serviceConfig) {
-		super();
-		this.vehiclesRepository = vehiclesRepository;
-		this.vehicleDetailsRepository = vehicleDetailsRepository;
-		this.serviceConfig=serviceConfig;
-	}
+
 	@Override
 	public ArrayList<VehicleBrand> getbrands() {
 		SetBrands brands=new SetBrands();
@@ -120,7 +119,11 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vehicleRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
 		if(vm!=null)
 		{
-			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference("V-"+new UUIDGeneratorLogic().generateID()).vehicle_model_id(vm.getId()).build());
+			UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("V-", "vehicles", "reference", 12);
+
+
+
+			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference("V-"+uniqueIdGenerator.generateUniqueId(jdbcTemplate)).vehicle_model_id(vm.getId()).build());
 			if(vehicles!=null) {
 				VehicleDetails vehicleDetails=vehicleDetailsRepository.save(VehicleDetails.builder().vehicle_registration_plate(vehicleRequest.getVehicle_registration_plate()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
 				

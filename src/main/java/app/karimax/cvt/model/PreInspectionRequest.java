@@ -19,7 +19,9 @@ public class PreInspectionRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    
+    @Column(name = "reference")
+    String reference;
     @Column(name = "customer_id")
     Integer  customer_id;
     @Column(name = "seller_name")
