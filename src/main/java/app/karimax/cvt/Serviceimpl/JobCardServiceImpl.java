@@ -4,11 +4,15 @@ import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.util.List;
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.JobCardDto;
 import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.GetDate;
@@ -22,22 +26,23 @@ import app.karimax.cvt.service.JobCardService;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 
 @Service
+@RequiredArgsConstructor
 public class JobCardServiceImpl  implements JobCardService{
-	private JobCardRepository jobCardRepository;
-	private Configs serviceConfig;
+	private final JobCardRepository jobCardRepository;
+	private final UserRepository userRepository;
+	private final Configs serviceConfig;
+	private final JdbcTemplate jdbcTemplate;
 	  
 	GetDate date=new GetDate("yyyy-MM-dd HH:mm");
-	public JobCardServiceImpl(JobCardRepository jobCardRepository,Configs serviceConfig) {
-		super();
-		this.jobCardRepository = jobCardRepository;
-		this.serviceConfig=serviceConfig;
-	}
+
 	@Override
 	public JobCard saveJobCard(JobCard jobCard) {
-		UUIDGeneratorLogic uuidGeneratorLogic=new UUIDGeneratorLogic();
+		UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("JC-", "job_cards", "reference", 12);
+
+
 		jobCard.setCreated_at(date.date());
 		jobCard.setUpdated_at(date.date());
-		jobCard.setReference("JC-"+uuidGeneratorLogic.generateID());
+		jobCard.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
 		// TODO Auto-generated method stub
 		return jobCardRepository.save(jobCard);
 	}
@@ -46,9 +51,10 @@ public class JobCardServiceImpl  implements JobCardService{
 		Job_Card_Service jService=jobCardRepository.findByJobCard(String.valueOf(jobCard.getId()));
 		if(!(jService==null)) {
 			
-					User usr=jobCardRepository.findByuserid(Long.parseLong(jService.getMechanic_id()));
-		Mechanic mech=jobCardRepository.findBymechid(usr.getUserable_id());
-		usr.setUserable_type("mechanic");
+
+		Mechanic mech=jobCardRepository.findBymechid(Long.parseLong(jService.getMechanic_id()));
+			User usr=userRepository.getByUserableId("%Mechanic",Long.parseLong(String.valueOf(mech.getId())));
+		usr.setUserable_type("Mechanic");
 		jService.setUser(usr);
 		
 		jService.setMechanic(mech);			
@@ -76,12 +82,12 @@ public class JobCardServiceImpl  implements JobCardService{
 		Job_Card_Service jobcardservice=jobCardRepository.getmechjob(String.valueOf(mechid));
 		if(!(jobcardservice==null)) {
 			JobCard jobcard=jobCardRepository.findByJobCardId(jobcardservice.getJob_card_id());
-			
-	
-			User usr=jobCardRepository.findByuserid(Long.valueOf(jobcard.getCustomer_id()));
+
+			User usr=userRepository.getByUserableId("%Customer",Long.parseLong(String.valueOf(jobcard.getCustomer_id())));
+
 					Customer cust=jobCardRepository.findBycustid(usr.getUserable_id());
 		
-		usr.setUserable_type("mechanic");
+		usr.setUserable_type("Mechanic");
 		
 		jobcardservice.setCustomer(cust);
 		

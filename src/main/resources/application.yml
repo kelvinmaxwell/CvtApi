@@ -52,7 +52,7 @@ spring:
 #    url: jdbc:mysql://localhost:3306/staging_cvt_database
 #    username: forge
 #    password: MuXaMinPLyX0eCYGJKKk
- 
+#
  
 token:
   signing:

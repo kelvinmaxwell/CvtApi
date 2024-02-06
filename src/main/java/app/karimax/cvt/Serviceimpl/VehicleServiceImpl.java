@@ -37,7 +37,7 @@ public class VehicleServiceImpl implements VehiclesService {
 private final VehiclesRepository vehiclesRepository;
 private final JdbcTemplate jdbcTemplate;
 private final VehicleDetailsRepository vehicleDetailsRepository;
-private  Configs serviceConfig;
+private final  Configs serviceConfig;
 GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 
 
@@ -123,7 +123,7 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 
 
 
-			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference("V-"+uniqueIdGenerator.generateUniqueId(jdbcTemplate)).vehicle_model_id(vm.getId()).build());
+			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference(uniqueIdGenerator.generateUniqueId(jdbcTemplate)).vehicle_model_id(vm.getId()).build());
 			if(vehicles!=null) {
 				VehicleDetails vehicleDetails=vehicleDetailsRepository.save(VehicleDetails.builder().vehicle_registration_plate(vehicleRequest.getVehicle_registration_plate()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
 				

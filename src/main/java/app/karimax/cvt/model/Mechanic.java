@@ -74,8 +74,9 @@ public class Mechanic {
 	    
 	    @Column(name = "city")
 	    private String city;
-	    
-	    
+
+
+
 	    @Column(name = "current_address")
 	    private String current_address;
 	    

@@ -101,16 +101,7 @@ public class AuthenticationController {
 			e.printStackTrace();
 		}
         
-//    	 String carg=null;
-//		try {
-//			carg = URLDecoder.decode(request.getResume_file_path(), "UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//    	 carg = carg.replace("\n","");
-    	 
+
     	byte[] decodedBytes = Base64.getMimeDecoder().decode(request.getResume_file_path());
     	
     	 ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);

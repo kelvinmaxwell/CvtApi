@@ -127,7 +127,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		newMechanic.setSpecialized_cars(mechrequest.getSpecialized_cars());
 		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
 		newMechanic.setBlue_collar_position("appUser");
-		newMechanic.setNext_of_kin("app");
+		newMechanic.setNext_of_kin("[{\"email\": \"cvtuser@hotmail.com\", \"last_name\": \"cvtuser\", \"first_name\": \"cvtuser\", \"phone_number\": \"+15519125905\"}]");
+        newMechanic.setColor_code("#FF0000");
 		newMechanic.setCountry("app");
 		newMechanic.setCity("app");
 		newMechanic.setMechanic_type("app");
