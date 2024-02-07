@@ -28,5 +28,8 @@ public class Configs {
     private String duplicateEntryDesc;
 
     private String permissionDeniedStatusDesc;
+    private String counties;
+    private String defaultImage;
+    private String serverImageUrl;
 
 }

@@ -2,50 +2,45 @@ package app.karimax.cvt.Serviceimpl;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.GaradgesDto;
 import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.model.*;
 import app.karimax.cvt.response.SuccessResponseHandler;
+import lombok.RequiredArgsConstructor;
 import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import app.karimax.cvt.GetDate;
 import app.karimax.cvt.SetBrands;
 import app.karimax.cvt.dao.request.VehicleRequest;
 import app.karimax.cvt.exception.MainExceptions;
-import app.karimax.cvt.model.VehicleBrand;
-import app.karimax.cvt.model.VehicleDetails;
-import app.karimax.cvt.model.EngineCapacity;
-import app.karimax.cvt.model.VehicleModels;
-import app.karimax.cvt.model.VehicleModelsDao;
-import app.karimax.cvt.model.VehicleYear;
-import app.karimax.cvt.model.Vehicles;
 import app.karimax.cvt.repository.VehicleDetailsRepository;
 import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.service.UUIDGeneratorLogic;
 import app.karimax.cvt.service.VehiclesService;
 
 @Service
-
+@RequiredArgsConstructor
 public class VehicleServiceImpl implements VehiclesService {
 	
-private VehiclesRepository vehiclesRepository;
-private VehicleDetailsRepository vehicleDetailsRepository;
-private  Configs serviceConfig;
+private final VehiclesRepository vehiclesRepository;
+private final JdbcTemplate jdbcTemplate;
+private final VehicleDetailsRepository vehicleDetailsRepository;
+private final  Configs serviceConfig;
 GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 
-	public VehicleServiceImpl(VehiclesRepository vehiclesRepository,VehicleDetailsRepository vehicleDetailsRepository,Configs serviceConfig) {
-		super();
-		this.vehiclesRepository = vehiclesRepository;
-		this.vehicleDetailsRepository = vehicleDetailsRepository;
-		this.serviceConfig=serviceConfig;
-	}
+
 	@Override
 	public ArrayList<VehicleBrand> getbrands() {
 		SetBrands brands=new SetBrands();
@@ -81,6 +76,22 @@ GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 		}
 			return myreturnyears;
 	}
+
+	@Override
+	public ArrayList<VehicleTrim> gettrims(String brand, String model, String year) {
+		ArrayList<String> mytrimssArrayList=	vehiclesRepository.findtrims(brand,model,year);
+
+		ArrayList<VehicleTrim> myreturntrim=new ArrayList<>();
+
+		for(int k=0;k<mytrimssArrayList.size();k++) {
+			VehicleTrim listTrim=new VehicleTrim();
+			listTrim.setName(mytrimssArrayList.get(k));
+			myreturntrim.add(listTrim);
+
+		}
+		return myreturntrim;
+	}
+
 	@Override
 	public ArrayList<EngineCapacity> getEngineCapacity(String brand, String model, String year) {
 ArrayList<String> mymodelsArrayList=	vehiclesRepository.findEnginecc(brand,model,year);
@@ -108,7 +119,11 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vehicleRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
 		if(vm!=null)
 		{
-			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference("V-"+new UUIDGeneratorLogic().generateID()).vehicle_model_id(vm.getId()).build());
+			UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("V-", "vehicles", "reference", 12);
+
+
+
+			Vehicles vehicles=vehiclesRepository.save(Vehicles.builder().customer_id(vehicleRequest.getCustomer_id()).created_at(date.gdate()).reference(uniqueIdGenerator.generateUniqueId(jdbcTemplate)).vehicle_model_id(vm.getId()).build());
 			if(vehicles!=null) {
 				VehicleDetails vehicleDetails=vehicleDetailsRepository.save(VehicleDetails.builder().vehicle_registration_plate(vehicleRequest.getVehicle_registration_plate()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
 				
@@ -201,6 +216,38 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 
 		List<VehicleDetailsDto> vehicleDetailsDtos=vehicleDetailsDto.mapToListOfObjects(listGarageServices);
 		return new SuccessResponseHandler(serviceConfig,vehicleDetailsDtos).SuccResponse();
+	}
+
+	@Override
+	public ApiResponseDTO getVehicleDetailsByReg(String regno) {
+		List<Object[]> vehicledetails=vehiclesRepository.getVehicleDetailsByReg(regno);
+		List<VehicleModels> resultList = new ArrayList<>();
+
+		for (Object[] objectArray : vehicledetails) {
+			if (objectArray != null && objectArray.length == 1 ){
+
+				VehicleModels vehicleModels=new VehicleModels();
+
+				vehicleModels.setName(String.valueOf((String) objectArray[0]));
+
+
+
+
+
+				// Assuming the order is: garageName, vehicleRegistration, status, created_at
+
+
+
+
+
+				resultList.add(vehicleModels);
+			}
+		}
+
+
+
+
+		return new SuccessResponseHandler(serviceConfig,resultList).SuccResponse();
 	}
 
 

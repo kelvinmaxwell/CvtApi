@@ -71,7 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Date jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
         
         SimpleDateFormat DateFormat
-        = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");
+        = new SimpleDateFormat("yyyy-MM-dd HH:mm.sss");
 
       // Initializing the calendar Object
       Calendar c = Calendar.getInstance();
@@ -85,7 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     		  formateddate);
         
        User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).userable_id(newuser.getUserable_id()).build();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
  Date jwtexpiry=jwtServiceimpl.extractExpiration(jwt);
         
         SimpleDateFormat DateFormat
-        = new SimpleDateFormat("yyyy-MM-dd HH:mm.SSS");
+        = new SimpleDateFormat("yyyy-MM-dd HH:mm.sss");
 
       // Initializing the calendar Object
       Calendar c = Calendar.getInstance();
@@ -113,13 +113,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
         
         User newuser = userRepository.getbyEmailapp(request.getEmail());
-        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(newuser.getEmail()).phone(newuser.getPhone_number()).auth_expiry(formateddate).id(newuser.getId()).userable_type(newuser.getUserable_type()).userable_id(newuser.getUserable_id()).build();
     }
 
 	@Override
 	public User savemechanicbio(mechsignuprequest mechrequest) {
 		Mechanic newMechanic=new Mechanic();
-        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("MEC-","customers","mechanics",12);
+        UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("MEC-","mechanics","reference",12);
 		newMechanic.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
 		newMechanic.setFirst_name(mechrequest.getFirst_name());
 		newMechanic .setLast_name(mechrequest.getLast_name());
@@ -127,7 +127,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		newMechanic.setSpecialized_cars(mechrequest.getSpecialized_cars());
 		newMechanic.setResume_file_path(mechrequest.getResume_file_path());
 		newMechanic.setBlue_collar_position("appUser");
-		newMechanic.setNext_of_kin("app");
+		newMechanic.setNext_of_kin("[{\"email\": \"cvtuser@hotmail.com\", \"last_name\": \"cvtuser\", \"first_name\": \"cvtuser\", \"phone_number\": \"+15519125905\"}]");
+        newMechanic.setColor_code("#FF0000");
 		newMechanic.setCountry("app");
 		newMechanic.setCity("app");
 		newMechanic.setMechanic_type("app");

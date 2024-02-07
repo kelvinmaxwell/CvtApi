@@ -1,0 +1,66 @@
+package app.karimax.cvt.Serviceimpl;
+
+import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.MechTypes;
+import app.karimax.cvt.dto.MechanicsDto;
+import app.karimax.cvt.model.Mechanic;
+import app.karimax.cvt.repository.MechanicRepository;
+import app.karimax.cvt.response.SuccessResponseHandler;
+import app.karimax.cvt.service.JwtService;
+import app.karimax.cvt.service.MechTypesService;
+import com.google.gson.Gson;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class MechTypesServiceImpl implements MechTypesService {
+    private final Configs serviceConfig;
+    private  final MechanicRepository mechanicRepository;
+    @Override
+    public ApiResponseDTO getMechTypes() {
+
+        String jsonString= "[\n    {\n        \"issueid\": 1,\n        \"issue\": \"Tyres, suspension and brakes Mechanics\"\n    },\n    {\n        \"issueid\": 2,\n        \"issue\": \"Petrol engine Mechanic\"\n    },\n    {\n        \"issueid\": 3,\n        \"issue\": \"Diesel engine Mechanic\"\n    },\n    {\n        \"issueid\": 4,\n        \"issue\": \"Automatic transmission mech\"\n    },\n    {\n        \"issueid\": 5,\n        \"issue\": \"Cvt Mechanics\"\n    },\n    {\n        \"issueid\": 6,\n        \"issue\": \"Auto body Mechanics\"\n    },\n    {\n        \"issueid\": 7,\n        \"issue\": \"Auto glass Mechanic\"\n    },\n    {\n        \"issueid\": 8,\n        \"issue\": \"Service Mechanics\"\n    },\n    {\n        \"issueid\": 9,\n        \"issue\": \"General automotive mechanic\"\n    },\n    {\n        \"issueid\": 10,\n        \"issue\": \"Wiring and lights Mechanics\"\n    }\n]";
+
+        Gson gson = new Gson();
+        MechTypes[] arrayOfObjects = gson.fromJson(jsonString, MechTypes[].class);
+
+
+        return new SuccessResponseHandler(serviceConfig,arrayOfObjects).SuccResponse();
+
+    }
+
+    @Override
+    public ApiResponseDTO getmechtypesfiltered(String speialization, String model) {
+      List<Mechanic> mechanics=mechanicRepository.getMechTypesFiltered(speialization,"%"+model+"%");
+        List<MechanicsDto> mechanicsDtoList = new ArrayList<>();
+        for (Mechanic mechanic:mechanics
+             ) {
+
+            mechanicsDtoList.add(mapMechanicToDto(mechanic));
+
+        }
+
+
+        return new SuccessResponseHandler(serviceConfig,mechanicsDtoList).SuccResponse();
+
+    }
+
+
+    public  MechanicsDto mapMechanicToDto(Mechanic mechanic) {
+        MechanicsDto mechanicsDto = new MechanicsDto();
+        mechanicsDto.setMechanic_id((int) mechanic.getId());
+        mechanicsDto.setFirst_name(mechanic.getFirst_name());
+        mechanicsDto.setLast_name(mechanic.getLast_name());
+        mechanicsDto.setColor_code(mechanic.getColor_code()); // Assuming badge represents color code
+        mechanicsDto.setMechanic_type(mechanic.getMechanic_type());
+        mechanicsDto.setSpecialized_car(mechanic.getSpecialized_cars());
+        // Map other fields as needed
+
+        return mechanicsDto;
+    }
+}

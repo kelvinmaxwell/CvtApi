@@ -4,14 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.model.VehicleBrand;
-import app.karimax.cvt.model.VehicleDetails;
+import app.karimax.cvt.model.*;
 import app.karimax.cvt.dao.request.VehicleRequest;
-import app.karimax.cvt.model.EngineCapacity;
-import app.karimax.cvt.model.VehicleModels;
-import app.karimax.cvt.model.VehicleModelsDao;
-import app.karimax.cvt.model.VehicleYear;
-import app.karimax.cvt.model.Vehicles;
 
 public interface VehiclesService {
 	    
@@ -19,6 +13,7 @@ public interface VehiclesService {
 	  ArrayList<VehicleModels> getmodels(String brand);
 	  
 	  ArrayList<VehicleYear> getyears(String brand,String model);
+	ArrayList<VehicleTrim> gettrims(String brand, String model, String year);
 	  ArrayList<EngineCapacity> getEngineCapacity(String brand,String model,String year);
 	  Vehicles savevehicle(VehicleRequest vehicleRequest);
 	  ArrayList<VehicleDetails> getcustomervehicles(long id);
@@ -27,6 +22,8 @@ public interface VehiclesService {
 	  Vehicles getvmodelid(long id);
 
 	  ApiResponseDTO getCustomerVehicles(Integer customerId);
+
+	  ApiResponseDTO getVehicleDetailsByReg(String regno);
 	  
 	 
 	  

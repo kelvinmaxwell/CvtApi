@@ -49,6 +49,8 @@ public class Mechanic {
 	    
 	    @Column(name = "badge")
 	    private String badge;
+	@Column(name = "color_code")
+	private String color_code;
 	    
 	    @Column(name = "mechanic_status_id")
 	    private String mechanic_status_id;
@@ -63,8 +65,8 @@ public class Mechanic {
 	    @Column(name = "next_of_kin")
 	    private String next_of_kin;
 	    
-	    @Column(name = "car_make_and_model")
-	    private String car_make_and_model;
+//	    @Column(name = "car_make_and_model")
+//	    private String car_make_and_model;
 	    
 	    @Column(name = "country")
 	    private String country;
@@ -72,8 +74,9 @@ public class Mechanic {
 	    
 	    @Column(name = "city")
 	    private String city;
-	    
-	    
+
+
+
 	    @Column(name = "current_address")
 	    private String current_address;
 	    
