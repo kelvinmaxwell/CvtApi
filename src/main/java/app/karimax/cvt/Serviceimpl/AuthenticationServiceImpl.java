@@ -1,6 +1,8 @@
 package app.karimax.cvt.Serviceimpl;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,6 +41,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtServiceImpl jwtServiceimpl;
     private final JdbcTemplate jdbcTemplate;
     private final AuthenticationManager authenticationManager;
+    LocalDateTime currentDate = LocalDateTime.now();
+    Timestamp sqlTimestamp = Timestamp.valueOf(currentDate);
     @Override
     public JwtAuthenticationResponse signup(SignUpRequest request) {
 
@@ -48,11 +52,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         
         Customer customer=new Customer();
-        customer.setCity("app");
-        customer.setCountry("app");
-        customer.setGender("app");
+        customer.setCity(request.getCity());
+        customer.setCountry(request.getCountry());
+        customer.setGender(request.getGender());
         customer.setFirst_name(request.getFirstName());
-        customer.setLast_name(request.getFirstName());
+        customer.setLast_name(request.getLastName());
+        customer.setCurrent_address(request.getCurrent_address());
+        customer.setCreated_at(sqlTimestamp);
         UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("CUS-","customers","reference",12);
         customer.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
         

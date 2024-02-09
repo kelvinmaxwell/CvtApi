@@ -116,7 +116,7 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 			
 		
 		VehicleRequest vRequest=vehicleRequest;
-		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vehicleRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
+		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vehicleRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()),vRequest.getTrim());
 		if(vm!=null)
 		{
 			UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("V-", "vehicles", "reference", 12);
@@ -192,7 +192,7 @@ VehicleDetails vehicleDetailsv=vehiclesRepository.findexistingveiclereg(vehicleR
 	}
 	@Override
 	public VehicleModelsDao returnmodelid(VehicleRequest vRequest) {
-		VehicleModelsDao vm=vehiclesRepository.findmodelid(vRequest.getBrand(),vRequest.getModel_name(),vRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
+		VehicleModelsDao vm=vehiclesRepository.findmodelidnotrim(vRequest.getBrand(),vRequest.getModel_name(),vRequest.getYear_of_manufacture(),String.valueOf(vRequest.getEngine_capacity()));
 		if(vm!=null)
 		{
 			return vm;

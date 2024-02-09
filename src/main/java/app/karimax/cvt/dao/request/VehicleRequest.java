@@ -18,6 +18,7 @@ public class VehicleRequest {
 	String model_name;
 	String vehicle_registration_plate;
 	Integer engine_capacity;
+	String trim;
 	
 
 }
