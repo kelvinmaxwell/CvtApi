@@ -135,11 +135,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		newMechanic.setBlue_collar_position("appUser");
 		newMechanic.setNext_of_kin("[{\"email\": \"cvtuser@hotmail.com\", \"last_name\": \"cvtuser\", \"first_name\": \"cvtuser\", \"phone_number\": \"+15519125905\"}]");
         newMechanic.setColor_code("#FF0000");
-		newMechanic.setCountry("app");
-		newMechanic.setCity("app");
+		newMechanic.setCountry(mechrequest.getCountry());
+		newMechanic.setCity(mechrequest.getCity());
 		newMechanic.setMechanic_type("app");
 		newMechanic.setBadge(mechrequest.getBadge());
-		newMechanic.setCurrent_address("{\"message\":\" \"}");
+		newMechanic.setCurrent_address(mechrequest.getCurrent_address());
+        newMechanic.setMechanic_status_id("2");
 		
 		
 		
