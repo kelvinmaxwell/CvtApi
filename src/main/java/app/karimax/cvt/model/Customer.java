@@ -63,7 +63,7 @@ public class Customer {
 	    @Column(name = "created_at")
 	    private Timestamp created_at;
 	    @Column(name = "updated_at")
-	    private String updated_at; 
+	    private Timestamp updated_at;
 	    
 
 }

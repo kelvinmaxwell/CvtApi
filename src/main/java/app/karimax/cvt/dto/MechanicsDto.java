@@ -10,6 +10,8 @@ public class MechanicsDto {
     String  last_name;
     String  color_code;
     String mechanic_type;
+    String current_address;
 
     String specialized_car;
+    String city;
 }

@@ -43,7 +43,7 @@ public class User implements UserDetails {
     
     
     @Column(name = "created_at")
-    private String created_at;
+    private Timestamp created_at;
     @Column(name = "updated_at")
     private Timestamp updated_at;
 

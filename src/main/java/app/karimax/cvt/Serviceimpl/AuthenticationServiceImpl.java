@@ -69,6 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     		   
     		   user.setUserable_id(savedUser.getId());
     		   user.setUserable_type("App\\Models\\Customer");
+               user.setCreated_at(sqlTimestamp);
     		  
     		   userRepository.save(user);
         
@@ -141,6 +142,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		newMechanic.setBadge(mechrequest.getBadge());
 		newMechanic.setCurrent_address(mechrequest.getCurrent_address());
         newMechanic.setMechanic_status_id("2");
+        newMechanic.setCreated_at(sqlTimestamp);
 		
 		
 		
@@ -156,7 +158,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		usr.setUserable_id(mechtemp.getId());
 		usr.setPassword(passwordEncoder.encode(mechrequest.getPassword()));	
 		usr.setUserable_type("App\\Models\\Mechanic");
-		
+        usr.setCreated_at(sqlTimestamp);
 		
 		User newmechUser=userRepository.save(usr);
 		

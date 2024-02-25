@@ -5,5 +5,5 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 public interface MechTypesService {
     ApiResponseDTO getMechTypes();
 
-    ApiResponseDTO getmechtypesfiltered(String speialization,String model);
+    ApiResponseDTO getmechtypesfiltered(String speialization,String model,String locationtype,String location);
 }
