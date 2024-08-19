@@ -1,34 +1,26 @@
 package app.karimax.cvt.Serviceimpl;
 
 
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
-
+import app.karimax.cvt.GetDate;
+import app.karimax.cvt.SetBrands;
 import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dao.request.VehicleRequest;
 import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.dto.GaradgesDto;
 import app.karimax.cvt.dto.VehicleDetailsDto;
+import app.karimax.cvt.exception.MainExceptions;
 import app.karimax.cvt.model.*;
+import app.karimax.cvt.repository.VehicleDetailsRepository;
+import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
+import app.karimax.cvt.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
-import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import app.karimax.cvt.GetDate;
-import app.karimax.cvt.SetBrands;
-import app.karimax.cvt.dao.request.VehicleRequest;
-import app.karimax.cvt.exception.MainExceptions;
-import app.karimax.cvt.repository.VehicleDetailsRepository;
-import app.karimax.cvt.repository.VehiclesRepository;
-import app.karimax.cvt.service.UUIDGeneratorLogic;
-import app.karimax.cvt.service.VehiclesService;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,14 +34,17 @@ GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 
 
 	@Override
-	public ArrayList<VehicleBrand> getbrands() {
+	public  ApiResponseDTO  getbrands() {
+		System.err.println("reached brand section");
 		SetBrands brands=new SetBrands();
-	
-		return brands.getbrands();
+
+		return new SuccessResponseHandler(serviceConfig, brands.getbrands()).SuccResponse();
+
+
 	}
 
 	@Override
-	public ArrayList<VehicleModels> getmodels(String brandid) {
+	public ApiResponseDTO getmodels(String brandid) {
 	ArrayList<String> mymodelsArrayList=	vehiclesRepository.findmodelsbymodel(brandid);
 	
 	ArrayList<VehicleModels> myreturnModels=new ArrayList<>();
@@ -60,7 +55,8 @@ GetDate date=new GetDate("yyyy-MM-dd HH:mm");
 		myreturnModels.add(listModel);
 		
 	}
-		return myreturnModels;
+
+		return new SuccessResponseHandler(serviceConfig,myreturnModels).SuccResponse();
 	}
 	@Override
 	public ArrayList<VehicleYear> getyears(String brand, String model) {

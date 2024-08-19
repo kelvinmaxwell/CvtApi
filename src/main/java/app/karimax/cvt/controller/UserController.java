@@ -2,6 +2,7 @@ package app.karimax.cvt.controller;
 
 import java.util.List;
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +26,11 @@ public class UserController {
 		this.userService = userService;
 	}
 	@GetMapping("savejob/{email}")
-		public  ResponseEntity <User> getUserByEmail(@PathVariable("email") String email)
+		public  ResponseEntity <ApiResponseDTO> getUserByEmail(@PathVariable("email") String email)
 		
 		{
 		
-			return new ResponseEntity <User>(userService.getbyEmailapp(email),HttpStatus.OK);
+			return new ResponseEntity <>(userService.getbyEmailapp(email),HttpStatus.OK);
 		}
 	
 	

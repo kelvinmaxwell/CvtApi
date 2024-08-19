@@ -9,8 +9,8 @@ import app.karimax.cvt.dao.request.VehicleRequest;
 
 public interface VehiclesService {
 	    
-	  ArrayList<VehicleBrand> getbrands();
-	  ArrayList<VehicleModels> getmodels(String brand);
+	 ApiResponseDTO getbrands();
+	ApiResponseDTO getmodels(String brand);
 	  
 	  ArrayList<VehicleYear> getyears(String brand,String model);
 	ArrayList<VehicleTrim> gettrims(String brand, String model, String year);

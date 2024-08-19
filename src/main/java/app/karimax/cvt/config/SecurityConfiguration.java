@@ -28,11 +28,10 @@ public class SecurityConfiguration {
 
     private final UserService userService;
 
-    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**","/uploads/**")
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**","/uploads/**","/api/v1/vehicles/**")
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

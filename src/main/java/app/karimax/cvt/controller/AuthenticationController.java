@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import app.karimax.cvt.dto.ApiResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -139,30 +140,30 @@ public class AuthenticationController {
     
     
     
-    @GetMapping("getUserphone/{phone}")
-	public  ResponseEntity <User> getUserByPhone(@PathVariable("phone") String phone)
+    @GetMapping("getuserphone/{phone}")
+	public  ResponseEntity <ApiResponseDTO> getUserByPhone(@PathVariable("phone") String phone)
 	
 	{
 	
-		return new ResponseEntity <User>(userService.findByphone(phone),HttpStatus.OK);
+		return new ResponseEntity <>(userService.findByphone(phone),HttpStatus.OK);
 	}
     
     
-    @GetMapping("getUseremail/{email}")
-	public  ResponseEntity <User> getUserByEmail(@PathVariable("email") String email)
+    @GetMapping("getuseremail/{email}")
+	public  ResponseEntity <ApiResponseDTO> getUserByEmail(@PathVariable("email") String email)
 	
 	{
 	
-		return new ResponseEntity <User>(userService.getbyEmailapp(email),HttpStatus.OK);
+		return new ResponseEntity <>(userService.getbyEmailapp(email),HttpStatus.OK);
 	}
     
     
     @GetMapping("phonever/{phone}")
-  	public  ResponseEntity <User> phoneverification(@PathVariable("phone") String phone)
+  	public  ResponseEntity <ApiResponseDTO> phoneverification(@PathVariable("phone") String phone)
   	
   	{
   	
-  		return new ResponseEntity <User>(userService.findByphone(phone),HttpStatus.OK);
+  		return new ResponseEntity <>(userService.findByphone(phone),HttpStatus.OK);
   	}
     
     @PostMapping("/PhonVerResponse")

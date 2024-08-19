@@ -8,7 +8,10 @@ import java.util.Date;
 import java.util.Random;
 
 
-
+import app.karimax.cvt.config.Configs;
+import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.exception.ErrorExceptionHandler;
+import app.karimax.cvt.response.SuccessResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -16,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import app.karimax.cvt.exception.ResourceNotFoundException;
@@ -32,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+	private final Configs configs;
     private final MechanicRepository mechanicRepository;
 
     
@@ -46,25 +51,25 @@ public class UserServiceImpl implements UserService {
         };
     }
 	@Override
-	public User getbyEmailapp(String email) {
+	public ApiResponseDTO getbyEmailapp(String email) {
 		User user=userRepository.getbyEmailapp(email);
 		if(user!=null) {
-		return user;
-		
+			return new SuccessResponseHandler(configs,user).SuccResponse();
+
 		}
 		else {
-			throw new ResourceNotFoundException("UserNotFound","name",email);
+			return new ErrorExceptionHandler(configs, configs.getNotFoundStatusDesc()).ErrorResponseNotFound();
 		}
 	}
 	@Override
-	public User findByphone(String phone) {
+	public ApiResponseDTO findByphone(String phone) {
 		User user=userRepository.findByPhone_number(phone);
 		if(user!=null) {
-		return user;
+			return new SuccessResponseHandler(configs,user).SuccResponse();
 		
 		}
 		else {
-			throw new ResourceNotFoundException("User Not Found","","");
+			return new ErrorExceptionHandler(configs, configs.getNotFoundStatusDesc()).ErrorResponseNotFound();
 		}
 	}
 	@Override

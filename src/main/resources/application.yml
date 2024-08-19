@@ -40,18 +40,18 @@ spring:
         # Format queries
         format_sql: true
 
-#  datasource:
-#    driverClassName: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/cvt
-#    username: root
-#    password: Karimax@2023
-
-#
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/staging_cvt_database
-    username: forge
-    password: MuXaMinPLyX0eCYGJKKk
+    url: jdbc:mysql://localhost:3306/cvt
+    username: root
+    password: Karimax@2023
+
+#
+#  datasource:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/staging_cvt_database
+#    username: forge
+#    password: MuXaMinPLyX0eCYGJKKk
 
  
 token:
@@ -78,9 +78,11 @@ configs:
   duplicateEntryDesc: Duplicate Entry
   emailSubject: User Registration Email
   failureResultCode: 0
-  failureStatusCode: 4
+  failureStatusCode: 500
+  notFoundStatusCode: 404
   failureStatusDesc: An error occurred while processing request
-  failureStatusType: 4
+  failureStatusType: 0
+  notFoundStatusType: 4
   fromEmail: cvtautokenyampesa@gmail.com
   missingParamsStatusCode: 3
   newUserPasswordStatus: 3
@@ -89,7 +91,7 @@ configs:
   recordActive: 1
   sessionExpired: Session expired
   skipAuditLogArray: clients
-  successStatusCode: 1
+  successStatusCode: 200
   successStatusDesc: Request processed successfully
   successStatusType: 1
   defaultImage: 1700909850708-file.png

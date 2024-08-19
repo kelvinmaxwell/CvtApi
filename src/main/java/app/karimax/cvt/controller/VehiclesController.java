@@ -28,21 +28,21 @@ public class VehiclesController {
 		this.vehiclesService = vehiclesService;
 	}
 	@GetMapping("brands")
-		public  ResponseEntity <ArrayList<VehicleBrand>> getbrands()
+		public   ResponseEntity <ApiResponseDTO>  getbrands()
 		
 		{
 		
-			return new ResponseEntity <ArrayList<VehicleBrand>>(vehiclesService.getbrands(),HttpStatus.OK);
+			return new ResponseEntity <>(vehiclesService.getbrands(),HttpStatus.OK);
 		}
 	
 	
 	
 	@GetMapping("models/{brand}")
-	public  ResponseEntity <ArrayList<VehicleModels>> getmodels(@PathVariable("brand") String brand)
+	public  ResponseEntity <ApiResponseDTO> getmodels(@PathVariable("brand") String brand)
 	
 	{
 	
-		return new ResponseEntity <ArrayList<VehicleModels>>(vehiclesService.getmodels(brand),HttpStatus.OK);
+		return new ResponseEntity <>(vehiclesService.getmodels(brand),HttpStatus.OK);
 	}
 	
 	@GetMapping("years/{brand}/{model}")

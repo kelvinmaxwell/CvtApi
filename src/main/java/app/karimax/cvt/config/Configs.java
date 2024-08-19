@@ -19,6 +19,10 @@ public class Configs {
     private Integer failureStatusCode;
     private Integer successStatusType;
     private Integer failureStatusType;
+    private Integer notFoundStatusType;
+    private Integer notFoundStatusCode;
+
+
 
     private String successStatusDesc;
     private String failureStatusDesc;
