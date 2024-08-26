@@ -80,6 +80,8 @@ configs:
   failureResultCode: 0
   failureStatusCode: 500
   notFoundStatusCode: 404
+  invalidAuthToken: 407
+  invalidAuthTokenDesc: invalid token
   failureStatusDesc: An error occurred while processing request
   failureStatusType: 0
   notFoundStatusType: 4

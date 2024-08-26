@@ -22,13 +22,14 @@ public class Configs {
     private Integer notFoundStatusType;
     private Integer notFoundStatusCode;
 
+    private Integer invalidAuthToken;
 
 
     private String successStatusDesc;
     private String failureStatusDesc;
     private String notFoundStatusDesc;
     private String sessionExpired;
-
+    private String invalidAuthTokenDesc;
     private String duplicateEntryDesc;
 
     private String permissionDeniedStatusDesc;
