@@ -2,6 +2,7 @@ package app.karimax.cvt.controller;
 
 
 import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.LoginDto;
 import app.karimax.cvt.service.AuthenticationService;
 import app.karimax.cvt.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,12 @@ public class AuthenticationController {
 
     private final UserService userService;
     private final AuthenticationService authenticationService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponseDTO> login(@RequestBody LoginDto loginDto){
+
+        return new ResponseEntity<ApiResponseDTO>(authenticationService.login(loginDto), HttpStatus.OK);
+    }
 
 
     @PostMapping("/verify-token/{idToken}")
@@ -41,7 +48,7 @@ public class AuthenticationController {
 
 
     @GetMapping("phonever/{phone}")
-    public ResponseEntity<ApiResponseDTO> phoneverification(@PathVariable("phone") String phone) {
+    public ResponseEntity<ApiResponseDTO> phoneVerification(@PathVariable("phone") String phone) {
 
         return new ResponseEntity<>(userService.findByphone(phone), HttpStatus.OK);
     }

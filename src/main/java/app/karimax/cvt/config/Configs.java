@@ -31,7 +31,7 @@ public class Configs {
     private String sessionExpired;
     private String invalidAuthTokenDesc;
     private String duplicateEntryDesc;
-
+private  String invalidCredentialsStatusDesc;
     private String permissionDeniedStatusDesc;
     private String counties;
     private String defaultImage;
