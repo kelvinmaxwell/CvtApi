@@ -17,6 +17,7 @@ public class CarDto {
     private String trim;
     @JsonIgnore
     private Image image;
+    private Long userId;
 
 
 }

@@ -16,6 +16,7 @@ public interface VehiclesService {
 	ApiResponseDTO getmodels(String brand);
 
 	ApiResponseDTO saveUserRegestration(MultipartFile image, CarDto carDto, UserDto userDto);
+	ApiResponseDTO saveUserVehicle(MultipartFile image, CarDto carDto);
 
 	ApiResponseDTO getyears(String brand,String model);
 	ApiResponseDTO gettrims(String brand, String model, String year);
@@ -26,7 +27,7 @@ public interface VehiclesService {
 	  
 	  Vehicles getvmodelid(long id);
 
-	  ApiResponseDTO getCustomerVehicles(Integer customerId);
+	  ApiResponseDTO getCustomerVehicles(Long userId);
 
 	  ApiResponseDTO getVehicleDetailsByReg(String regno);
 	  

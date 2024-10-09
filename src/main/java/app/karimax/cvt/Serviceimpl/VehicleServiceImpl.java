@@ -188,6 +188,37 @@ public class VehicleServiceImpl implements VehiclesService {
     }
 
     @Override
+    public ApiResponseDTO saveUserVehicle(MultipartFile image, CarDto carDto) {
+        UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("V-", "vehicles", "reference", 12);
+        VehicleModelsDao vm = vehiclesRepository.findmodelid(carDto.getMake(), carDto.getModel(), carDto.getYear(), String.valueOf(carDto.getEngineSize()), carDto.getTrim());
+
+        User user=userRepository.getCustomerByUserId(carDto.getUserId());
+        Vehicles vehicles = vehiclesRepository.save(Vehicles.builder().customer_id((int) user.getUserable_id()).created_at(date.gdate()).reference(uniqueIdGenerator.generateUniqueId(jdbcTemplate)).vehicle_model_id(vm.getId()).build());
+
+        // Save the image
+        String uploadDirectory = "uploads/carimages/";
+        String fileName = image.getOriginalFilename();
+        Path filePath = Paths.get(uploadDirectory + fileName);
+        VehicleDetails vehicleDetails = vehicleDetailsRepository.save(VehicleDetails.builder().video_file_path(uploadDirectory + fileName).vehicle_registration_plate(carDto.getCarRegNo()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
+
+        // Ensure the directory exists
+        try {
+            Files.createDirectories(filePath.getParent());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Save the file to the specified directory
+        try {
+            Files.write(filePath, image.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new SuccessResponseHandler(serviceConfig, vehicleDetails).SuccResponse();
+
+    }
+
+    @Override
     public Vehicles savevehicle(VehicleRequest vehicleRequest) {
 
         VehicleDetails vehicleDetailsv = vehiclesRepository.findexistingveiclereg(vehicleRequest.getVehicle_registration_plate());
@@ -276,8 +307,10 @@ public class VehicleServiceImpl implements VehiclesService {
     }
 
     @Override
-    public ApiResponseDTO getCustomerVehicles(Integer customerId) {
-        List<Object[]> listGarageServices = vehiclesRepository.getCustomerVehicles(customerId);
+    public ApiResponseDTO getCustomerVehicles(Long userId) {
+
+        User user=userRepository.getCustomerByUserId(userId);
+        List<Object[]> listGarageServices = vehiclesRepository.getCustomerVehicles(user.getUserable_id());
         VehicleDetailsDto vehicleDetailsDto = new VehicleDetailsDto();
 
         List<VehicleDetailsDto> vehicleDetailsDtos = vehicleDetailsDto.mapToListOfObjects(listGarageServices);

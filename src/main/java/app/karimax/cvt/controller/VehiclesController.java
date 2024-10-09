@@ -63,11 +63,23 @@ public class VehiclesController {
         return new ResponseEntity<>(vehiclesService.saveUserRegestration(image, car, user), HttpStatus.OK);
     }
 
+    @PostMapping("/savecardata")
+    public ResponseEntity<ApiResponseDTO> saveCarData(
+            @RequestPart("image") MultipartFile image,
+            @RequestPart("car") String carJson
+    ) throws JsonProcessingException {
 
-    @GetMapping("/getCustomerVehicles/{customerid}")
-    public ResponseEntity<ApiResponseDTO> getCustomerVehicles(@PathVariable("customerid") Integer customerid) {
+        CarDto car = objectMapper.readValue(carJson, CarDto.class);
 
-        return new ResponseEntity<>(vehiclesService.getCustomerVehicles(customerid), HttpStatus.OK);
+
+        return new ResponseEntity<>(vehiclesService.saveUserVehicle(image, car), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getCustomerVehicles/{userid}")
+    public ResponseEntity<ApiResponseDTO> getCustomerVehicles(@PathVariable("userid") Long userId) {
+
+        return new ResponseEntity<>(vehiclesService.getCustomerVehicles(userId), HttpStatus.OK);
     }
 
 
