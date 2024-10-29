@@ -68,7 +68,7 @@ public class VehiclesController {
             @RequestPart("image") MultipartFile image,
             @RequestPart("car") String carJson
     ) throws JsonProcessingException {
-
+ System.err.println(carJson);
         CarDto car = objectMapper.readValue(carJson, CarDto.class);
 
 

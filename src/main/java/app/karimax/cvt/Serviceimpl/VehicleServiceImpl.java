@@ -19,6 +19,7 @@ import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
+import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -199,12 +200,13 @@ public class VehicleServiceImpl implements VehiclesService {
         String uploadDirectory = "uploads/carimages/";
         String fileName = image.getOriginalFilename();
         Path filePath = Paths.get(uploadDirectory + fileName);
-        VehicleDetails vehicleDetails = vehicleDetailsRepository.save(VehicleDetails.builder().video_file_path(uploadDirectory + fileName).vehicle_registration_plate(carDto.getCarRegNo()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).build());
+        VehicleDetails vehicleDetails = vehicleDetailsRepository.save(VehicleDetails.builder().video_file_path(uploadDirectory + fileName).vehicle_registration_plate(carDto.getCarRegNo()).vehicle_id(vehicles.getId()).has_super_charger(0).has_turbo(0).engine_capacity(Integer.valueOf(carDto.getEngineSize())).build());
 
         // Ensure the directory exists
         try {
             Files.createDirectories(filePath.getParent());
         } catch (IOException e) {
+            System.err.println("checking"+e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -212,6 +214,7 @@ public class VehicleServiceImpl implements VehiclesService {
         try {
             Files.write(filePath, image.getBytes());
         } catch (IOException e) {
+            System.err.println("writing"+e.getMessage());
             throw new RuntimeException(e);
         }
         return new SuccessResponseHandler(serviceConfig, vehicleDetails).SuccResponse();
