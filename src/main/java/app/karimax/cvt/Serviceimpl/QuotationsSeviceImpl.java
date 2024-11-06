@@ -8,14 +8,11 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.model.QuotationService;
 import app.karimax.cvt.model.Quotations;
-import app.karimax.cvt.repository.GarageRepository;
 import app.karimax.cvt.repository.QuotationRepository;
 import app.karimax.cvt.repository.QuotationServiceRepository;
-import app.karimax.cvt.response.ErrorResponseUtil;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.QuotationsService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -54,40 +51,30 @@ public class QuotationsSeviceImpl implements QuotationsService {
 
       Quotations quotations=new Quotations();
       quotations.setReference(refrence);
-      quotations.setGarage_id(quotationsPostRequest.getGarage_id());
-      quotations.setCustomer_id(quotationsPostRequest.getCustomer_id());
-      quotations.setVehicle_id(quotationsPostRequest.getVehicle_id());
+      quotations.setGarage_id(quotationsPostRequest.getGarageId());
+      quotations.setCustomer_id(quotationsPostRequest.getCustomerId());
+      quotations.setVehicle_id(quotationsPostRequest.getVehicleId());
       quotations.setStatus("Pending");
       quotations.setJob_card_id(String.valueOf(0));
-      quotations.setIssue_description("<p>"+quotationsPostRequest.getIssue_description()+"</p>");
-      quotations.setInitiated_by(quotationsPostRequest.getInitiated_by());
+      quotations.setIssue_description("<p>"+quotationsPostRequest.getIssueDescription()+"</p>");
+      quotations.setInitiated_by(quotationsPostRequest.getCustomerId());
       quotations.setCreated_at(currentTimestamp);
 
       quotations=quotationRepository.save(quotations);
 
-      if(quotations!=null)
-      {
-          List<QuotationService> quotationServiceList=quotationsPostRequest.getQuotationsServiceList();
+//        List<QuotationService> quotationServiceList = quotationsPostRequest.getQuotationsServiceList();
+//
+//        for ( QuotationService quote: quotationServiceList) {
+//            quote.setQuotation_id(quotations.getId());
+//            quote.setDescription("<p>"+quotationsPostRequest.getIssueDescription()+"</p>");
+//            quote.setCreated_at(currentTimestamp);
+//
+//
+//        }
 
-          for ( QuotationService quote: quotationServiceList) {
-              quote.setQuotation_id(quotations.getId());
-              quote.setDescription("<p>"+quotationsPostRequest.getIssue_description()+"</p>");
-              quote.setCreated_at(currentTimestamp);
+//        List<QuotationService> quotationServices     =quotationServiceRepository.saveAll(quotationServiceList);
 
-
-          }
-
-     List<QuotationService> quotationServices     =quotationServiceRepository.saveAll(quotationServiceList);
-
-          return new SuccessResponseHandler(serviceConfig,quotationsPostRequest).SuccResponse();
-
-      }
-      return  new ErrorExceptionHandler(serviceConfig,"error processing Request").ErrorResponse();
-
-
-
-
-
+        return new SuccessResponseHandler(serviceConfig,quotations).SuccResponse();
 
 
     }

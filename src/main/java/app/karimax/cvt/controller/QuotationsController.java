@@ -34,7 +34,7 @@ public class QuotationsController {
 
 
     @PostMapping("addquatations")
-    public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@RequestBody QuotationsPostRequest  request) {
+    public ResponseEntity<ApiResponseDTO> addQuatations(@RequestBody QuotationsPostRequest  request) {
 
 
 
