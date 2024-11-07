@@ -15,10 +15,10 @@ public class QuotationsPostRequest {
     private Integer garageId;
 
 
-    private Integer customerId;
+    private Integer userId;
 
 
-    private Integer vehicleId;
+    private String vehicleId;
     private Long serviceId;
 
 

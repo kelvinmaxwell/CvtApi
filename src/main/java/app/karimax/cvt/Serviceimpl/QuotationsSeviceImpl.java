@@ -6,10 +6,14 @@ import app.karimax.cvt.dao.request.QuotationsPostRequest;
 import app.karimax.cvt.dto.ActiveQuotation;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
-import app.karimax.cvt.model.QuotationService;
 import app.karimax.cvt.model.Quotations;
+import app.karimax.cvt.model.User;
+import app.karimax.cvt.model.VehicleDetails;
+import app.karimax.cvt.model.Vehicles;
 import app.karimax.cvt.repository.QuotationRepository;
 import app.karimax.cvt.repository.QuotationServiceRepository;
+import app.karimax.cvt.repository.UserRepository;
+import app.karimax.cvt.repository.VehicleDetailsRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.QuotationsService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +34,8 @@ public class QuotationsSeviceImpl implements QuotationsService {
 
     private final QuotationRepository quotationRepository;
     private final QuotationServiceRepository quotationServiceRepository;
+    private final VehicleDetailsRepository vehicleDetailsRepository;
+    private final UserRepository userRepository;
     private final JdbcTemplate jdbcTemplate;
 
     Date currentDate = new Date();
@@ -45,6 +51,8 @@ public class QuotationsSeviceImpl implements QuotationsService {
     @Override
     public ApiResponseDTO saveQuotations(QuotationsPostRequest quotationsPostRequest) {
 
+        User user=userRepository.findCustomerByUserId(Long.valueOf(quotationsPostRequest.getUserId()));
+        VehicleDetails vehicleDetails=vehicleDetailsRepository.findVehicleBYRegistrationNumber(quotationsPostRequest.getVehicleId());
         System.out.println("...........................request from phone.>"+quotationsPostRequest);
         UniqueIdGenerator uniqueIdGenerator=new UniqueIdGenerator("Q-","quotations","reference",12);
       String refrence=  uniqueIdGenerator.generateUniqueId(jdbcTemplate);
@@ -52,12 +60,12 @@ public class QuotationsSeviceImpl implements QuotationsService {
       Quotations quotations=new Quotations();
       quotations.setReference(refrence);
       quotations.setGarage_id(quotationsPostRequest.getGarageId());
-      quotations.setCustomer_id(quotationsPostRequest.getCustomerId());
-      quotations.setVehicle_id(quotationsPostRequest.getVehicleId());
+      quotations.setCustomer_id((int) user.getUserable_id());
+      quotations.setVehicle_id(vehicleDetails.getVehicle_id());
       quotations.setStatus("Pending");
       quotations.setJob_card_id(String.valueOf(0));
       quotations.setIssue_description("<p>"+quotationsPostRequest.getIssueDescription()+"</p>");
-      quotations.setInitiated_by(quotationsPostRequest.getCustomerId());
+      quotations.setInitiated_by(quotationsPostRequest.getUserId());
       quotations.setCreated_at(currentTimestamp);
 
       quotations=quotationRepository.save(quotations);
@@ -81,8 +89,10 @@ public class QuotationsSeviceImpl implements QuotationsService {
 
     @Override
     public ApiResponseDTO getActiveQuotation(Integer userId, Integer serviceId) {
+        User user=userRepository.findCustomerByUserId(Long.valueOf(userId));
 
-        List<Object[]> getActivequoyes=quotationServiceRepository.getPendingQuotations(serviceId,userId);
+
+        List<Object[]> getActivequoyes=quotationServiceRepository.getPendingQuotations(serviceId, (int) user.getUserable_id());
 
         if(getActivequoyes.isEmpty())
         {
@@ -96,7 +106,9 @@ public class QuotationsSeviceImpl implements QuotationsService {
 
     @Override
     public ApiResponseDTO getAlluserquotations(Integer userId) {
-        List<Object[]> getActivequotes=quotationRepository.getPendingQuotations(userId);
+        User user=userRepository.findCustomerByUserId(Long.valueOf(userId));
+        List<Object[]> getActivequotes=quotationRepository.getPendingQuotations((int) user.getUserable_id());
+
 
 
         if(getActivequotes.isEmpty())
