@@ -22,7 +22,7 @@ jobs:
           --health-retries=3
         env:
           MYSQL_ROOT_PASSWORD: Karimax@2023
-          MYSQL_DATABASE: ujuziocorewater
+          MYSQL_DATABASE: cvt_garage
 
     steps:
       - name: Checkout code
@@ -57,9 +57,9 @@ jobs:
         run: |
           CONTAINER_ID=$(docker ps -qf "ancestor=mysql:8.0")
           echo "Copying SQL file to MySQL container..."
-          docker cp src/main/resources/schema.sql $CONTAINER_ID:/schema.sql
+          docker cp src/main/resources/cvt.sql $CONTAINER_ID:/cvt.sql
           echo "Executing SQL file..."
-          docker exec $CONTAINER_ID mysql -uroot -pKarimax@2023 ujuziocorewater < /schema.sql
+          docker exec $CONTAINER_ID mysql -uroot -pKarimax@2023 cvt_garage < /cvt.sql
 
       - name: Build with Maven
         run: mvn clean install
