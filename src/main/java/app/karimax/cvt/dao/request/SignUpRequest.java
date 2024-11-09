@@ -19,6 +19,10 @@ public class SignUpRequest {
     private String password;
     private String phone_number;
     private String phone;
+    private String city;
+    private String country;
+    private  String gender;
+    private String current_address;
     
     @Enumerated(EnumType.STRING)
     private Role role;

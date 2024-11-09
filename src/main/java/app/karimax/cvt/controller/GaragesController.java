@@ -26,17 +26,17 @@ public class GaragesController {
 
 
 
-    @GetMapping("getAll")
+    @GetMapping("get-all-garages")
     public ResponseEntity<ApiResponseDTO> getAllServiceByCategory() {
         return new ResponseEntity<ApiResponseDTO>(services.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("getAll/{category}")
+    @GetMapping("get-all-garages-by-category/{category}")
     public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@PathVariable("category") String category) {
         return new ResponseEntity<ApiResponseDTO>(services.getGarageByCategory(category), HttpStatus.OK);
     }
 
-    @GetMapping("getGarageServices/{id}")
+    @GetMapping("get-garage-service/{id}")
     public ResponseEntity<ApiResponseDTO> getAllGarageServiceByCategory(@PathVariable("id") Integer garageId) {
         return new ResponseEntity<ApiResponseDTO>(services.getGarageServices(garageId), HttpStatus.OK);
     }

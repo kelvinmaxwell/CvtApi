@@ -38,7 +38,8 @@ public class mechsignuprequest {
 	    
 	    
 	    private String specialized_cars;
-	    
+	    private String current_address;
+
 
 	    
 

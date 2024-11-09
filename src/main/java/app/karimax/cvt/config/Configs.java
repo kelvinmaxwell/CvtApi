@@ -19,14 +19,19 @@ public class Configs {
     private Integer failureStatusCode;
     private Integer successStatusType;
     private Integer failureStatusType;
+    private Integer notFoundStatusType;
+    private Integer notFoundStatusCode;
+
+    private Integer invalidAuthToken;
+
 
     private String successStatusDesc;
     private String failureStatusDesc;
     private String notFoundStatusDesc;
     private String sessionExpired;
-
+    private String invalidAuthTokenDesc;
     private String duplicateEntryDesc;
-
+private  String invalidCredentialsStatusDesc;
     private String permissionDeniedStatusDesc;
     private String counties;
     private String defaultImage;

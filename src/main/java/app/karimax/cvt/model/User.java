@@ -33,20 +33,24 @@ public class User implements UserDetails {
     private String email;
   
     private String phone_number;
+    @JsonIgnore
     private String password;
     private String otp_code;
     public String username;
     public String user_summary;
+    @JsonIgnore
     public String profile_photo_path;
+    @JsonIgnore
     private String otp_code_expires_at;
+    @JsonIgnore
     private String otp_verified_at;
     
     
     @Column(name = "created_at")
-    private String created_at;
+    private Timestamp created_at;
     @Column(name = "updated_at")
     private Timestamp updated_at;
-
+    @JsonIgnore
     private String userable_type;
     @Column(name = "userable_id")
     private long userable_id;

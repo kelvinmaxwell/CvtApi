@@ -26,12 +26,12 @@ public class MechTypesController {
         return new ResponseEntity<ApiResponseDTO>(mechTypesService.getMechTypes(), HttpStatus.OK);
     }
 
-    @GetMapping("getmechtypesfiltered/{specialization}/{model}")
-    public ResponseEntity<ApiResponseDTO> getMechTypesFiltered(@PathVariable("specialization") String  specialization,@PathVariable("model") String  model) {
+    @GetMapping("getmechtypesfiltered/{specialization}/{model}/{locationtype}/{location}")
+    public ResponseEntity<ApiResponseDTO> getMechTypesFiltered(@PathVariable("specialization") String  specialization,@PathVariable("model") String  model,@PathVariable("locationtype") String  locationtype,@PathVariable("location") String  location) {
 
 
 
 
-        return new ResponseEntity<ApiResponseDTO>(mechTypesService.getmechtypesfiltered(specialization,model), HttpStatus.OK);
+        return new ResponseEntity<ApiResponseDTO>(mechTypesService.getmechtypesfiltered(specialization,model,locationtype,location), HttpStatus.OK);
     }
 }

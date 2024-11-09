@@ -1,5 +1,6 @@
 package app.karimax.cvt.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +61,9 @@ public class Customer {
 	    
 
 	    @Column(name = "created_at")
-	    private String created_at;
+	    private Timestamp created_at;
 	    @Column(name = "updated_at")
-	    private String updated_at; 
+	    private Timestamp updated_at;
 	    
 
 }

@@ -12,16 +12,17 @@ public class QuotationsPostRequest {
 
     String title;
 
-    private Integer garage_id;
+    private Integer garageId;
 
 
-    private Integer customer_id;
+    private Integer userId;
 
 
-    private Integer vehicle_id;
+    private String vehicleId;
+    private Long serviceId;
 
 
-    private String issue_description;
+    private String issueDescription;
 
 
     private Integer initiated_by;

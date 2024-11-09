@@ -22,6 +22,26 @@ public class ErrorExceptionHandler {
         return apiResponseDTO;
     }
 
+    public ApiResponseDTO InvalidTokenErrorResponse() {
+        ApiResponseDTO apiResponseDTO=new ApiResponseDTO();
+        apiResponseDTO.setStat_code(serviceConfig.getInvalidAuthToken());
+        apiResponseDTO.setStat_type(serviceConfig.getFailureStatusCode());
+        apiResponseDTO.setStat_desc(errormessageString);
+
+
+        return apiResponseDTO;
+    }
+
+    public ApiResponseDTO ErrorResponseNotFound() {
+        ApiResponseDTO apiResponseDTO=new ApiResponseDTO();
+        apiResponseDTO.setStat_code(serviceConfig.getNotFoundStatusCode());
+        apiResponseDTO.setStat_type(serviceConfig.getNotFoundStatusType());
+        apiResponseDTO.setStat_desc(errormessageString);
+
+
+        return apiResponseDTO;
+    }
+
     public ApiResponseDTO ErrorResponseObject(List<String> errstrings) {
         ApiResponseDTO apiResponseDTO=new ApiResponseDTO();
         apiResponseDTO.setStat_code(serviceConfig.getFailureStatusCode());
