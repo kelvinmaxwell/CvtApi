@@ -59,12 +59,12 @@ jobs:
           echo "Copying SQL file to MySQL container..."
           docker cp src/main/resources/cvt.sql $CONTAINER_ID:/cvt.sql
           
-           echo "Verifying if SQL file was copied..."
+          echo "Verifying if SQL file was copied..."
           docker exec $CONTAINER_ID ls /cvt.sql || { echo "SQL file not found in container"; exit 1; }
-
-
+          
           echo "Executing SQL file..."
-          docker exec $CONTAINER_ID mysql -uroot -pKarimax@2023 cvt_garage < /cvt.sql
+          docker exec $CONTAINER_ID sh -c "mysql -uroot -pKarimax@2023 cvt_garage < /cvt.sql"
+      
 
       - name: Build with Maven
         run: mvn clean install
