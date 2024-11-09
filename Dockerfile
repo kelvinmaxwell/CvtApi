@@ -14,7 +14,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage to the working directory
-COPY --from=build /usr/src/app/target/cvt-springboot-images.jar /app/cvt.jar
+COPY --from=build /usr/src/app/target/cvt.jar /app/cvt.jar
 
 #EXPOSE 9878/udp
 
