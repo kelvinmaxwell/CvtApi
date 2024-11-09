@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  app:
+    image: kelvinmaxwell/cvtapi:tagname
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cvt_garage
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Karimax@2023
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
