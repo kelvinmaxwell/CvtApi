@@ -5,11 +5,13 @@ import app.karimax.cvt.dto.CarDetailsPageDto;
 import app.karimax.cvt.dto.NextVisitDto;
 import app.karimax.cvt.model.JobCard;
 import app.karimax.cvt.model.Quotations;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface QuotationRepository extends JpaRepository<Quotations,Long> {
@@ -20,25 +22,27 @@ public interface QuotationRepository extends JpaRepository<Quotations,Long> {
     List<Object[]> getPendingQuotations(Integer UserId);
 
 
-    @Query("SELECT j.created_at FROM JobCard j WHERE j.vehicle_id = :vehicleId AND j.status = 'Done' ORDER BY j.created_at DESC LIMIT 1")
-    String findLastCheckUp(@Param("vehicleId") Long vehicleId);
+    @Query("SELECT j.createdAt FROM JobCard j WHERE j.vehicleId = :vehicleId AND j.status = 'Done' ORDER BY j.createdAt DESC LIMIT 1")
+    Timestamp findLastCheckUp(@Param("vehicleId") Long vehicleId);
 
 
     @Query("SELECT new app.karimax.cvt.dto.NextVisitDto(" +
-            "   COALESCE(q.created_at, j.created_at), " +  // Next visit createdAt
-            "   COALESCE(q.status, j.status), " +  // Next visit status
-            "   COALESCE(q.issue_description, j.issue_description), " +  // Next visit issueDescription
-            "   COALESCE(q.garage_id, j.garage_id) " +  // Next visit garageId
+            "   COALESCE(q.created_at, j.createdAt), " +          // Next visit createdAt
+            "   COALESCE(q.status, j.status), " +                  // Next visit status
+            "   COALESCE(q.issue_description, j.issueDescription), " + // Next visit issueDescription
+            "   COALESCE(g.name, '')" +                            // Garage name from Garages table
             ") " +
             "FROM Quotations q " +
-            "LEFT JOIN JobCard j ON q.vehicle_id = j.vehicle_id " +
-            "WHERE q.vehicle_id = :vehicleId " +
+            "LEFT JOIN JobCard j ON q.vehicle_id = j.vehicleId AND q.status = 'Pending' " +
+            "LEFT JOIN Garages g ON COALESCE(q.garage_id, j.garageId) = g.id " +
+            "WHERE (q.vehicle_id = :vehicleId OR j.vehicleId = :vehicleId) " +
             "AND (q.status = 'Pending' OR j.status IN ('Draft', 'In Progress')) " +
-            "ORDER BY q.created_at DESC, j.created_at DESC")
-    NextVisitDto findNextVisit(@Param("vehicleId") Long vehicleId, Pageable pageable);
+            "ORDER BY COALESCE(q.created_at, j.createdAt) DESC")
+    Page<NextVisitDto> findNextVisit(@Param("vehicleId") Long vehicleId, Pageable pageable);
 
 
-    @Query("SELECT j FROM JobCard j WHERE j.vehicle_id = :vehicleId AND j.status = 'Done' ORDER BY j.created_at DESC")
+
+    @Query("SELECT j FROM JobCard j WHERE j.vehicleId = :vehicleId AND j.status = 'Done' ORDER BY j.createdAt DESC")
     List<JobCard> findServiceHistory(@Param("vehicleId") Long vehicleId);
 
 }

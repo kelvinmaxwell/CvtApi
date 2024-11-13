@@ -34,7 +34,7 @@ public class Quotations {
     private Integer customer_id;
 
     @Column(name = "vehicle_id")
-    private Integer vehicle_id;
+    private Long vehicle_id;
 
     @Column(name = "issue_description")
     private String issue_description;

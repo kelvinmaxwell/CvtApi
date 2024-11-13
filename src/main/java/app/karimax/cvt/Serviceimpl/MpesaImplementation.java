@@ -222,7 +222,7 @@ public class MpesaImplementation implements MpesaService {
 			mpesaReposotory.save(inv);
 			
 			JobCard jcard=jobCardRepository.findByJobCardId(inv.getJob_card_id());
-			jcard.setCompleted_at(completedat);
+			jcard.setCompletedAt(completedat);
 			jcard.setStatus("Done");
 			jobCardRepository.save(jcard);
 			

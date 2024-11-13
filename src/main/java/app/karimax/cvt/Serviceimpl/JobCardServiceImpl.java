@@ -2,20 +2,19 @@ package app.karimax.cvt.Serviceimpl;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import app.karimax.cvt.Utils.UniqueIdGenerator;
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.JobCardDto;
-import app.karimax.cvt.dto.VehicleDetailsDto;
 import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import app.karimax.cvt.GetDate;
 import app.karimax.cvt.model.Customer;
 import app.karimax.cvt.model.JobCard;
 import app.karimax.cvt.model.Job_Card_Service;
@@ -23,7 +22,6 @@ import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.JobCardRepository;
 import app.karimax.cvt.service.JobCardService;
-import app.karimax.cvt.service.UUIDGeneratorLogic;
 
 @Service
 @RequiredArgsConstructor
@@ -32,16 +30,17 @@ public class JobCardServiceImpl  implements JobCardService{
 	private final UserRepository userRepository;
 	private final Configs serviceConfig;
 	private final JdbcTemplate jdbcTemplate;
-	  
-	GetDate date=new GetDate("yyyy-MM-dd HH:mm");
+
+	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
 
 	@Override
 	public JobCard saveJobCard(JobCard jobCard) {
 		UniqueIdGenerator uniqueIdGenerator = new UniqueIdGenerator("JC-", "job_cards", "reference", 12);
 
 
-		jobCard.setCreated_at(date.date());
-		jobCard.setUpdated_at(date.date());
+		jobCard.setCreatedAt(timestamp);
+		jobCard.setUpdatedAt(timestamp);
 		jobCard.setReference(uniqueIdGenerator.generateUniqueId(jdbcTemplate));
 		// TODO Auto-generated method stub
 		return jobCardRepository.save(jobCard);
@@ -83,7 +82,7 @@ public class JobCardServiceImpl  implements JobCardService{
 		if(!(jobcardservice==null)) {
 			JobCard jobcard=jobCardRepository.findByJobCardId(jobcardservice.getJob_card_id());
 
-			User usr=userRepository.getByUserableId("%Customer",Long.parseLong(String.valueOf(jobcard.getCustomer_id())));
+			User usr=userRepository.getByUserableId("%Customer",Long.parseLong(String.valueOf(jobcard.getCustomerId())));
 
 					Customer cust=jobCardRepository.findBycustid(usr.getUserable_id());
 		
@@ -113,7 +112,7 @@ JobCard empltyCard=null;
 		}
 		else {
 			
-			return empltyCard.builder().customer_rating("rated").build();
+			return empltyCard.builder().customerRating("rated").build();
 		}
 		
 	}
@@ -121,8 +120,8 @@ JobCard empltyCard=null;
 	public JobCard submitrating(JobCard jobCard) {
 		JobCard jcrd=jobCardRepository.findByJobCardId(String.valueOf(jobCard.getId()));
 		if(!(jcrd==null)) {
-			jcrd.setCustomer_rating(jobCard.getCustomer_rating());
-			jcrd.setCustomer_remarks(jobCard.getCustomer_remarks());
+			jcrd.setCustomerRating(jobCard.getCustomerRating());
+			jcrd.setCustomerRemarks(jobCard.getCustomerRemarks());
 			
 			jcrd=jobCardRepository.save(jcrd);
 			if(!(jcrd==null)) {
@@ -132,7 +131,7 @@ JobCard empltyCard=null;
 			
 			
 		}
-		return jcrd.builder().customer_remarks("not set").build();
+		return jcrd.builder().customerRemarks("not set").build();
 	}
 
 	@Override

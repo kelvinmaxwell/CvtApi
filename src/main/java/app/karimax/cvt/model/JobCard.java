@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 
 @Data
 @Builder
@@ -23,18 +25,18 @@ public class JobCard {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private long id;
 	String  reference;
-	String  customer_id;
-	Long  vehicle_id;
-	Long  garage_id;
-	String issue_description;
+	String customerId;
+	Long vehicleId;
+	Long garageId;
+	String issueDescription;
 	String  status;
 	String  source;
-	String created_by;
-	String completed_at;
-	String customer_rating;
-	String customer_remarks;
-	String created_at;
-	String updated_at;
+	String createdBy;
+	String completedAt;
+	String customerRating;
+	String customerRemarks;
+	Timestamp createdAt;
+	Timestamp updatedAt;
 	
 	
 	

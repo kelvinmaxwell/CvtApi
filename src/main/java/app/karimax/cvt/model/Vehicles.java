@@ -24,7 +24,7 @@ public class Vehicles {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	Integer customer_id;
 	Integer vehicle_model_id;
 	String reference;
