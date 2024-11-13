@@ -24,7 +24,8 @@ public class JobCard {
 	    private long id;
 	String  reference;
 	String  customer_id;
-	String  vehicle_id;
+	Long  vehicle_id;
+	Long  garage_id;
 	String issue_description;
 	String  status;
 	String  source;
