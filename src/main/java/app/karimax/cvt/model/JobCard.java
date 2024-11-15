@@ -1,10 +1,6 @@
 package app.karimax.cvt.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +33,8 @@ public class JobCard {
 	String customerRemarks;
 	Timestamp createdAt;
 	Timestamp updatedAt;
+	Double amount;
+	String garageName;
 	
 	
 	

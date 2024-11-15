@@ -122,7 +122,7 @@ public class QuotationsSeviceImpl implements QuotationsService {
 
         Timestamp lastCheckUp = quotationRepository.findLastCheckUp(vehicleDetails.getVehicle_id());
 
-        List<JobCard> jobCardList=quotationRepository.findServiceHistory(vehicleDetails.getVehicle_id());
+        List<JobCard> jobCardList=quotationRepository.findServiceHistoryWithAmount(vehicleDetails.getVehicle_id());
 
         Pageable pageable = PageRequest.of(0, 1); // Get only the first result
         NextVisitDto nextVisit = quotationRepository.findNextVisit(vehicleDetails.getVehicle_id(), pageable).getContent().stream().findFirst().orElse(null);

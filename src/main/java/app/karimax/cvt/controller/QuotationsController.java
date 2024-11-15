@@ -62,7 +62,7 @@ public class QuotationsController {
         return new ResponseEntity<ApiResponseDTO>(quotationsService.getAlluserquotations(userId), HttpStatus.OK);
     }
 
-    @GetMapping("getVehicle-description-content/{vehicleRegistration}")
+    @GetMapping("get-vehicle-description-content/{vehicleRegistration}")
     public ResponseEntity<ApiResponseDTO> getVehicleDescriptionContent(@PathVariable("vehicleRegistration") String  vehicleRegistration) {
 
 

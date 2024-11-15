@@ -24,10 +24,10 @@ public class Invoices {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Integer id;
 String  reference;
-String job_card_id;
+Long job_card_id;
 int paymentable_id;
 String paymentable_type;
-String amount;
+Double amount;
 String status;
 String created_at;
 String updated_at;

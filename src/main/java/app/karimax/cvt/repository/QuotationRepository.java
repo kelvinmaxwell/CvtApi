@@ -42,7 +42,15 @@ public interface QuotationRepository extends JpaRepository<Quotations,Long> {
 
 
 
-    @Query("SELECT j FROM JobCard j WHERE j.vehicleId = :vehicleId AND j.status = 'Done' ORDER BY j.createdAt DESC")
-    List<JobCard> findServiceHistory(@Param("vehicleId") Long vehicleId);
+    @Query("SELECT new app.karimax.cvt.model.JobCard(" +
+            "   j.id, j.reference, j.customerId, j.vehicleId, j.garageId, " +
+            "   j.issueDescription, j.status, j.source, j.createdBy, j.completedAt, " +
+            "   j.customerRating, j.customerRemarks, j.createdAt, j.updatedAt, " +
+            "   i.amount,g.name) " +
+            "FROM JobCard j " +
+            "LEFT JOIN Invoices i ON j.id = i.job_card_id " +
+            " INNER JOIN Garages g on g.id=j.garageId WHERE j.vehicleId = :vehicleId AND j.status = 'Done' " +
+            "ORDER BY j.createdAt DESC")
+    List<JobCard> findServiceHistoryWithAmount(@Param("vehicleId") Long vehicleId);
 
 }

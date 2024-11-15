@@ -47,7 +47,7 @@ public class JobCardServiceImpl  implements JobCardService{
 	}
 	@Override
 	public Job_Card_Service checkallocated(JobCard jobCard) {
-		Job_Card_Service jService=jobCardRepository.findByJobCard(String.valueOf(jobCard.getId()));
+		Job_Card_Service jService=jobCardRepository.findByJobCard(jobCard.getId());
 		if(!(jService==null)) {
 			
 
@@ -80,7 +80,7 @@ public class JobCardServiceImpl  implements JobCardService{
 	public Job_Card_Service getmechjob(long mechid) {
 		Job_Card_Service jobcardservice=jobCardRepository.getmechjob(String.valueOf(mechid));
 		if(!(jobcardservice==null)) {
-			JobCard jobcard=jobCardRepository.findByJobCardId(jobcardservice.getJob_card_id());
+			JobCard jobcard=jobCardRepository.findByJobCardId(Long.valueOf(jobcardservice.getJob_card_id()));
 
 			User usr=userRepository.getByUserableId("%Customer",Long.parseLong(String.valueOf(jobcard.getCustomerId())));
 
@@ -118,7 +118,7 @@ JobCard empltyCard=null;
 	}
 	@Override
 	public JobCard submitrating(JobCard jobCard) {
-		JobCard jcrd=jobCardRepository.findByJobCardId(String.valueOf(jobCard.getId()));
+		JobCard jcrd=jobCardRepository.findByJobCardId(jobCard.getId());
 		if(!(jcrd==null)) {
 			jcrd.setCustomerRating(jobCard.getCustomerRating());
 			jcrd.setCustomerRemarks(jobCard.getCustomerRemarks());

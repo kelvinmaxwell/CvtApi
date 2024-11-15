@@ -15,10 +15,10 @@ import app.karimax.cvt.model.User;
 public interface JobCardRepository extends JpaRepository<JobCard,Long>{
 	
 	@Query("select u from Job_Card_Service u WHERE u.job_card_id =?1 and u.completed_at=null")
-	Job_Card_Service findByJobCard(String jobcardid);
+	Job_Card_Service findByJobCard(Long jobcardid);
 	
 	@Query("select u from JobCard u WHERE u.id =?1")
-	JobCard findByJobCardId(String jobcardid);
+	JobCard findByJobCardId(Long jobcardid);
 	
 	@Query("select u from Mechanic u WHERE u.id =?1")
 	Mechanic findBymechid(Long mechid);
