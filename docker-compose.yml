@@ -7,7 +7,7 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cvt_garage
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/cvt_garage
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Karimax@2023
     networks:
