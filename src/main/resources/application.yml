@@ -42,9 +42,9 @@ spring:
 
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.17.0.1:3306/cvt_garage
+    url: jdbc:mysql://172.17.0.1:3306/forge
     username: forge
-    password: 8uDgSjpWL1aLzJKW2ld8
+    password: VH53yqtb0tdALwjjMion
 
 
 

@@ -7,9 +7,9 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306:3306/cvt_garage
+      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306:3306/forge
       SPRING_DATASOURCE_USERNAME: forge
-      SPRING_DATASOURCE_PASSWORD: 8uDgSjpWL1aLzJKW2ld8
+      SPRING_DATASOURCE_PASSWORD: VH53yqtb0tdALwjjMion
     networks:
       - my_network
 
