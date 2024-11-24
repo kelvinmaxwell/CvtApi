@@ -143,8 +143,8 @@ public class VehicleServiceImpl implements VehiclesService {
         customer.setCity("Nairobi");
         customer.setCountry("Kenya");
         customer.setGender(userDto.getGender());
-        customer.setFirst_name(userDto.getUsername());
-        customer.setLast_name(userDto.getUsername());
+        customer.setFirst_name(userDto.getFirstName());
+        customer.setLast_name(userDto.getLastName());
         customer.setCurrent_address("{\"latitude\": -1.4, \"longitude\": 36.6380556, \"formatted_address\": \"Ngong Hills\"}");
         customer.setCreated_at(sqlTimestamp);
          uniqueIdGenerator=new UniqueIdGenerator("CUS-","customers","reference",12);
