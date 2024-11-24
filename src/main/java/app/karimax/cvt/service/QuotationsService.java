@@ -14,5 +14,7 @@ public interface QuotationsService {
 
     ApiResponseDTO getAlluserquotations(Integer userId  );
 
+    ApiResponseDTO getVehicleDescriptionContent(String vehicleRegistration);
+
 
 }
