@@ -145,6 +145,7 @@ public class VehicleServiceImpl implements VehiclesService {
         customer.setGender(userDto.getGender());
         customer.setFirst_name(userDto.getFirstName());
         customer.setLast_name(userDto.getLastName());
+
         customer.setCurrent_address("{\"latitude\": -1.4, \"longitude\": 36.6380556, \"formatted_address\": \"Ngong Hills\"}");
         customer.setCreated_at(sqlTimestamp);
          uniqueIdGenerator=new UniqueIdGenerator("CUS-","customers","reference",12);
@@ -157,6 +158,7 @@ public class VehicleServiceImpl implements VehiclesService {
 
         user.setUserable_id(savedUser.getId());
         user.setUserable_type("App\\Models\\Customer");
+        user.setId_number(userDto.getIdNumber());
         user.setCreated_at(sqlTimestamp);
 
         userRepository.save(user);

@@ -40,20 +40,20 @@ spring:
         # Format queries
         format_sql: true
 
-  datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.17.0.1:3306/forge
-    username: forge
-    password: VH53yqtb0tdALwjjMion
-
-
-
-#
 #  datasource:
 #    driverClassName: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/staging_cvt_database
+#    url: jdbc:mysql://172.17.0.1:3306/forge
 #    username: forge
-#    password: MuXaMinPLyX0eCYGJKKk
+#    password: VH53yqtb0tdALwjjMion
+
+
+
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cvt
+    username: root
+    password: Karimax@2023
 
  
 token:
