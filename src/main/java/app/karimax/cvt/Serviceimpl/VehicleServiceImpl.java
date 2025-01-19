@@ -19,7 +19,6 @@ import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
-import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,10 +64,10 @@ public class VehicleServiceImpl implements VehiclesService {
     public ApiResponseDTO getmodels(String brandid) {
         ArrayList<String> mymodelsArrayList = vehiclesRepository.findmodelsbymodel(brandid);
 
-        ArrayList<VehicleModels> myreturnModels = new ArrayList<>();
+        ArrayList<VehicleModel> myreturnModels = new ArrayList<>();
 
         for (int k = 0; k < mymodelsArrayList.size(); k++) {
-            VehicleModels listModel = new VehicleModels();
+            VehicleModel listModel = new VehicleModel();
             listModel.setName(mymodelsArrayList.get(k));
             myreturnModels.add(listModel);
 
@@ -325,12 +324,12 @@ public class VehicleServiceImpl implements VehiclesService {
     @Override
     public ApiResponseDTO getVehicleDetailsByReg(String regno) {
         List<Object[]> vehicleDetails = vehiclesRepository.getVehicleDetailsByReg(regno);
-        List<VehicleModels> resultList = new ArrayList<>();
+        List<VehicleModel> resultList = new ArrayList<>();
 
         for (Object[] objectArray : vehicleDetails) {
             if (objectArray != null && objectArray.length == 1) {
 
-                VehicleModels vehicleModels = new VehicleModels();
+                VehicleModel vehicleModels = new VehicleModel();
 
                 vehicleModels.setName(String.valueOf((String) objectArray[0]));
 

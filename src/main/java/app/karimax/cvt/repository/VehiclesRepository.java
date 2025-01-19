@@ -6,10 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import app.karimax.cvt.model.Model;
-import app.karimax.cvt.model.User;
 import app.karimax.cvt.model.VehicleDetails;
-import app.karimax.cvt.model.VehicleModels;
 import app.karimax.cvt.model.VehicleModelsDao;
 import app.karimax.cvt.model.Vehicles;
 

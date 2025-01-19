@@ -4,12 +4,8 @@ import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
 import app.karimax.cvt.dto.GaradgesDto;
 import app.karimax.cvt.dto.GarageDetailsDto;
-import app.karimax.cvt.dto.ServiceDto;
-import app.karimax.cvt.model.Garages;
-import app.karimax.cvt.model.Services;
-import app.karimax.cvt.model.products;
+import app.karimax.cvt.model.Garage;
 import app.karimax.cvt.repository.GarageRepository;
-import app.karimax.cvt.repository.ServicesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.GaragesService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +26,7 @@ public class GarageServiceImpl implements GaragesService {
     private final Configs serviceConfig;
     @Override
     public ApiResponseDTO getAll() {
-        List<Garages> listGarages=garageRepository.findAll();
+        List<Garage> listGarages=garageRepository.findAll();
 
         List<GaradgesDto> listDto=listGarages.stream()
                 .map(garage -> modelMapper.map(garage, GaradgesDto.class))

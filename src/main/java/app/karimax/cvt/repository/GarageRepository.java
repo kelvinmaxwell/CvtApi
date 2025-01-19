@@ -1,13 +1,12 @@
 package app.karimax.cvt.repository;
 
-import app.karimax.cvt.model.Garages;
-import app.karimax.cvt.model.JobCard;
+import app.karimax.cvt.model.Garage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface GarageRepository  extends JpaRepository<Garages,Long> {
+public interface GarageRepository  extends JpaRepository<Garage,Long> {
 
 
 

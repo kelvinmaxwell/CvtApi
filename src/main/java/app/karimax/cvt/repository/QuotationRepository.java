@@ -34,7 +34,7 @@ public interface QuotationRepository extends JpaRepository<Quotations,Long> {
             ") " +
             "FROM Quotations q " +
             "LEFT JOIN JobCard j ON q.vehicle_id = j.vehicleId AND q.status = 'Pending' " +
-            "LEFT JOIN Garages g ON COALESCE(q.garage_id, j.garageId) = g.id " +
+            "LEFT JOIN Garage g ON COALESCE(q.garage_id, j.garageId) = g.id " +
             "WHERE (q.vehicle_id = :vehicleId OR j.vehicleId = :vehicleId) " +
             "AND (q.status = 'Pending' OR j.status IN ('Draft', 'In Progress')) " +
             "ORDER BY COALESCE(q.created_at, j.createdAt) DESC")
@@ -49,7 +49,7 @@ public interface QuotationRepository extends JpaRepository<Quotations,Long> {
             "   i.amount,g.name) " +
             "FROM JobCard j " +
             "LEFT JOIN Invoices i ON j.id = i.job_card_id " +
-            " INNER JOIN Garages g on g.id=j.garageId WHERE j.vehicleId = :vehicleId AND j.status = 'Done' " +
+            " INNER JOIN Garage g on g.id=j.garageId WHERE j.vehicleId = :vehicleId AND j.status = 'Done' " +
             "ORDER BY j.createdAt DESC")
     List<JobCard> findServiceHistoryWithAmount(@Param("vehicleId") Long vehicleId);
 
