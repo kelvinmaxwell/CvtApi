@@ -23,6 +23,8 @@ public class ServiceCategory {
     String description;
     @Column(name = "has_packages")
     String hasPackages;
+    @Column(name = "grouping")
+    String grouping;
     @Column(name = "created_by")
     private Integer created_by;
     @Column(name = "updated_by")

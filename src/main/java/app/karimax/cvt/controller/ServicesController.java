@@ -1,11 +1,8 @@
 package app.karimax.cvt.controller;
 
 import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.response.ErrorResponseUtil;
 import app.karimax.cvt.service.ServicesService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +28,19 @@ public class ServicesController {
     @GetMapping("get-pre-purchase-inspection-by-package/{aPackage}")
     public ResponseEntity<ApiResponseDTO> getPrePurchaseInspectionForms(@PathVariable("aPackage") String aPackage) {
         return new ResponseEntity<ApiResponseDTO>(services.getInspectionByPackage(aPackage), HttpStatus.OK);
+    }
+
+    @GetMapping("get-service-categories/{grouping}")
+    public ResponseEntity<ApiResponseDTO> getServiceCategories(@PathVariable("grouping") String grouping) {
+        return new ResponseEntity<ApiResponseDTO>(services.getServiceCategories(grouping), HttpStatus.OK);
+
+    }
+
+
+    @GetMapping("get-service-by-category/{category}")
+    public ResponseEntity<ApiResponseDTO> getServiceByCategory(@PathVariable("category") String category) {
+        return new ResponseEntity<ApiResponseDTO>(services.getServiceByCategory(category), HttpStatus.OK);
+
     }
 
 }

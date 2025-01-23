@@ -42,5 +42,19 @@ public class ServicesImpl implements ServicesService {
         return new SuccessResponseHandler(serviceConfig, purchaseInspectionFormRepository.getPrePurchaseInspectionFormsByPackage(aPackage)).SuccResponse();
     }
 
+    @Override
+    public ApiResponseDTO getServiceCategories(String grouping) {
+
+        return new SuccessResponseHandler(serviceConfig, servicesRepository.geCategoryByGrouping(grouping)).SuccResponse();
+
+    }
+
+    @Override
+    public ApiResponseDTO getServiceByCategory(String category) {
+        System.err.println("categorygotten"+category);
+        return new SuccessResponseHandler(serviceConfig, servicesRepository.getServicesByCategory(category)).SuccResponse();
+
+    }
+
 
 }
