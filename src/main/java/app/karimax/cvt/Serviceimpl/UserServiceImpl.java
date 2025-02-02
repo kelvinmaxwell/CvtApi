@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 
@@ -33,7 +34,7 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final Configs configs;
-    private final MechanicRepository mechanicRepository;
+
 
 
     @Override
@@ -67,6 +68,14 @@ public class UserServiceImpl implements UserService {
         } else {
             return new ErrorExceptionHandler(configs, configs.getNotFoundStatusDesc()).ErrorResponseNotFound();
         }
+    }
+
+    @Override
+    public ApiResponseDTO getAllMechanics() {
+        List<User> mechanics = userRepository.findMechanics("%Mechanic");
+
+        return new SuccessResponseHandler(configs, mechanics).SuccResponse();
+
     }
 
     @Override

@@ -1,17 +1,10 @@
 package app.karimax.cvt.service;
 
 
-
-
 import app.karimax.cvt.dto.ApiResponseDTO;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import app.karimax.cvt.dao.request.mechsignuprequest;
-import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.User;
-
 import app.karimax.cvt.response.PhonVerResponse;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 
 public interface UserService {
@@ -21,16 +14,13 @@ public interface UserService {
 
     ApiResponseDTO findByphone(String phone);
 
-  
-  PhonVerResponse addvercode(User user);
+    ApiResponseDTO getAllMechanics();
 
-  
-  
-  PhonVerResponse confirmcode(User user);
-  
-  
 
-  
+    PhonVerResponse addvercode(User user);
 
-  
+
+    PhonVerResponse confirmcode(User user);
+
+
 }

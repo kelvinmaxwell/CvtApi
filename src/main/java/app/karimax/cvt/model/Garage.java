@@ -23,8 +23,11 @@ public class Garage {
     private String reference;
     @Column(name = "name")
     private String name;
-    @Column(name = "garage_specialization_id")
-    private String garage_specialization_id;
+    @Column(name = "garage_profile")
+    private String garageProfile;
+    @ManyToOne
+    @JoinColumn(name = "garage_specialization_id")
+    private GarageSpecialization garageSpecialization;
 
     @Column(name = "country")
     private String country;
