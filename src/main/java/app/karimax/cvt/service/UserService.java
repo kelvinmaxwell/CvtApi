@@ -16,6 +16,8 @@ public interface UserService {
 
     ApiResponseDTO getAllMechanics();
 
+    ApiResponseDTO getMechUserDetails(Long userableId);
+
 
     PhonVerResponse addvercode(User user);
 
