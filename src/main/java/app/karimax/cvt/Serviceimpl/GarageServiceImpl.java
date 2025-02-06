@@ -74,11 +74,11 @@ public class GarageServiceImpl implements GaragesService {
         List<Garage> garages = garageRepository.findAllGarages();
         List<GarageSummaryDTO> garageSummaryDTOList= garages.stream().map(garage -> {
             System.err.println(garage.getId());
-            Manager manager = garageRepository.findGarageManager(garage.getId());
+            List<Manager> manager = garageRepository.findGarageManager(garage.getId());
             ManagerDto managerDto=new ManagerDto();
-           if(manager!=null) {
-               User managerUser = userRepository.getByUserableId("%Manager", manager.getId());
-                managerDto = new ManagerDto(manager, managerUser);
+           if(!manager.isEmpty()) {
+               User managerUser = userRepository.getByUserableId("%Manager", manager.get(0).getId());
+                managerDto = new ManagerDto(manager.get(0), managerUser);
            }
             List<User> mechanics = garageRepository.findGarageMechanics(garage.getId(),"%Mechanic");
             List<Services> services = garageRepository.findGarageServices(garage.getId());

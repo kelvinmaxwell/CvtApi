@@ -26,8 +26,8 @@ public interface GarageRepository  extends JpaRepository<Garage,Long> {
     @Query("SELECT g FROM Garage g")
     List<Garage> findAllGarages();
 
-    @Query("SELECT distinct m FROM Manager m WHERE  m.garageId = :garageId ")
-    Manager findGarageManager(Long garageId);
+    @Query("SELECT m FROM Manager m WHERE  m.garageId = :garageId ")
+    List<Manager> findGarageManager(Long garageId);
 
     @Query("SELECT u FROM User u WHERE u.userable_type like ?2 AND u.userable_id = ?1")
     List<User> findGarageMechanics(Long garageId,String userableType);
