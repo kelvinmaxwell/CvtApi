@@ -39,7 +39,7 @@ public class User implements UserDetails {
     public String username;
     public String id_number;
     public String user_summary;
-    @JsonIgnore
+
     public String profile_photo_path;
     @JsonIgnore
     private String otp_code_expires_at;
