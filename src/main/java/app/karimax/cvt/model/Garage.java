@@ -29,6 +29,9 @@ public class Garage {
     @JoinColumn(name = "garage_specialization_id")
     private GarageSpecialization garageSpecialization;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "country")
     private String country;
     @Column(name = "city")
