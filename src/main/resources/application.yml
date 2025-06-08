@@ -6,7 +6,7 @@ spring:
       max-file-size: 30MB
       max-request-size: 30MB
   application:
-    name: cvt-main-api
+    name: cvt-main
   main: 
       allow-circular-references: true
   mail:
