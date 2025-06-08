@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>app.karimax</groupId>
-    <artifactId>cvt</artifactId>
+    <artifactId>cvt-main</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>security</name>
 
