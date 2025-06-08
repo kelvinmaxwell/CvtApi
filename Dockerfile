@@ -14,7 +14,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file from the build stage to the working directory
-COPY --from=build /usr/src/app/target/cvt-0.0.1-SNAPSHOT.jar /app/cvt.jar
+COPY --from=build /usr/src/app/target/cvt-main.jar /app/cvt-main.jar
 
 
 #EXPOSE 9878/udp
@@ -25,4 +25,11 @@ EXPOSE 8081
 ENV JAVA_OPTS="-Dserver.tomcat.apr-lifecycle-listener.enabled=false"
 
 # Command to run the JAR file
-ENTRYPOINT ["java", "-jar", "/app/cvt.jar"]
+ENTRYPOINT ["java", "-jar", "/app/cvt-main.jar"]
+
+
+
+##docker details for kelvinmaxwell82@gmail.com
+#
+#username:kelvinmaxwell
+#pass:Karimax@2023

@@ -84,4 +84,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: kelvinmaxwell/cvtapi:tagname
+          tags: kelvinmaxwell/cvt-main:tagname
