@@ -54,6 +54,21 @@ public class AuthenticationController {
     }
 
 
+    @GetMapping("get-all-mechs")
+    public ResponseEntity<ApiResponseDTO> getAllMechanics() {
+
+        return new ResponseEntity<>(userService.getAllMechanics(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("get-mech-user-details/{userableId}")
+    public ResponseEntity<ApiResponseDTO> getMechUserDetails(@PathVariable("userableId") Long userableId) {
+
+        return new ResponseEntity<>(userService.getMechUserDetails(userableId), HttpStatus.OK);
+    }
+
+
+
     //build get employee by id name
 
 

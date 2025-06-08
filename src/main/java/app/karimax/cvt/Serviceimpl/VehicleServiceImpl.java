@@ -19,7 +19,6 @@ import app.karimax.cvt.repository.VehiclesRepository;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.VehiclesService;
 import lombok.RequiredArgsConstructor;
-import org.apache.juli.logging.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,10 +64,10 @@ public class VehicleServiceImpl implements VehiclesService {
     public ApiResponseDTO getmodels(String brandid) {
         ArrayList<String> mymodelsArrayList = vehiclesRepository.findmodelsbymodel(brandid);
 
-        ArrayList<VehicleModels> myreturnModels = new ArrayList<>();
+        ArrayList<VehicleModel> myreturnModels = new ArrayList<>();
 
         for (int k = 0; k < mymodelsArrayList.size(); k++) {
-            VehicleModels listModel = new VehicleModels();
+            VehicleModel listModel = new VehicleModel();
             listModel.setName(mymodelsArrayList.get(k));
             myreturnModels.add(listModel);
 
@@ -143,8 +142,9 @@ public class VehicleServiceImpl implements VehiclesService {
         customer.setCity("Nairobi");
         customer.setCountry("Kenya");
         customer.setGender(userDto.getGender());
-        customer.setFirst_name(userDto.getUsername());
-        customer.setLast_name(userDto.getUsername());
+        customer.setFirst_name(userDto.getFirstName());
+        customer.setLast_name(userDto.getLastName());
+
         customer.setCurrent_address("{\"latitude\": -1.4, \"longitude\": 36.6380556, \"formatted_address\": \"Ngong Hills\"}");
         customer.setCreated_at(sqlTimestamp);
          uniqueIdGenerator=new UniqueIdGenerator("CUS-","customers","reference",12);
@@ -157,6 +157,7 @@ public class VehicleServiceImpl implements VehiclesService {
 
         user.setUserable_id(savedUser.getId());
         user.setUserable_type("App\\Models\\Customer");
+        user.setId_number(userDto.getIdNumber());
         user.setCreated_at(sqlTimestamp);
 
         userRepository.save(user);
@@ -323,12 +324,12 @@ public class VehicleServiceImpl implements VehiclesService {
     @Override
     public ApiResponseDTO getVehicleDetailsByReg(String regno) {
         List<Object[]> vehicleDetails = vehiclesRepository.getVehicleDetailsByReg(regno);
-        List<VehicleModels> resultList = new ArrayList<>();
+        List<VehicleModel> resultList = new ArrayList<>();
 
         for (Object[] objectArray : vehicleDetails) {
             if (objectArray != null && objectArray.length == 1) {
 
-                VehicleModels vehicleModels = new VehicleModels();
+                VehicleModel vehicleModels = new VehicleModel();
 
                 vehicleModels.setName(String.valueOf((String) objectArray[0]));
 

@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  app:
+    image: kelvinmaxwell/cvtapi:tagname
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306:3306/forge
+      SPRING_DATASOURCE_USERNAME: forge
+      SPRING_DATASOURCE_PASSWORD: VH53yqtb0tdALwjjMion
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

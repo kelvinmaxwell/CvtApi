@@ -1,0 +1,87 @@
+name: Java CI with Maven CVT
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        env:
+          MYSQL_ROOT_PASSWORD: Karimax@2023
+          MYSQL_DATABASE: cvt_garage
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Checking MySQL container status..."
+          CONTAINER_ID=$(docker ps -qf "ancestor=mysql:8.0")
+          for i in {30..0}; do
+            if docker exec $CONTAINER_ID mysqladmin ping --silent; then
+              echo "MySQL is ready!"
+              break
+            fi
+            echo 'MySQL still not ready, waiting...'
+            sleep 1
+          done
+          if [ "$i" = 0 ]; then
+            echo 'MySQL did not become ready in time!'
+            docker logs $CONTAINER_ID
+            exit 1
+          fi
+
+      - name: Copy and execute SQL file
+        run: |
+          CONTAINER_ID=$(docker ps -qf "ancestor=mysql:8.0")
+          echo "Copying SQL file to MySQL container..."
+          docker cp src/main/resources/cvt.sql $CONTAINER_ID:/cvt.sql
+          
+          echo "Verifying if SQL file was copied..."
+          docker exec $CONTAINER_ID ls /cvt.sql || { echo "SQL file not found in container"; exit 1; }
+          
+          echo "Executing SQL file..."
+          docker exec $CONTAINER_ID sh -c "mysql -uroot -pKarimax@2023 cvt_garage < /cvt.sql"
+      
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: kelvinmaxwell/cvtmain-springboot-images:latest

@@ -24,7 +24,7 @@ public class VehicleDetails {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	 private Integer id;
-	Integer vehicle_id;
+	Long vehicle_id;
 	String exterior_images;
 	String interior_images;
 	String video_file_path;

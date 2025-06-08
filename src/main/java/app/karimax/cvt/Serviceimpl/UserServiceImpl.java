@@ -3,8 +3,11 @@ package app.karimax.cvt.Serviceimpl;
 
 import app.karimax.cvt.config.Configs;
 import app.karimax.cvt.dto.ApiResponseDTO;
+import app.karimax.cvt.dto.MechSpecializations;
+import app.karimax.cvt.dto.MechanicDetails;
 import app.karimax.cvt.exception.ErrorExceptionHandler;
 import app.karimax.cvt.exception.ResourceNotFoundException;
+import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.SmsCall;
 import app.karimax.cvt.model.User;
 import app.karimax.cvt.repository.MechanicRepository;
@@ -12,6 +15,11 @@ import app.karimax.cvt.repository.UserRepository;
 import app.karimax.cvt.response.PhonVerResponse;
 import app.karimax.cvt.response.SuccessResponseHandler;
 import app.karimax.cvt.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,19 +30,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final Configs configs;
     private final MechanicRepository mechanicRepository;
-
+    private final Configs configs;
+    private User user;
+    private Mechanic mechanic;
+    private Integer reviews;
+    private Integer orders;
+    private Integer experience;
+    private List<MechSpecializations> mechSpecializationsList;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -67,6 +79,33 @@ public class UserServiceImpl implements UserService {
         } else {
             return new ErrorExceptionHandler(configs, configs.getNotFoundStatusDesc()).ErrorResponseNotFound();
         }
+    }
+
+    @Override
+    public ApiResponseDTO getAllMechanics() {
+        List<User> mechanics = userRepository.findMechanics("%Mechanic");
+
+        return new SuccessResponseHandler(configs, mechanics).SuccResponse();
+
+    }
+
+    @Override
+    public ApiResponseDTO getMechUserDetails(Long userableId) {
+
+        User user = userRepository.findById(userableId).get();
+        Mechanic mechanic = mechanicRepository.findById(user.getUserable_id()).get();
+
+        Integer order = userRepository.countServices(mechanic.getId());
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<MechSpecializations>>() {}.getType();
+        List<MechSpecializations> specializations = gson.fromJson(mechanic.getSpecialized_cars(), listType);
+
+
+        MechanicDetails mechanicDetails = new MechanicDetails(user, mechanic, 1, order, 1, specializations);
+
+
+        return new SuccessResponseHandler(configs, mechanicDetails).SuccResponse();
     }
 
     @Override

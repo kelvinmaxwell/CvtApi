@@ -4,8 +4,8 @@ import app.karimax.cvt.dto.ApiResponseDTO;
 
 public interface ServicesService {
     ApiResponseDTO getAllServiceByCategory(Integer garadgeId);
-    ApiResponseDTO getServiceById(Integer id);
+    ApiResponseDTO getInspectionByPackage(String  aPackage);
+    ApiResponseDTO getServiceCategories(String  grouping);
+    ApiResponseDTO getServiceByCategory(String  category);
 
-
-    ApiResponseDTO getServicesByCategory(String serviceCategory);
 }

@@ -1,12 +1,8 @@
 package app.karimax.cvt.controller;
 
 import app.karimax.cvt.dto.ApiResponseDTO;
-import app.karimax.cvt.response.ErrorResponseUtil;
 import app.karimax.cvt.service.GaragesService;
-import app.karimax.cvt.service.ServicesService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/garages")
 public class GaragesController {
     private final GaragesService services;
-
-
-
-
-
 
 
     @GetMapping("get-all-garages")
@@ -41,8 +32,10 @@ public class GaragesController {
         return new ResponseEntity<ApiResponseDTO>(services.getGarageServices(garageId), HttpStatus.OK);
     }
 
-
-
+    @GetMapping("get-garages-details")
+    public ResponseEntity<ApiResponseDTO> getAllGaragesWithDetails() {
+        return new ResponseEntity<ApiResponseDTO>(services.getAllGaragesWithDetails(), HttpStatus.OK);
+    }
 
 
 }

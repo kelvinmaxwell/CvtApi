@@ -6,7 +6,7 @@ spring:
       max-file-size: 30MB
       max-request-size: 30MB
   application:
-    name: spring-security
+    name: cvt-main
   main: 
       allow-circular-references: true
   mail:
@@ -42,16 +42,18 @@ spring:
 
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cvt
-    username: root
-    password: Karimax@2023
+    url: jdbc:mysql://172.17.0.1:3306/forge
+    username: forge
+    password: VH53yqtb0tdALwjjMion
 
-#
+
+
+
 #  datasource:
 #    driverClassName: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/staging_cvt_database
-#    username: forge
-#    password: MuXaMinPLyX0eCYGJKKk
+#    url: jdbc:mysql://localhost:3306/cvt
+#    username: root
+#    password: Karimax@2023
 
  
 token:
@@ -108,3 +110,10 @@ configs:
 server:
   tomcat:
     max-swallow-size: 30MB
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cvtserver:9099/eureka
+  instance:
+    prefer-ip-address: true

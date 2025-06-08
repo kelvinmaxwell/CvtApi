@@ -1,14 +1,12 @@
 package app.karimax.cvt.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 
 @Data
@@ -23,17 +21,20 @@ public class JobCard {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private long id;
 	String  reference;
-	String  customer_id;
-	String  vehicle_id;
-	String issue_description;
+	String customerId;
+	Long vehicleId;
+	Long garageId;
+	String issueDescription;
 	String  status;
 	String  source;
-	String created_by;
-	String completed_at;
-	String customer_rating;
-	String customer_remarks;
-	String created_at;
-	String updated_at;
+	String createdBy;
+	String completedAt;
+	String customerRating;
+	String customerRemarks;
+	Timestamp createdAt;
+	Timestamp updatedAt;
+	Double amount;
+	String garageName;
 	
 	
 	

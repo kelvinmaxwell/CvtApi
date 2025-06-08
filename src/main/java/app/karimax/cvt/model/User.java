@@ -37,8 +37,9 @@ public class User implements UserDetails {
     private String password;
     private String otp_code;
     public String username;
+    public String id_number;
     public String user_summary;
-    @JsonIgnore
+
     public String profile_photo_path;
     @JsonIgnore
     private String otp_code_expires_at;

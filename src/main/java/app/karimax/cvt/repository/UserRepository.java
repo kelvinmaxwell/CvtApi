@@ -1,5 +1,6 @@
 package app.karimax.cvt.repository;
 
+import app.karimax.cvt.model.Mechanic;
 import app.karimax.cvt.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -60,5 +61,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User getCustomerByUserId(Long userId);
     @Query("SELECT u FROM User u WHERE u.id = :userId")
     User findCustomerByUserId(@Param("userId") Long userId);
+
+
+    @Query("SELECT u FROM User u WHERE u.userable_type like ?1")
+    List<User> findMechanics(String userableType);
+
+    @Query("SELECT m FROM Mechanic m WHERE m.id = ?1")
+    Mechanic findMechByUserableId(Long  userableiId);
+
+
+    @Query(value = "SELECT ifnull((count(id)),0) FROM job_card_service m WHERE m.main_mechanic_id = ?1",nativeQuery = true)
+    Integer countServices(Long  mechId);
+
+
 
 }
