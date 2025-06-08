@@ -110,3 +110,10 @@ configs:
 server:
   tomcat:
     max-swallow-size: 30MB
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cvtserver:9099/eureka
+  instance:
+    prefer-ip-address: true
