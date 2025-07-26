@@ -7,7 +7,18 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306:3306/forge
+      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306/forge
+      SPRING_DATASOURCE_USERNAME: forge
+      SPRING_DATASOURCE_PASSWORD: VH53yqtb0tdALwjjMion
+    networks:
+      - my_network
+
+  towingambulance:
+    image: kelvinmaxwell/towingambulance:tagname
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://172.17.0.1:3306/forge
       SPRING_DATASOURCE_USERNAME: forge
       SPRING_DATASOURCE_PASSWORD: VH53yqtb0tdALwjjMion
     networks:
