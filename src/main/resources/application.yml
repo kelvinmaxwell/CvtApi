@@ -108,6 +108,7 @@ configs:
 
 
 server:
+  port: 8081
   tomcat:
     max-swallow-size: 30MB
 
