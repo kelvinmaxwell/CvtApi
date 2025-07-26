@@ -69,9 +69,9 @@ file:
     
 logging:
   level:
-    root: DEBUG
-    com.howtodoinjava: DEBUG
-    org.hibernate: DEBUG
+    root: ERROR
+    com.howtodoinjava: ERROR
+    org.hibernate: ERROR
 configs:
   asyncSuccessStatusCode: 1
   defaultCreatedBy: 1
