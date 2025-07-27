@@ -44,7 +44,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://172.17.0.1:3306/forge
     username: forge
-    password: VH53yqtb0tdALwjjMion
+    password: Karimax@2023
 
 
 
