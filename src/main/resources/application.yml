@@ -70,7 +70,9 @@ file:
 logging:
   level:
     root: ERROR
-    com.howtodoinjava: ERROR
+    app:
+      karimax:
+        cvt:  ERROR
     org.hibernate: ERROR
 configs:
   asyncSuccessStatusCode: 1
