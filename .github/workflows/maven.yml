@@ -22,7 +22,7 @@ jobs:
           --health-retries=3
         env:
           MYSQL_ROOT_PASSWORD: Karimax@2023
-          MYSQL_DATABASE: forge
+          MYSQL_DATABASE: cvt_garage
 
     steps:
       - name: Checkout code
