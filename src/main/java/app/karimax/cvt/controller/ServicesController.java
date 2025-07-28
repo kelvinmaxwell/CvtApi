@@ -22,7 +22,7 @@ public class ServicesController {
 
     @GetMapping("get-by-garage/{garadgeId}")
     public ResponseEntity<ApiResponseDTO> getAllServiceByCategory(@PathVariable("garadgeId") Integer garadgeId) {
-        return new ResponseEntity<ApiResponseDTO>(services.getAllServiceByCategory(garadgeId), HttpStatus.OK);
+        return new ResponseEntity<ApiResponseDTO>(services.getAllServiceByGaradgeId(garadgeId), HttpStatus.OK);
     }
 
     @GetMapping("get-pre-purchase-inspection-by-package/{aPackage}")

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ServicesRepository extends JpaRepository<Services, Long> {
     @Query("select u from Services u WHERE  u.garage.id=?1")
-    List<Services> findAllByService_category_id(Integer garadgeId);
+    List<Services> findAllByGarageId(Integer garadgeId);
 
     @Query("select sc from ServiceCategory sc WHERE sc.grouping =?1")
     List<ServiceCategory>geCategoryByGrouping(String grouping);
