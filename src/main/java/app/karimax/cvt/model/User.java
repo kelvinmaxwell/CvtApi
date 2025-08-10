@@ -51,7 +51,7 @@ public class User implements UserDetails {
     private Timestamp created_at;
     @Column(name = "updated_at")
     private Timestamp updated_at;
-    @JsonIgnore
+
     private String userable_type;
     @Column(name = "userable_id")
     private long userable_id;
